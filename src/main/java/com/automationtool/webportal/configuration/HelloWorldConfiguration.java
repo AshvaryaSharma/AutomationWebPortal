@@ -1,4 +1,4 @@
-package com.websystique.springsecurity.configuration;
+package com.automationtool.webportal.configuration;
  
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -12,7 +12,7 @@ import org.springframework.web.servlet.view.JstlView;
  
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "com.websystique.springsecurity")
+@ComponentScan(basePackages = "com.automationtool.webportal")
 public class HelloWorldConfiguration extends WebMvcConfigurerAdapter{
      
     @Bean

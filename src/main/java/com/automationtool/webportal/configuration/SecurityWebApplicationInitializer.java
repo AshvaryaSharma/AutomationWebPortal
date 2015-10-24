@@ -1,4 +1,4 @@
-package com.websystique.springsecurity.configuration;
+package com.automationtool.webportal.configuration;
 
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 

@@ -5,12 +5,12 @@ App.controller('AppController', ['$scope', 'keywordService', function($scope, Ke
           self.keywords;
           self.keywordObject=null;
                
-          self.listAllKeywords = function(){
-        	  KeywordService.listAllKeywords()
+          self.listAllKeywords = function(keyword){
+        	  KeywordService.listAllKeywords(keyword)
                   .then(
                                function(d) {
                                     self.keywords = d;
-                                    console.out('Successfull');
+                                    console.out('Successfull' + d);
                                },
                                 function(errResponse){
                                     console.error('Error while fetching Keywords');

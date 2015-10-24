@@ -4,8 +4,8 @@ App.factory('keywordService', ['$http', '$q', function($http, $q){
  
     return {
          
-    	listAllKeywords: function() {
-            return $http.get('http://localhost:8080/AutomationToolWebPortal/webservice/keywords')
+    	listAllKeywords: function(keyword) {
+            return $http.post('http://localhost:8080/AutomationToolWebPortal/webservice/keywords',keyword)
             .then(
                     function(response){
                     	 

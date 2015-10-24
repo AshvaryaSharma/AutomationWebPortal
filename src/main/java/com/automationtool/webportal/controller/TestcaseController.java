@@ -1,5 +1,8 @@
-package com.websystique.springsecurity.controller;
+package com.automationtool.webportal.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -7,14 +10,22 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.automationtool.webportal.service.OperationService;
+
 @Controller
 public class TestcaseController {
 	
+	@Autowired
+	OperationService operationService;
+	
 	@RequestMapping(value = "/createTestCase" , method = RequestMethod.GET)
 	public String createTestcase(ModelMap model) {
-		
 		model.addAttribute("user", getPrincipal());
-		return "protected/testCases/createTestcase";
+		model.addAttribute("testcaseAction","create");
+		model.addAttribute("testcaseId", 0);
+		model.addAttribute("heading", "Create Test Case");
+		model.addAttribute("button", "Create");
+		return "protected/testCases/testcase";
 		
 	}
 	

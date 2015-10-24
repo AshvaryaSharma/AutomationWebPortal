@@ -1,4 +1,4 @@
-package com.websystique.springsecurity;
+package com.automationtool.webportal.springsecurity;
 
 import java.net.URI;
 import java.util.LinkedHashMap;

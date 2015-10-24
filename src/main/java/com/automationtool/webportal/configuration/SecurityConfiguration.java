@@ -1,4 +1,4 @@
-package com.websystique.springsecurity.configuration;
+package com.automationtool.webportal.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +17,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		auth.inMemoryAuthentication().withUser("Ashvarya").password("ashvarya123").roles("USER");
 		auth.inMemoryAuthentication().withUser("admin").password("root123").roles("ADMIN");
 		auth.inMemoryAuthentication().withUser("dba").password("root123").roles("ADMIN","DBA");
+		auth.inMemoryAuthentication().withUser("Aditya").password("aditya123").roles("USER");
 	}
 	
 	@Override
@@ -25,7 +26,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	  http.authorizeRequests()
 	  //----------------------------------------------------------
 	  	.antMatchers("/index").permitAll()
-	  	
+	  	.antMatchers("/webservice/**").permitAll()
 	  	//-------------------------------------------------------
 	  	.antMatchers("/", "/home").access("hasRole('USER') or hasRole('ADMIN')")
 	  	.antMatchers("/protected/**").access("hasRole('USER') or hasRole('ADMIN')")
@@ -34,8 +35,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		.and().formLogin()
 		.and().formLogin().loginPage("/login")
         .usernameParameter("ssoId").passwordParameter("password")
-        .and().csrf()
+        /*.and().csrf()*/
 		.and().exceptionHandling().accessDeniedPage("/Access_Denied");
+	  
+	  http.csrf().disable();
  
 	}
 }

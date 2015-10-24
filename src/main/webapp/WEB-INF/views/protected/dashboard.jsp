@@ -13,6 +13,10 @@
     <meta name="author" content="">
 
     <title>Automation Tool</title>
+    
+    
+    
+    
 
     <!-- Bootstrap Core CSS -->
     <link href="resources/themes/bowerTheme/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -23,7 +27,7 @@
     <!-- Custom CSS -->
     <link href="resources/themes/bowerTheme/dist/css/sb-admin-2.css" rel="stylesheet">
 
-    <!-- Custom Fonts -->
+   <!--  Custom Fonts -->
     <link href="resources/themes/bowerTheme/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -41,17 +45,19 @@
 
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-            <div class="navbar-header">
+           <!--  <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Automation Tool</a>
-            </div>
+                
+            </div> -->
+            
+            <img class="navbar navbar-top-links navbar-left" style="margin-left: 10;margin-top: 5; margin-bottom:5" src="resources/images/TechMahindra.png" height="10%" width="10%">
             <!-- /.navbar-header -->
-
+			<%-- <center><img src="resources/images/TechMahindra.png" height="10%" width="12%" border="10"></center> --%>
             <ul class="nav navbar-top-links navbar-right">
                 
                 <li class="dropdown">
@@ -72,7 +78,7 @@
                 <!-- /.dropdown -->
             </ul>
             <!-- /.navbar-top-links -->
-
+			 <br>
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
@@ -84,8 +90,8 @@
                             <a href="#">Test Cases</a>
                             <ul class="nav nav-second-level">
 								<ul class="nav nav-second-level">
-								<li><a href="createTestCase.html">Create Test Case</a></li>
-								<li><a href="EditTestCase.html">View/Edit Test Case</a></li>
+								<li><a href="createTestCase">Create Test Case</a></li>
+								<li><a href="viewTestcase">View/Edit Test Case</a></li>
 								</ul>
 							</ul>
                             <!-- /.nav-second-level -->
@@ -93,6 +99,9 @@
                         <li>
                             <a href="createPackage.html">Package</a>
                         </li>
+                        <sec:authorize access="hasRole('ADMIN')">
+						<li><a href="application">Application</a></li>
+						</sec:authorize>
 						<li>
 							<a href="#">Test Suite</a>
 							<ul class="nav nav-second-level">
@@ -100,9 +109,7 @@
 								<li><a href="EditTestSuite.html">View/Edit Test Suite</a></li>
 							</ul>
 						</li>
-						<sec:authorize access="hasRole('ADMIN')">
-						<li><a href="#">Admin Module</a>
-						</sec:authorize>
+						
                     </ul>
                 <!-- /.sidebar-collapse -->
             </div>
@@ -208,6 +215,9 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="resources/themes/bowerTheme/dist/js/sb-admin-2.js"></script>
+
+
+	<script src="https://ideas.techmahindra.com/BaseStyle/js/jquery.accordion.js" type="text/javascript"></script>
 
 </body>
 
