@@ -38,7 +38,7 @@ angular.module('testCase',[]).controller('testcaseController', function($scope,$
 	$scope.getAllApplications = function() {
 		console.log("---------GETTING ALL APPLICATIONS-----------");
 		
-		$http.get("webservice/findAllApplications")
+		$http.get("../webservice/findAllApplications")
 			.success(function (response) {
 				$scope.applications = response;
 				$scope.intializing = false;
@@ -92,7 +92,7 @@ angular.module('testCase',[]).controller('testcaseController', function($scope,$
 			
 		} else  {
 			
-			$http.post("webservice/getOperation",$scope.testStep[i].keyword)
+			$http.post("../webservice/getOperation",$scope.testStep[i].keyword)
 			.success(function(response){
 				
 				$scope.testStep[i].arg1_ph = response.arg1;
@@ -129,7 +129,7 @@ angular.module('testCase',[]).controller('testcaseController', function($scope,$
 	
 	$scope.getAllOperationNames = function() {
 		
-		$http.get("webservice/getAllOperationNames")
+		$http.get("../webservice/getAllOperationNames")
 			.success(function (response){
 				
 				$scope.operationNames = response;
@@ -176,7 +176,7 @@ angular.module('testCase',[]).controller('testcaseController', function($scope,$
 		$scope.loading = true;
 			$scope.testattr = "checking package";
 		
-		$http.post("webservice/findpackagebyapplicationid",$scope.app_id)
+		$http.post("../webservice/findpackagebyapplicationid",$scope.app_id)
 			 .success(function(response) {
 				$scope.packages = response;
 				$scope.testattr = "getPackages";
@@ -224,7 +224,7 @@ angular.module('testCase',[]).controller('testcaseController', function($scope,$
 			$scope.loading = true;
 			$scope.createTestcaseObject();
 			
-			$http.post("webservice/addNewTestCase", $scope.testcaseObject)
+			$http.post("../webservice/addNewTestCase", $scope.testcaseObject)
 				.success(function(response){
 					
 					$scope.reset();

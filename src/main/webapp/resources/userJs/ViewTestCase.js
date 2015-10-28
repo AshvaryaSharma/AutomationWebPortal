@@ -29,7 +29,7 @@ angular.module('viewTestCase',["checklist-model"]).controller('viewTestcaseContr
 	$scope.getAllApplications = function() {
 		console.log("---------GETTING ALL APPLICATIONS-----------");
 		
-		$http.get("webservice/findAllApplications")
+		$http.get("../webservice/findAllApplications")
 			.success(function (response) {
 				$scope.applications = response;
 				$scope.intializing = false;
@@ -67,7 +67,7 @@ angular.module('viewTestCase',["checklist-model"]).controller('viewTestcaseContr
 	$scope.deleteTestcases = function() {
 		
 		console.log("Attempting to delete test cases" + $scope.testcasesTobeDeleted.id);
-		$http.post("webservice/deleteTestcasesByTestcaseId", $scope.testcasesTobeDeleted.id)
+		$http.post("../webservice/deleteTestcasesByTestcaseId", $scope.testcasesTobeDeleted.id)
 			.success(function(response) {
 				console.log("Deleted successfully");
 				$scope.testcasesTobeDeleted = { id: []};
@@ -133,7 +133,7 @@ angular.module('viewTestCase',["checklist-model"]).controller('viewTestcaseContr
 	$scope.getTestcasesByPackageId = function() {
 		$scope.loading = true;
 		
-		$http.post("webservice/gettestcasesbypackageid",$scope.package_id)
+		$http.post("../webservice/gettestcasesbypackageid",$scope.package_id)
 			.success(function(response) {
 				$scope.testcases = response;
 				if($scope.testcases.length == 0) {
@@ -157,7 +157,7 @@ angular.module('viewTestCase',["checklist-model"]).controller('viewTestcaseContr
 		$scope.loading = true;
 			$scope.testattr = "checking package";
 		
-		$http.post("webservice/findpackagebyapplicationid",$scope.app_id)
+		$http.post("../webservice/findpackagebyapplicationid",$scope.app_id)
 			 .success(function(response) {
 				$scope.packages = response;
 				$scope.testattr = "getPackages";

@@ -50,7 +50,7 @@ angular.module('package',[]).controller('packageController', function($scope,$ht
 		$scope.loading = true;
 			
 		
-		$http.post("webservice/findpackagebyapplicationid",$scope.app_id)
+		$http.post("../webservice/findpackagebyapplicationid",$scope.app_id)
 			 .success(function(response) {
 				$scope.package_list = response;
 				
@@ -168,7 +168,7 @@ $scope.createPackage = function() {
 	
 	console.log("Making webservice request to create package");
 	
-	$http.post("webservice/addNewPackage" , $scope.package_obj)
+	$http.post("../webservice/addNewPackage" , $scope.package_obj)
 		.success(function (response) {
 			$scope.successMessage = "Package Created Successfully";
 			$scope.successStatus = false;
@@ -188,7 +188,7 @@ $scope.updatePackage = function() {
 	console.log(" ------------ Editing old package ---------------");
 	
 	
-	$http.post("webservice/editPackage", $scope.package_obj)
+	$http.post("../webservice/editPackage", $scope.package_obj)
 		.success(function(response) {
 			$scope.successMessage = "Package Created Successfully";
 			$scope.successStatus = true;
@@ -212,7 +212,7 @@ $scope.updatePackage = function() {
 		
 		console.log("---------GETTING ALL APPLICATIONS-----------");
 		
-		$http.get("webservice/findAllApplications")
+		$http.get("../webservice/findAllApplications")
 			.success(function (response) {
 				$scope.applicationList = response;
 				$scope.intializing = false;

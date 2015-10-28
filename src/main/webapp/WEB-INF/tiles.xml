@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+ <tiles-definitions>
+ 
+ 	<definition name="master.page" template="/WEB-INF/views/master.jsp">
+ 		<put-attribute name="header" value="/WEB-INF/views/protected/header.jsp" />
+ 		<put-attribute name="footer" value="/WEB-INF/views/protected/footer.jsp" />
+ 		
+ 	</definition>
+ 	
+ 	<definition name="login" extends="master.page">
+ 		<put-attribute name="header" value="" />
+ 		<put-attribute name="footer" value="" />
+ 		<put-attribute name="body" value="/WEB-INF/views/login.jsp" />
+ 	</definition>
+ 	
+ 	<definition name="dashboard" extends="master.page">
+ 		
+ 		<put-attribute name="body" value="/WEB-INF/views/protected/dashboard.jsp" />
+ 	</definition>
+ 	<definition name="package" extends="master.page">
+ 		
+ 		<put-attribute name="body" value="/WEB-INF/views/protected/testCases/package.jsp" />
+ 	</definition>
+ 	<definition name="testcase" extends="master.page">
+ 		
+ 		<put-attribute name="body" value="/WEB-INF/views/protected/testCases/testcase.jsp" />
+ 	</definition>
+ 	
+ 	<definition name="application" extends="master.page">
+ 		
+ 		<put-attribute name="body" value="/WEB-INF/views/protected/testCases/application.jsp" />
+ 	</definition>
+ 	<definition name="viewTestcase" extends="master.page">
+ 		
+ 		<put-attribute name="body" value="/WEB-INF/views/protected/testCases/viewTestcase.jsp" />
+ 	</definition>
+ 	
+ 	<definition name="try" extends="master.page">
+ 		
+ 		<put-attribute name="body" value="/WEB-INF/views/main.jsp" />
+ 	</definition>
+        	
+ </tiles-definitions>

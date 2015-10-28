@@ -2,6 +2,9 @@ angular.module('testCase',[]).controller('testcaseController', function($scope,$
 
 	$scope.startApplication = function(pageAction,testcaseId) {
 		console.log("Checking page action: " + pageAction)
+		
+		
+		
 		if(pageAction=='create') {
 			console.log("Page action is create");
 			$scope.createInitialize();
@@ -70,7 +73,7 @@ angular.module('testCase',[]).controller('testcaseController', function($scope,$
 		console.log("Executing webservice. Getting testcase details");
 		
 		
-		$http.post('webservice/getTestcaseByTestcaseId',testcaseId)
+		$http.post('../webservice/getTestcaseByTestcaseId',testcaseId)
 		.success(function (response) {
 			
 			$scope.package_id = response.package_id;
@@ -135,7 +138,7 @@ angular.module('testCase',[]).controller('testcaseController', function($scope,$
 		
 		console.log("Executing webservice. Getting testcase details");
 		
-		$http.post('webservice/getTestcaseByTestcaseId',testcaseId)
+		$http.post('../webservice/getTestcaseByTestcaseId',testcaseId)
 			.success(function (response) {
 				
 				
@@ -305,7 +308,7 @@ $scope.saveInitialize = function(){
 	$scope.getAllApplications = function() {
 		console.log("---------GETTING ALL APPLICATIONS-----------");
 		
-		$http.get("webservice/findAllApplications")
+		$http.get("../webservice/findAllApplications")
 			.success(function (response) {
 				$scope.applications = response;
 				$scope.intializing = false;
@@ -359,7 +362,7 @@ $scope.saveInitialize = function(){
 			
 		} else  {
 			
-			$http.post("webservice/getOperation",$scope.testStep[i].keyword)
+			$http.post("../webservice/getOperation",$scope.testStep[i].keyword)
 			.success(function(response){
 				
 				$scope.testStep[i].arg1_ph = response.arg1;
@@ -396,7 +399,7 @@ $scope.saveInitialize = function(){
 	
 	$scope.getAllOperationNames = function() {
 		
-		$http.get("webservice/getAllOperationNames")
+		$http.get("../webservice/getAllOperationNames")
 			.success(function (response){
 				
 				$scope.operationNames = response;
@@ -445,7 +448,7 @@ $scope.saveInitialize = function(){
 		$scope.loading = true;
 			$scope.testattr = "checking package";
 		
-		$http.post("webservice/findpackagebyapplicationid",$scope.app_id)
+		$http.post("../webservice/findpackagebyapplicationid",$scope.app_id)
 			 .success(function(response) {
 				$scope.packages = response;
 				$scope.testattr = "getPackages";
@@ -495,7 +498,7 @@ $scope.saveInitialize = function(){
 			
 			if($scope.editTestCase) {
 				
-				$http.post("webservice/updateTestCase", $scope.testcaseObject)
+				$http.post("../webservice/updateTestCase", $scope.testcaseObject)
 				.success(function(response){
 					
 					$scope.reset();
@@ -512,7 +515,7 @@ $scope.saveInitialize = function(){
 				
 			} else {
 				
-				$http.post("webservice/addNewTestCase", $scope.testcaseObject)
+				$http.post("../webservice/addNewTestCase", $scope.testcaseObject)
 				.success(function(response){
 					
 					$scope.reset();

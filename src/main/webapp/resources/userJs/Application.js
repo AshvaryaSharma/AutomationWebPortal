@@ -79,7 +79,7 @@ angular.module('application',[]).controller('applicationController', function($s
 	
 	$scope.editApplication = function() {
 		$scope.init();
-		$http.post("webservice/editApplication", $scope.application)
+		$http.post("../webservice/editApplication", $scope.application)
 		.success(function(response){
 			
 			$scope.successMessage = "Application Edited Successfully";
@@ -98,7 +98,7 @@ angular.module('application',[]).controller('applicationController', function($s
 		$scope.init();
 		$scope.loading = true;
 		
-		$http.post("webservice/removeApplication", id)
+		$http.post("../webservice/removeApplication", id)
 		.success(function(response){
 			
 			$scope.successMessage = "Application Deleted Successfully";
@@ -132,7 +132,7 @@ angular.module('application',[]).controller('applicationController', function($s
 	$scope.createApplication = function() {
 		
 		
-		$http.post("webservice/addNewApplication", $scope.application)
+		$http.post("../webservice/addNewApplication", $scope.application)
 		.success(function(response){
 			
 			$scope.successMessage = "Application Created Successfully";
@@ -169,7 +169,7 @@ angular.module('application',[]).controller('applicationController', function($s
 		
 		console.log("---------GETTING ALL APPLICATIONS-----------");
 		
-		$http.get("webservice/findAllApplications")
+		$http.get("../webservice/findAllApplications")
 			.success(function (response) {
 				$scope.applicationList = response;
 				

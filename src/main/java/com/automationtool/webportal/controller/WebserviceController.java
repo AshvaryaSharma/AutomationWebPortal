@@ -26,16 +26,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 
+
+
+
 import com.automationtool.webportal.model.Application;
 import com.automationtool.webportal.model.Operations;
 import com.automationtool.webportal.model.Packages;
 import com.automationtool.webportal.model.Testcase;
 import com.automationtool.webportal.model.viewModel.TestcaseSample;
+import com.automationtool.webportal.model.viewModel.Testsuite;
 import com.automationtool.webportal.service.ApplicationService;
 import com.automationtool.webportal.service.CreateTestcaseService;
 import com.automationtool.webportal.service.KeywordService;
 import com.automationtool.webportal.service.OperationService;
 import com.automationtool.webportal.service.PackagesService;
+import com.automationtool.webportal.service.TestsuiteService;
 
 @RestController
 
@@ -56,6 +61,9 @@ public class WebserviceController {
 	@Autowired
 	ApplicationService applicationService;
 	
+	@Autowired
+	TestsuiteService testsuiteService;
+	
 	
 	@RequestMapping(value="/webservice/findAllApplications" , method = RequestMethod.GET)
 	public ResponseEntity<List<Application>> findAllApplications() {
@@ -66,6 +74,36 @@ public class WebserviceController {
 		}
 		
 		return new ResponseEntity<List<Application>>(application, HttpStatus.OK);
+	}
+	
+	
+	@RequestMapping(value="/webservice/createTestsuite" , method = RequestMethod.POST)
+	public ResponseEntity<Boolean> createNewTestsuite(@RequestBody Testsuite testsuite) {
+		boolean flag;
+		
+		System.out.println("::::::::::CREATING TEST SUITE::::::::::::");
+		
+		flag = testsuiteService.createTestsuite(testsuite);
+		
+		if(!flag) {
+			return new ResponseEntity<Boolean>(HttpStatus.NO_CONTENT);
+		}
+		
+		return new ResponseEntity<Boolean>(HttpStatus.OK);
+	}
+	
+	
+	@RequestMapping(value="/webservice/getAllTestsuite" , method = RequestMethod.GET)
+	public ResponseEntity<List<Testsuite>> createNewTestsuite() {
+		boolean flag;
+		List<Testsuite> testsuite;
+		testsuite = testsuiteService.getAllTestsuite();
+		
+		if(testsuite.isEmpty()) {
+			return new ResponseEntity<List<Testsuite>>(HttpStatus.NO_CONTENT);
+		}
+		
+		return new ResponseEntity<List<Testsuite>>(testsuite, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/webservice/keywords", method = RequestMethod.GET)

@@ -14,17 +14,17 @@
     <title>Automation Tool</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="resources/themes/bowerTheme/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../resources/themes/bowerTheme/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
-    <link href="resources/themes/bowerTheme/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+    <link href="../resources/themes/bowerTheme/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="resources/themes/bowerTheme/dist/css/sb-admin-2.css" rel="stylesheet">
+    <link href="../resources/themes/bowerTheme/dist/css/sb-admin-2.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="resources/themes/bowerTheme/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
+    <link href="../resources/themes/bowerTheme/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	 <link href="../resources/themes/bowerTheme/dist/css/tech-m.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -38,78 +38,7 @@
 
     <div id="wrapper">
 
-        <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-           <!--  <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.html">Automation Tool</a>
-            </div> -->
-            <!-- /.navbar-header -->
-			<img class="navbar navbar-top-links navbar-left" style="margin-left: 10;margin-top: 5; margin-bottom:5" src="resources/images/TechMahindra.png" height="10%" width="10%">
-            
-            <ul class="nav navbar-top-links navbar-right">
-                
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw"></i> ${user}  <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> ${user}'s Profile</a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li><a href="<c:url value="/logout" />"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                        </li>
-                    </ul>
-                    <!-- /.dropdown-user -->
-                </li>
-                <!-- /.dropdown -->
-            </ul>
-            <!-- /.navbar-top-links -->
-			<br>
-            <div class="navbar-default sidebar" role="navigation">
-                <div class="sidebar-nav navbar-collapse">
-                    <ul class="nav" id="side-menu">
-                        
-                        <li>
-                            <a href="home">Dashboard</a>
-                        </li>
-                        <li>
-                            <a href="#">Test Cases</a>
-                            <ul class="nav nav-second-level">
-								<ul class="nav nav-second-level">
-								<li><a href="createTestCase">Create Test Case</a></li>
-								<li><a href="viewTestcase">View/Edit Test Case</a></li>
-								</ul>
-							</ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-                        <li>
-                            <a href="createPackage.html">Package</a>
-                        </li>
-                        <sec:authorize access="hasRole('ADMIN')">
-						<li><a href="application">Application</a></li>
-						</sec:authorize>
-						<li>
-							<a href="#">Test Suite</a>
-							<ul class="nav nav-second-level">
-								<li><a href="createTestSuite.html">Create Test Suite</a></li>
-								<li><a href="EditTestSuite.html">View/Edit Test Suite</a></li>
-							</ul>
-						</li>
-						
-                    </ul>
-                <!-- /.sidebar-collapse -->
-            </div>
-            <!-- /.navbar-static-side -->
-        </nav>
-
+    
         <!-- Page Content -->
        <div id="page-wrapper" ng-app="viewTestCase" ng-controller="viewTestcaseController">
        	<div class="container-fluid">
@@ -129,7 +58,7 @@
 								<form role="form">
 									<div class="row" ng-show="intializing || loading">
 										<div class="col-lg-12">
-											<center><img src="resources/images/loading.gif" alt="Loading" height = "20" width="20"></center>
+											<center><img src="../resources/images/loading.gif" alt="Loading" height = "20" width="20"></center>
 										
 										</div>
 									
@@ -272,22 +201,12 @@
     </div>
     <!-- /#wrapper -->
 
-    <!-- jQuery -->
-    <script src="resources/themes/bowerTheme/bower_components/jquery/dist/jquery.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="resources/themes/bowerTheme/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="resources/themes/bowerTheme/bower_components/metisMenu/dist/metisMenu.min.js"></script>
-
-    <!-- Custom Theme JavaScript -->
-    <script src="resources/themes/bowerTheme/dist/js/sb-admin-2.js"></script>
+    
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js">
       </script>
     
-    <script src="resources/userJs/Checklist-model.js"></script>
-    <script src="resources/userJs/ViewTestCase.js"></script>
+    <script src="../resources/userJs/Checklist-model.js"></script>
+    <script src="../resources/userJs/ViewTestCase.js"></script>
 	
 </body>
 

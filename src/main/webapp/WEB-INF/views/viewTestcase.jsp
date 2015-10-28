@@ -124,7 +124,7 @@
 								<form role="form">
 									<div class="row" ng-show="intializing || loading">
 										<div class="col-lg-12">
-											<center><img src="resources/images/loading.gif" alt="Loading" height = "20" width="20"></center>
+											<center><img src="../resources/images/loading.gif" alt="Loading" height = "20" width="20"></center>
 										
 										</div>
 									

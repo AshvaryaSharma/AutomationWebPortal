@@ -9,13 +9,15 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.JstlView;
+import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
+import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
  
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "com.automationtool.webportal")
 public class HelloWorldConfiguration extends WebMvcConfigurerAdapter{
      
-    @Bean
+    /*@Bean
     public ViewResolver viewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
         viewResolver.setViewClass(JstlView.class);
@@ -23,7 +25,26 @@ public class HelloWorldConfiguration extends WebMvcConfigurerAdapter{
         viewResolver.setSuffix(".jsp");
  
         return viewResolver;
-    }
+    }*/
+	
+	@Bean
+	TilesViewResolver viewResolver() {
+		
+		TilesViewResolver viewResolver = new TilesViewResolver();
+		
+		return viewResolver;
+		
+	}
+	
+	@Bean
+	TilesConfigurer tilesConfigurer() {
+		
+		TilesConfigurer tilesConfigurer = new TilesConfigurer();
+		tilesConfigurer.setDefinitions("/WEB-INF/tiles.xml");
+		tilesConfigurer.setPreparerFactoryClass(org.springframework.web.servlet.view.tiles3.SpringBeanPreparerFactory.class);
+		return tilesConfigurer;
+		
+	}
  
      /*
      * Configure ResourceHandlers to serve static resources like CSS/ Javascript etc...
