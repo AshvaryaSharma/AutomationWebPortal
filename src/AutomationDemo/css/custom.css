@@ -1,0 +1,20 @@
+.container-fluid {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+.navbar-brand .navbar-left {
+	margin-bottom:15px;
+}
+@media screen and (max-width: 480px) {
+	#logo {
+		padding-left: 0px !important;
+	}
+	#safe-logo {
+		margin-top: -50px !important;
+	}
+}
+@media (min-width: 1200px) {
+	#tag-line {
+		padding-left: 120px !important;
+	}
+}
