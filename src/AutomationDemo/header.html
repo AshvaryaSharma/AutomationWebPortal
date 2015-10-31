@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 	<!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="lib/bootstrap.css" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
     <link href="css/metisMenu.css" rel="stylesheet">
@@ -21,7 +21,9 @@
 	
     <!-- Custom Fonts -->
     <link href="css/font-awesome.css" rel="stylesheet" type="text/css">
-
+	
+	<script src="lib/jquery-2.1.4.js"></script>
+	<script src="lib/bootstrap.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -67,25 +69,72 @@
 				<span class="icon-bar"></span>
 			</button>
 		</div>
+		
 		<div id="navbarCollapse" class="navbar-collapse collapse">
-			<ul class="nav nav-pills">
-				<li class="dropdown">
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">Messages <b class="caret"></b></a>
+			<ul class="nav nav-pills" id="menu">
+				<li role="presentation" class="dropdown" id="safe-dropdown">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="javascript:void(0);">Test Cases<b class="caret"></b></a>
                     <ul role="menu" class="dropdown-menu">
-                        <li><a href="#">Inbox</a></li>
-                        <li><a href="#">Drafts</a></li>
-                        <li><a href="#">Sent Items</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">Trash</a></li>
+                        <li><a href="javascript:void(0);">Create Test Case</a></li>
+                        <li><a href="javascript:void(0);">View Test Cases</a></li>
                     </ul>
                 </li>
-				<li><a href="#">Home</a></li>
-				<li><a href="#">Profile</a></li>
-				<li><a href="#">Msg</a></li>
+				<li role="presentation"><a href="javascript:void(0);">Packages</a></li>
+				<li role="presentation"><a href="javascript:void(0);">Applications</a></li>
 			</ul>
 		</div>
 	</nav>
 </div>
 </body>
+<script>
+			
+			var menu = document.getElementById("menu");
+			var collapse = document.getElementById("navbarCollapse");
+			var dropdown = document.getElementById("safe-dropdown");
+			var bar = document.querySelector(".navbar-toggle");
+				
+			console.log("DropDown::"+dropdown);
+			console.log("Menu::"+menu);
+			console.log("Bar::"+bar);
+			
+			bar.onclick = openMenu;
+			dropdown.onmouseover = addOpenFunc;
+			dropdown.onmouseout = removeOpenFunc;
+			window.onresize = resizeFunc;
+			
+			function resizeFunc() {
+				console.log("We are resizing..."+window.innerWidth);
+				if(window.innerWidth > 767) {
+					console.log("Removing nav-stacked...");
+					menu.classList.remove("nav-stacked");
+				}
+				if(window.innerWidth < 767) {
+					console.log("Adding nav-stacked...");
+					collapse.classList.add("collapse");
+				}
+			};
+			function openMenu(){
+				var menu = document.getElementById("menu");
+				console.log("Inside Menu..."+menu);
+				if(!collapse.classList.contains("collapse")) {
+					collapse.classList.add("collapse");
+					menu.classList.remove("nav-stacked");
+					
+				}
+				else {
+					menu.classList.add("nav-stacked");
+					collapse.classList.remove("collapse");
+				}
+				
+			};
+			function addOpenFunc() {
+				console.log("Opening the dropdown on onmouseover...");
+				dropdown.classList.add("open");
+			}
+			function removeOpenFunc() {
+				console.log("Removing the dropdown on mouseout...");
+				dropdown.classList.remove("open");
+			}
+		</script>
 </html>
 	
