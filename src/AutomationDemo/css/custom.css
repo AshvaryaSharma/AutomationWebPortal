@@ -5,6 +5,25 @@
 .navbar-brand .navbar-left {
 	margin-bottom:15px;
 }
+.nav-pills > li > a:hover {
+	background-color: #e31837 !important;
+	color: #fff;
+}
+.nav-stacked {
+	background-color: #DDD;
+}
+.dropdown-toggle {
+	color: #337ab7 !important;
+}
+.dropdown-toggle:hover, .dropdown-toggle:focus {
+	color: #fff !important;
+}
+.nav .open > a, .nav .open > a:focus, .nav .open > a:hover {
+	color: #337ab7 !important;
+} 
+@media (max-width: 768px) {
+  #navbar li { width:100%; }
+}
 @media screen and (max-width: 480px) {
 	#logo {
 		padding-left: 0px !important;
