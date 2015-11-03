@@ -7,7 +7,11 @@
 }
 .nav-pills > li > a:hover {
 	background-color: #e31837 !important;
+<<<<<<< HEAD
 	color: #fff;
+=======
+	color: #fff !important;
+>>>>>>> refs/remotes/AshvaryaSharma/Frontend
 }
 .nav-stacked {
 	background-color: #DDD;
@@ -20,10 +24,22 @@
 }
 .nav .open > a, .nav .open > a:focus, .nav .open > a:hover {
 	color: #337ab7 !important;
+<<<<<<< HEAD
 } 
 .footer {
 	font-family: font-family:'Open Sans', Sans Serif; 
 }
+=======
+}
+#safe-dropdown > a:hover {
+	color: #fff !important;
+}
+.footer {
+	font-family: 'Open Sans', Sans Serif;
+	padding-top: 10px;
+	font-size: 12px;
+} 
+>>>>>>> refs/remotes/AshvaryaSharma/Frontend
 @media (max-width: 768px) {
   #navbar li { width:100%; }
 }

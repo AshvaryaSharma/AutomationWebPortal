@@ -14,6 +14,7 @@
 		<springsecurity.version>4.0.1.RELEASE</springsecurity.version>
 		<jackson.version>2.5.3</jackson.version>
 		<hibernate.version>4.3.6.Final</hibernate.version>
+		<log4j.version>1.2.17</log4j.version>
 	</properties>
 
 	<dependencies>
@@ -114,11 +115,17 @@
         </dependency>
         
         <dependency>
-                        <groupId>postgresql</groupId>
-                        <artifactId>postgresql</artifactId>
-                        <version>9.1-901-1.jdbc4</version>
-                    </dependency>
+        	<groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        	<version>9.1-901-1.jdbc4</version>
+       	</dependency>
 		
+		<!-- Log4j -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
 		
 	</dependencies>
 

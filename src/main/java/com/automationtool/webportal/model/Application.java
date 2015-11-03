@@ -19,7 +19,7 @@ public class Application {
 	@Id
 	@Column(name="app_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int app_id;
+	private long app_id;
 	
 	public Application(String app_description, String app_name) {
 		
@@ -37,12 +37,12 @@ public class Application {
 				+ app_description + ", app_name=" + app_name + "]";
 	}
 
-	public int getApp_id() {
+	public long getApp_id() {
 		return app_id;
 	}
 
-	public void setApp_id(int app_id) {
-		this.app_id = app_id;
+	public void setApp_id(long application) {
+		this.app_id = application;
 	}
 
 	public String getApp_description() {

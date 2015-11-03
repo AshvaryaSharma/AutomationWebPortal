@@ -1,6 +1,8 @@
 package com.automationtool.webportal.dao;
 
+import java.math.BigInteger;
 import java.util.List;
+
 
 
 
@@ -12,7 +14,7 @@ import com.automationtool.webportal.model.Application;
 
 
 @Repository("applicationDao")
-public class ApplicationDaoImpl extends AbstractDao<Integer,Application> implements ApplicationDao {
+public class ApplicationDaoImpl extends AbstractDao<BigInteger,Application> implements ApplicationDao {
 
 	@Override
 	public List<Application> findAllApplication() {
@@ -34,11 +36,20 @@ public class ApplicationDaoImpl extends AbstractDao<Integer,Application> impleme
 	}
 
 	@Override
-	public void deleteApplication(int application) {
+	public void deleteApplication(long application) {
 		Application app = new Application();
 		app.setApp_id(application);
 		getSession().delete(app);
 		
+	}
+
+	@Override
+	public List<Application> findApplicationsByAppIds(List<BigInteger> appId) {
+		
+		Query query = getSession().createQuery("from Application where app_id IN :appId");
+		query.setParameterList("appId", appId);
+		List<Application> list = query.list();
+		return list;
 	}
 
 }

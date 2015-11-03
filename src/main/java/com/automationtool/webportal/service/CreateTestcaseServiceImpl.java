@@ -1,5 +1,6 @@
 package com.automationtool.webportal.service;
 
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
 
@@ -8,9 +9,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.automationtool.webportal.dao.ApplicationDao;
+import com.automationtool.webportal.dao.GroupAccessDao;
 import com.automationtool.webportal.dao.PackagesDao;
 import com.automationtool.webportal.dao.TestcaseDao;
 import com.automationtool.webportal.dao.TeststepsDao;
+import com.automationtool.webportal.dao.UserDao;
 import com.automationtool.webportal.model.Application;
 import com.automationtool.webportal.model.Packages;
 import com.automationtool.webportal.model.Testcase;
@@ -33,7 +36,11 @@ public class CreateTestcaseServiceImpl implements CreateTestcaseService {
 	@Autowired
 	private TeststepsDao teststeps;
 	
+	@Autowired
+	private UserDao user;
 	
+	@Autowired
+	private GroupAccessDao groupAccess;
 	
 	@Override
 	public List<Application> findAllApplications() {
@@ -205,6 +212,22 @@ public class CreateTestcaseServiceImpl implements CreateTestcaseService {
 		System.out.println("Flag value returning " + flag);
 		return flag;
 		
+	}
+
+
+	@Override
+	public List<Application> findApplicationsByUserId(String userId) {
+		
+		int groupId = user.findGroupByUserId(userId);
+		
+		System.out.println("GroupId returned: " + groupId);
+		List<BigInteger> appId = groupAccess.getApplicationsByGroupId(groupId);
+		
+		System.out.println("List of appid:" + appId);
+		List<Application> list = application.findApplicationsByAppIds(appId);
+		
+		System.out.println("List of applications returned: " + list);
+		return list;
 	}
 
 }

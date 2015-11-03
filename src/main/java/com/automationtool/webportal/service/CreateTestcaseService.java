@@ -25,4 +25,6 @@ public interface CreateTestcaseService {
 
 	void deleteTestCases(int[] testcaseIDs);
 
+	List<Application> findApplicationsByUserId(String userId);
+
 }

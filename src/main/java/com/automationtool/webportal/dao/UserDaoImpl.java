@@ -24,6 +24,18 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 		persist(user);
 		
 	}
+
+	@Override
+	public int findGroupByUserId(String userId) {
+
+
+		Criteria crit = createEntityCriteria();
+        crit.add(Restrictions.eq("ssoId", userId));
+        User user =  (User) crit.uniqueResult();
+        
+        
+		return user.getGroupid();
+	}
  
      
 }
