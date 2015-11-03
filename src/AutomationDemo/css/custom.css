@@ -21,6 +21,9 @@
 .nav .open > a, .nav .open > a:focus, .nav .open > a:hover {
 	color: #337ab7 !important;
 } 
+.footer {
+	font-family: font-family:'Open Sans', Sans Serif; 
+}
 @media (max-width: 768px) {
   #navbar li { width:100%; }
 }
