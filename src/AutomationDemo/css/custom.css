@@ -1,0 +1,47 @@
+.container-fluid {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+.navbar-brand .navbar-left {
+	margin-bottom:15px;
+}
+.nav-pills > li > a:hover {
+	background-color: #e31837 !important;
+	color: #fff !important;
+}
+.nav-stacked {
+	background-color: #DDD;
+}
+.dropdown-toggle {
+	color: #337ab7 !important;
+}
+.dropdown-toggle:hover, .dropdown-toggle:focus {
+	color: #fff !important;
+}
+.nav .open > a, .nav .open > a:focus, .nav .open > a:hover {
+	color: #337ab7 !important;
+}
+#safe-dropdown > a:hover {
+	color: #fff !important;
+}
+.footer {
+	font-family: 'Open Sans', Sans Serif;
+	padding-top: 10px;
+	font-size: 12px;
+} 
+@media (max-width: 768px) {
+  #navbar li { width:100%; }
+}
+@media screen and (max-width: 480px) {
+	#logo {
+		padding-left: 0px !important;
+	}
+	#safe-logo {
+		margin-top: -50px !important;
+	}
+}
+@media (min-width: 1200px) {
+	#tag-line {
+		padding-left: 120px !important;
+	}
+}

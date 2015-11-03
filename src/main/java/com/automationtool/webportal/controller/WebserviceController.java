@@ -29,10 +29,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 
+
+
 import com.automationtool.webportal.model.Application;
 import com.automationtool.webportal.model.Operations;
 import com.automationtool.webportal.model.Packages;
 import com.automationtool.webportal.model.Testcase;
+import com.automationtool.webportal.model.User_view;
 import com.automationtool.webportal.model.viewModel.TestcaseSample;
 import com.automationtool.webportal.model.viewModel.Testsuite;
 import com.automationtool.webportal.service.ApplicationService;
@@ -41,6 +44,7 @@ import com.automationtool.webportal.service.KeywordService;
 import com.automationtool.webportal.service.OperationService;
 import com.automationtool.webportal.service.PackagesService;
 import com.automationtool.webportal.service.TestsuiteService;
+import com.automationtool.webportal.service.UserService;
 
 @RestController
 
@@ -64,10 +68,41 @@ public class WebserviceController {
 	@Autowired
 	TestsuiteService testsuiteService;
 	
+	@Autowired
+	UserService userService;
+	
+	
+	@RequestMapping(value="/webservice/getUserDetails" , method = RequestMethod.POST)
+	public ResponseEntity<User_view> createNewTestsuite(@RequestBody String userId) {
+		User_view flag;
+		
+		System.out.println("::::::::::CREATING TEST SUITE::::::::::::");
+		
+		flag = userService.findUserDetailsByID(userId);
+		
+		if(flag== null) {
+			return new ResponseEntity<User_view>(HttpStatus.NO_CONTENT);
+		}
+		
+		return new ResponseEntity<User_view>( flag, HttpStatus.OK);
+	}
+	
 	
 	@RequestMapping(value="/webservice/findAllApplications" , method = RequestMethod.GET)
 	public ResponseEntity<List<Application>> findAllApplications() {
 		List<Application> application = createTestcaseService.findAllApplications();
+		
+		if(application.isEmpty()) {
+			return new ResponseEntity<List<Application>>(HttpStatus.NO_CONTENT);
+		}
+		
+		return new ResponseEntity<List<Application>>(application, HttpStatus.OK);
+	}
+	
+	
+	@RequestMapping(value="/webservice/findApplicationsByUserId" , method = RequestMethod.POST)
+	public ResponseEntity<List<Application>> findApplicationsByUserID(@RequestBody String userId) {
+		List<Application> application = createTestcaseService.findApplicationsByUserId(userId);
 		
 		if(application.isEmpty()) {
 			return new ResponseEntity<List<Application>>(HttpStatus.NO_CONTENT);

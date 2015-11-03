@@ -1,8 +1,11 @@
 package com.automationtool.webportal.controller;
 
+
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,10 +34,13 @@ public class HelloWorldController {
 	@Autowired
 	GroupService groupService;
 	
+	private static final Logger logger = Logger.getLogger(HelloWorldController.class);
+	
 	@RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
 	public String homePage(ModelMap model) {
 		model.addAttribute("team",getTeamName());
 		model.addAttribute("user", getPrincipal());
+		logger.info("Redirectiong to Home Application");
 		return "redirect:/utility/index";
 	}
 	
@@ -50,7 +56,7 @@ public class HelloWorldController {
 	public String indexTestPage(ModelMap model){
 		model.addAttribute("team",getTeamName());
 		model.addAttribute("user", getPrincipal());
-		
+		logger.info("Redirectiong to Home of Application");
 		return "dashboard";
 	}
 	
@@ -58,7 +64,7 @@ public class HelloWorldController {
 	public String packagePage(ModelMap model){
 		model.addAttribute("team",getTeamName());
 		model.addAttribute("user", getPrincipal());
-		
+		logger.info("Redirecting to Package Module");
 		return "package";
 	}
 	
@@ -71,6 +77,7 @@ public class HelloWorldController {
 		model.addAttribute("button", "Save As");
 		model.addAttribute("team",getTeamName());
 		System.out.println("Testcase Action: SaveAsNew and id: " + id);
+		logger.info("Redirecting to Testcase Module with Action Save As New" + id);
 		return "testcase";
 	}
 	
@@ -83,6 +90,7 @@ public class HelloWorldController {
 		model.addAttribute("heading", "Save Test Case As New");
 		model.addAttribute("button", "Save As");
 		System.out.println("Testcase Action: SaveAsNew and id: " + id);
+		logger.info("Redirecting to Testcase Module with Action Save As New" + id);
 		return "testcase";
 	}
 	

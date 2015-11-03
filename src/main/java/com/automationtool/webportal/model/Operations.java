@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 
 
 @Entity
-@Table(name="OPERATIONS")
+@Table(name="operation_nonui")
 public class Operations {
 	
 	@Id
