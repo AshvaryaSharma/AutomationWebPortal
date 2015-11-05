@@ -40,7 +40,7 @@
 			<li role="presentation" class="dropdown" id="safe-dropdown">
 				<a data-toggle="dropdown" class="dropdown-toggle" href="javascript:void(0);">Test Cases<b class="caret"></b></a>
 				<ul role="menu" class="dropdown-menu">
-					<li><a href="javascript:void(0);">Create Test Case</a></li>
+					<li><a href="#/createTestcase">Create Test Case</a></li>
 					<li><a href="#/viewTestcases">View Test Cases</a></li>
 				</ul>
 			</li>
@@ -49,6 +49,7 @@
 		</ul>
 	</div>
 </nav>
+</div>
 <script>
 		
 		var menu = document.getElementById("menu");
@@ -62,7 +63,7 @@
 		
 		bar.onclick = openMenu;
 		dropdown.onmouseover = addOpenFunc;
-		dropdown.onmouseout = removeOpenFunc;
+		//dropdown.onmouseout = removeOpenFunc;
 		window.onresize = resizeFunc;
 		
 		function resizeFunc() {
