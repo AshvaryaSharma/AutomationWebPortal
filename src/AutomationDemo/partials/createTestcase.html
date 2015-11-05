@@ -57,31 +57,21 @@
 												<label>Select Application</label>
 												<select name="application" id="application" class="form-control" ng-change="appChangeFunction()" ng-disabled="loading" ng-model="app_id">
 														<option value="">Select the application</option>
-														<option ng-repeat="app in data" value="{{app.app_id}}">{{app.app_name}}</option>
+														<option ng-repeat="app in safeAppData" value="{{app.app_id}}">{{app.app_name}}</option>
 													</select>
 											</div>
 										</div>
-										<!--div class="row" ng-show="isApplicationSelected">
-											<div class="col-lg-12">
-												<label>Select Package</label>
-													<select name="package" id="package" ng-model="package_id" class="form-control" ng-change="packageSelectEvent()" ng-disabled="loading">
-														<option value="" ng-selected="applicationsLoaded">Select Package</option>
-														<option ng-repeat="n in packages" value="{{n.package_id}}">{{n.package_name}}</option>
-												
-													</select>
-											</div>
-										</div-->
 										<div class="row" ng-show="isApplicationSelected">
 											<div class="col-lg-12">
 												<label>Enter Test Case Name</label>
-												<input class="form-control" placeholder="Enter Test Case Name" ng-model="testCaseName">
+												<input class="form-control" placeholder="Enter Test Case Name" ng-model="testCaseName" ng-change="testNameChange()">
 											</div>
 										
 										</div>
 										
 									</div>
 									<div class="col-lg-6">
-										<div class="row" ng-show="isPackageSelected">
+										<div class="row" ng-show="isTestCaseNameSelected">
 											<div class="col-lg-12">
 												<label>Test Case Description</label>
 												<textarea class="form-control" placeholder="Enter Test Case Description" rows="7" ng-model="testCaseDescription"  ng-disabled="loading"></textarea>
@@ -90,7 +80,7 @@
 									</div>
 								</div>
 								<br>
-								<div class="row" ng-show="isPackageSelected">
+								<div class="row" ng-show="isTestCaseNameSelected">
 									<div class="col-lg-12">
 										<div class="panel panel-default">
 											<div class="panel-heading">
@@ -112,7 +102,15 @@
 															</tr>
 														</thead>
 														<tbody>
-															<tr ng-repeat="row in testStep">
+														<tr>
+															<div>
+																<input type="text" ng-model="key" placeholder="test step"  value="row.keyword">
+																<ul>
+																	<li ng-repeat="row in safeOperationKeywords | filter:key">{{row}}</li>
+																</ul>
+															</div>
+														</tr>	
+															<!--tr ng-repeat="row in testStep">
 																<td> <!-- <input type="hidden" ng-model="row.step_num" value="{{testStep.indexOf(row)}}" /> --> {{testStep.indexOf(row) + 1}}</td>
 																
 																<td>
@@ -140,7 +138,7 @@
 																	<button type="button" class="btn btn-default btn-circle btn-xs" ng-click="addRowEvent(testStep.indexOf(row) + 1)" ng-disabled="loading"><i class="fa fa-plus-circle"></i></button>
 																	<button type="button" class="btn btn-default btn-circle btn-xs"  ng-click="removeRowEvent(testStep.indexOf(row) + 1)"  ng-disabled="loading"><i class="fa fa-minus-circle"></i></button>
 																</td>
-															</tr>
+															</tr-->
 														</tbody>
 													</table>
 												</div>
