@@ -18,7 +18,9 @@ import javax.persistence.Table;
 @Table(name="APP_USER")
 public class User {
  
-    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name="id")
     private int id;
  
     @Column(name="SSO_ID", unique=true, nullable=false)
@@ -36,7 +38,7 @@ public class User {
     @Column(name="EMAIL", nullable=false)
     private String email;
  
-    @Column(name="GROUPID", nullable=false)
+    @Column(name="groupid", nullable=false)
     private int groupid;
     
     public String getState() {

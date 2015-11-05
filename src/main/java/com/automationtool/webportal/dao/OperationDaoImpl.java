@@ -34,11 +34,11 @@ public class OperationDaoImpl extends AbstractDao<String, Operations> implements
 	}
 
 	@Override
-	public List<String> findAllOperationName() {
+	public List<Operations> findAllOperationName() {
 		System.out.println("Getting all possible operation names");
-		Query query = getSession().createQuery("Select op.keyword from Operations as op");
+		Query query = getSession().createQuery("from Operations as op");
 		
-		List<String> list = query.list();
+		List<Operations> list = query.list();
 		System.out.println("Got all posible operation names" + list);
 		return list;
 	}

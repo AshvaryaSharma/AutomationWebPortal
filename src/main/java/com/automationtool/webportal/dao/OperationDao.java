@@ -11,6 +11,6 @@ public interface OperationDao {
 	
 	List<Operations> findAllOperations();
 	Operations findOperationByKeyword(String keyword);
-	List<String> findAllOperationName();
+	List<Operations> findAllOperationName();
 
 }

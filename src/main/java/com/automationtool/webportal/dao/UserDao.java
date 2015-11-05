@@ -10,5 +10,5 @@ public interface UserDao {
 
 	void save(User user);
 
-	int findGroupByUserId(String userId);
+	int findGroupByUserId(String userId) throws Exception;
 }

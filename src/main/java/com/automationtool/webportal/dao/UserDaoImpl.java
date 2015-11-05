@@ -26,7 +26,7 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 	}
 
 	@Override
-	public int findGroupByUserId(String userId) {
+	public int findGroupByUserId(String userId) throws Exception {
 
 
 		Criteria crit = createEntityCriteria();

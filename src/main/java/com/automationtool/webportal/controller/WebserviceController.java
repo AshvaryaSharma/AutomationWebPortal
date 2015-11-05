@@ -31,6 +31,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 
+
+
 import com.automationtool.webportal.model.Application;
 import com.automationtool.webportal.model.Operations;
 import com.automationtool.webportal.model.Packages;
@@ -38,6 +40,8 @@ import com.automationtool.webportal.model.Testcase;
 import com.automationtool.webportal.model.User_view;
 import com.automationtool.webportal.model.viewModel.TestcaseSample;
 import com.automationtool.webportal.model.viewModel.Testsuite;
+import com.automationtool.webportal.model.webservices.ApplicationList;
+import com.automationtool.webportal.model.webservices.OperationsList;
 import com.automationtool.webportal.service.ApplicationService;
 import com.automationtool.webportal.service.CreateTestcaseService;
 import com.automationtool.webportal.service.KeywordService;
@@ -76,12 +80,12 @@ public class WebserviceController {
 	public ResponseEntity<User_view> createNewTestsuite(@RequestBody String userId) {
 		User_view flag;
 		
-		System.out.println("::::::::::CREATING TEST SUITE::::::::::::");
+		
 		
 		flag = userService.findUserDetailsByID(userId);
 		
 		if(flag== null) {
-			return new ResponseEntity<User_view>(HttpStatus.NO_CONTENT);
+			return new ResponseEntity<User_view>(HttpStatus.EXPECTATION_FAILED);
 		}
 		
 		return new ResponseEntity<User_view>( flag, HttpStatus.OK);
@@ -93,7 +97,7 @@ public class WebserviceController {
 		List<Application> application = createTestcaseService.findAllApplications();
 		
 		if(application.isEmpty()) {
-			return new ResponseEntity<List<Application>>(HttpStatus.NO_CONTENT);
+			return new ResponseEntity<List<Application>>(HttpStatus.EXPECTATION_FAILED);
 		}
 		
 		return new ResponseEntity<List<Application>>(application, HttpStatus.OK);
@@ -101,14 +105,14 @@ public class WebserviceController {
 	
 	
 	@RequestMapping(value="/webservice/findApplicationsByUserId" , method = RequestMethod.POST)
-	public ResponseEntity<List<Application>> findApplicationsByUserID(@RequestBody String userId) {
-		List<Application> application = createTestcaseService.findApplicationsByUserId(userId);
+	public ResponseEntity<ApplicationList> findApplicationsByUserID(@RequestBody String userId) {
+		ApplicationList application = createTestcaseService.findApplicationsByUserId(userId);
 		
-		if(application.isEmpty()) {
-			return new ResponseEntity<List<Application>>(HttpStatus.NO_CONTENT);
+		if(application.getStatus().equalsIgnoreCase("ERROR")) {
+			return new ResponseEntity<ApplicationList>(application, HttpStatus.EXPECTATION_FAILED);
 		}
 		
-		return new ResponseEntity<List<Application>>(application, HttpStatus.OK);
+		return new ResponseEntity<ApplicationList>(application, HttpStatus.OK);
 	}
 	
 	
@@ -385,14 +389,14 @@ public class WebserviceController {
 	}
 	
 	@RequestMapping(value ="/webservice/getAllOperationNames" , method = RequestMethod.GET)
-	public ResponseEntity<List<String>> findAllOperationName() {
+	public ResponseEntity<OperationsList> findAllOperationName() {
 		
 		System.out.println("Getting all operation names");
-		List<String> operationnames = operationService.findAllOperationName();
-		if(operationnames.isEmpty()) {
-			return new ResponseEntity<List<String>>(HttpStatus.NO_CONTENT);
+		OperationsList operationnames = operationService.findAllOperationName();
+		if(operationnames.getStatus().equalsIgnoreCase("ERROR")) {
+			return new ResponseEntity<OperationsList>(HttpStatus.EXPECTATION_FAILED);
 		}
-		return new ResponseEntity<List<String>>(operationnames,HttpStatus.OK);
+		return new ResponseEntity<OperationsList>(operationnames,HttpStatus.OK);
 		
 	}
 	

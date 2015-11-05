@@ -6,6 +6,7 @@ import com.automationtool.webportal.model.Application;
 import com.automationtool.webportal.model.Packages;
 import com.automationtool.webportal.model.Testcase;
 import com.automationtool.webportal.model.viewModel.TestcaseSample;
+import com.automationtool.webportal.model.webservices.ApplicationList;
 
 public interface CreateTestcaseService {
 	
@@ -25,6 +26,6 @@ public interface CreateTestcaseService {
 
 	void deleteTestCases(int[] testcaseIDs);
 
-	List<Application> findApplicationsByUserId(String userId);
+	ApplicationList findApplicationsByUserId(String userId);
 
 }

@@ -1,47 +1,86 @@
 package com.automationtool.webportal.model;
 
+import javax.persistence.AssociationOverride;
+import javax.persistence.AssociationOverrides;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 
 @Entity
 @Table(name="group_access")
+@AssociationOverrides({
+	@AssociationOverride(name = "pk.application", 
+		joinColumns = @JoinColumn(name = "app_id")),
+	@AssociationOverride(name = "pk.group", 
+		joinColumns = @JoinColumn(name = "groupid")) })
 public class GroupAccess {
 	
-	@Column(name="app_id")
+	/*@Column(name="app_id")
 	private long app_id;
 	
 	
 	@Column(name="groupid")
-	private long group_id;
+	private long group_id;*/
+	
+	
+	private GroupAccessId pk = new GroupAccessId();
 
 
-	public long getApp_id() {
-		return app_id;
+	@Transient
+	public Group getGroup() {
+		return getPk().getGroup();
 	}
 
-
-	public void setApp_id(long app_id) {
-		this.app_id = app_id;
+	public void setGroup(Group group) {
+		getPk().setGroup(group);
 	}
 
-
-	public long getGroup_id() {
-		return group_id;
+	@Transient
+	public Application getTestcase() {
+		return getPk().getApplication();
 	}
 
-
-	public void setGroup_id(long group_id) {
-		this.group_id = group_id;
+	public void setTestcase(Application application) {
+		getPk().setApplication(application);
 	}
-
+	
+	
 
 	@Override
-	public String toString() {
-		return "GroupAccess [app_id=" + app_id + ", group_id=" + group_id + "]";
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+
+		GroupAccess that = (GroupAccess) o;
+
+		if (getPk() != null ? !getPk().equals(that.getPk())
+				: that.getPk() != null)
+			return false;
+
+		return true;
+	}
+	
+	@EmbeddedId
+	public GroupAccessId getPk() {
+		return pk;
+	}
+	public void setPk(GroupAccessId pk) {
+		this.pk = pk;
+	}
+	@Override
+	public int hashCode() {
+		// TODO Auto-generated method stub
+		return (getPk() != null ? getPk().hashCode() : 0);
 	}
 
+
+	
 
 	public GroupAccess() {
 		

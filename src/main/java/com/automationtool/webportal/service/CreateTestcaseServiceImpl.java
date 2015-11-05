@@ -19,6 +19,7 @@ import com.automationtool.webportal.model.Packages;
 import com.automationtool.webportal.model.Testcase;
 import com.automationtool.webportal.model.Teststeps;
 import com.automationtool.webportal.model.viewModel.TestcaseSample;
+import com.automationtool.webportal.model.webservices.ApplicationList;
 
 @Service("createTestcaseService")
 @Transactional
@@ -216,18 +217,45 @@ public class CreateTestcaseServiceImpl implements CreateTestcaseService {
 
 
 	@Override
-	public List<Application> findApplicationsByUserId(String userId) {
+	public ApplicationList findApplicationsByUserId(String userId) {
 		
-		int groupId = user.findGroupByUserId(userId);
+		ApplicationList appList = null;
 		
-		System.out.println("GroupId returned: " + groupId);
-		List<BigInteger> appId = groupAccess.getApplicationsByGroupId(groupId);
+		List<Application> list;
+		try {
+			int groupId = user.findGroupByUserId(userId);
+			
+			System.out.println("GroupId returned: " + groupId);
+			List<BigInteger> appId = groupAccess.getApplicationsByGroupId(groupId);
+			if(appId == null) {
+				throw new Exception("User Team does not have access to any application");
+			} else if(appId.size() == 0) {
+				throw new Exception("User Team does not have access to any application");
+			}
+			System.out.println("List of appid:" + appId);
+			list = application.findApplicationsByAppIds(appId);
+			if(list == null) {
+				throw new Exception("No Application List returned");
+			}
+			System.out.println("List of applications returned: " + list);
+			
+			appList = new ApplicationList();
+			appList.setStatus("SUCCESS");
+			appList.setApplicationList(list);
+		} catch(NullPointerException e) {
+			appList = new ApplicationList("ERROR","Null Pointer Exception");
+		}
 		
-		System.out.println("List of appid:" + appId);
-		List<Application> list = application.findApplicationsByAppIds(appId);
+		catch (Exception e) {
+			System.out.println("GOT EXCEPTION");
+			appList = new ApplicationList("ERROR",e.getMessage());
+			e.printStackTrace();
+		} finally {
+			return appList;
+		}
 		
-		System.out.println("List of applications returned: " + list);
-		return list;
+		
+		
 	}
 
 }
