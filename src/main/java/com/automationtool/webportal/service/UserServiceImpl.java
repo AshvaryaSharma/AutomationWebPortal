@@ -9,6 +9,7 @@ import com.automationtool.webportal.dao.UserDao;
 import com.automationtool.webportal.dao.UserViewDao;
 import com.automationtool.webportal.model.User;
 import com.automationtool.webportal.model.User_view;
+import com.automationtool.webportal.model.webservices.UserDetail;
 
 @Service("userService")
 @Transactional
@@ -31,9 +32,22 @@ public class UserServiceImpl implements UserService {
     }
 
 	
-	public User_view findUserDetailsByID(String id) {
+	public UserDetail findUserDetailsByID(String id) {
+		UserDetail userDetail = null;
+		try {
+			User_view user = userView.getUserDatabyId(id);
+			if(user == null) {
+				throw new Exception("No user information found :: Logged in user not valid");
+			}
+			
+			userDetail = new UserDetail();
+			userDetail.setStatus("SUCCESS");
+			userDetail.setUserDetails(user);
+		} catch (Exception e) {
+			userDetail = new UserDetail("ERROR" , e.getLocalizedMessage());
+		}
 		
-		return userView.getUserDatabyId(id);
+		return userDetail;
 	}
 
 }

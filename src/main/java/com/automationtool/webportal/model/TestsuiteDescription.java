@@ -28,6 +28,27 @@ public class TestsuiteDescription {
 	@ManyToOne(optional=false)
 	@JoinColumn(name="app_id")
 	private Application application;
+	
+	
+	@ManyToOne(optional=false)
+	@JoinColumn(name="group_id")
+	private Group group;
+
+	public Application getApplication() {
+		return application;
+	}
+
+	public void setApplication(Application application) {
+		this.application = application;
+	}
+
+	public Group getGroup() {
+		return group;
+	}
+
+	public void setGroup(Group group) {
+		this.group = group;
+	}
 
 	public int getTestsuite_id() {
 		return testsuite_id;

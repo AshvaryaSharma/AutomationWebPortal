@@ -33,6 +33,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 
+
+
+
+
 import com.automationtool.webportal.model.Application;
 import com.automationtool.webportal.model.Operations;
 import com.automationtool.webportal.model.Packages;
@@ -41,7 +45,11 @@ import com.automationtool.webportal.model.User_view;
 import com.automationtool.webportal.model.viewModel.TestcaseSample;
 import com.automationtool.webportal.model.viewModel.Testsuite;
 import com.automationtool.webportal.model.webservices.ApplicationList;
+import com.automationtool.webportal.model.webservices.ConfigurationList;
 import com.automationtool.webportal.model.webservices.OperationsList;
+import com.automationtool.webportal.model.webservices.TestsuiteList;
+import com.automationtool.webportal.model.webservices.UserDetail;
+import com.automationtool.webportal.model.webservices.request.TestsuiteByAppAndGroup;
 import com.automationtool.webportal.service.ApplicationService;
 import com.automationtool.webportal.service.CreateTestcaseService;
 import com.automationtool.webportal.service.KeywordService;
@@ -77,18 +85,18 @@ public class WebserviceController {
 	
 	
 	@RequestMapping(value="/webservice/getUserDetails" , method = RequestMethod.POST)
-	public ResponseEntity<User_view> createNewTestsuite(@RequestBody String userId) {
-		User_view flag;
+	public ResponseEntity<UserDetail> createNewTestsuite(@RequestBody String userId) {
+		UserDetail flag;
 		
 		
 		
 		flag = userService.findUserDetailsByID(userId);
 		
-		if(flag== null) {
-			return new ResponseEntity<User_view>(HttpStatus.EXPECTATION_FAILED);
+		if(flag.getStatus().equalsIgnoreCase("ERROR")) {
+			return new ResponseEntity<UserDetail>(HttpStatus.EXPECTATION_FAILED);
 		}
 		
-		return new ResponseEntity<User_view>( flag, HttpStatus.OK);
+		return new ResponseEntity<UserDetail>(flag, HttpStatus.OK);
 	}
 	
 	
@@ -114,6 +122,32 @@ public class WebserviceController {
 		
 		return new ResponseEntity<ApplicationList>(application, HttpStatus.OK);
 	}
+	
+	
+	@RequestMapping(value="/webservice/getTestsuiteByAppAndGroup" , method = RequestMethod.POST)
+	public ResponseEntity<TestsuiteList> findApplicationsByAppAndGroup(@RequestBody TestsuiteByAppAndGroup testReq) {
+		TestsuiteList testSuiteList = testsuiteService.findApplicationByAppAndGroup(testReq);
+		
+		if(testSuiteList.getStatus().equalsIgnoreCase("ERROR")) {
+			return new ResponseEntity<TestsuiteList>(testSuiteList, HttpStatus.EXPECTATION_FAILED);
+		}
+		
+		return new ResponseEntity<TestsuiteList>(testSuiteList, HttpStatus.OK);
+	}
+	
+	
+	@RequestMapping(value="/webservice/getTestsuiteConfiguration" , method = RequestMethod.POST)
+	public ResponseEntity<ConfigurationList> getTestsuiteConfiguration(@RequestBody int testsuiteId) {
+		ConfigurationList configurationList = testsuiteService.getTestsuiteConfiguration(testsuiteId);
+		
+		if(configurationList.getStatus().equalsIgnoreCase("ERROR")) {
+			return new ResponseEntity<ConfigurationList>(configurationList, HttpStatus.EXPECTATION_FAILED);
+		}
+		
+		return new ResponseEntity<ConfigurationList>(configurationList, HttpStatus.OK);
+	}
+	
+	
 	
 	
 	@RequestMapping(value="/webservice/createTestsuite" , method = RequestMethod.POST)

@@ -191,7 +191,7 @@ public class HelloWorldController {
 		
 		User user = userService.findBySso(userName);
 		
-		return (user.getFirstName() + " " + user.getLastName());
+		return userName;
 	}
 	
 	private String getTeamName() {

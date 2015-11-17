@@ -1,11 +1,13 @@
 package com.automationtool.webportal.dao;
 
 import com.automationtool.webportal.model.Application;
+import com.automationtool.webportal.model.Configuration;
 import com.automationtool.webportal.model.Teststeps;
 import com.automationtool.webportal.model.TestsuiteDescription;
 import com.automationtool.webportal.model.TestsuiteTestcases;
 import com.automationtool.webportal.model.TestsuiteTestcasesId;
 import com.automationtool.webportal.model.viewModel.Testsuite;
+import com.automationtool.webportal.model.webservices.request.TestsuiteByAppAndGroup;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -84,6 +86,25 @@ public class TestsuiteDaoImpl implements Serializable, TestsuiteDao {
 		return suit;
 		
 		
+	}
+
+	@Override
+	public List<TestsuiteDescription> getTestSuite(
+			TestsuiteByAppAndGroup testReq) {
+		init();
+		Query query = session.createQuery("from TestsuiteDescription where app_id =:app_id and group_id =:group_id");
+		query.setInteger("app_id", testReq.getApp_id());
+		query.setInteger("group_id", testReq.getGroup_id());
+		
+		return query.list();
+	}
+
+	@Override
+	public List<Configuration> getTestsuiteConfig(int testsuiteId) {
+		init();
+		Query query = session.createQuery("from Configuration where pk.testsuite.testsuite_id =:testsuiteId");
+		query.setInteger("testsuiteId", testsuiteId);
+		return query.list();
 	}
 
 }

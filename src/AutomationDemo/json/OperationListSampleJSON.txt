@@ -1,30 +1,41 @@
-[
-  {
-    "keyword": "Action_MouseClick",
-    "type": "UI"
-  },
-  {
-    "keyword": "Action_MouseOver",
-    "type": "UI"
-  },
-  {
-    "keyword": "Click",
-    "type": "UI"
-  },
-  {
-    "keyword": "EnterText",
-    "type": "UI"
-  },
-  {
-    "keyword": "Open_DB",
-    "type": "NONUI"
-  },
-  {
-    "keyword": "OpenURL",
-    "type": "UI"
-  },
-  {
-    "keyword": "SSH",
-    "type": "NONUI"
-  }
-]
+URL: /webservice/getAllOperationNames
+Method: GET
+
+
+OUTPUT:
+
+
+{
+  "status": "SUCCESS",
+  "exceptionMessage": null,
+  "operationList": [
+    {
+      "keyword": "Action_MouseClick",
+      "type": "UI"
+    },
+    {
+      "keyword": "Action_MouseOver",
+      "type": "UI"
+    },
+    {
+      "keyword": "Click",
+      "type": "UI"
+    },
+    {
+      "keyword": "EnterText",
+      "type": "UI"
+    },
+    {
+      "keyword": "OpenURL",
+      "type": "UI"
+    },
+    {
+      "keyword": "Open_DB",
+      "type": "NONUI"
+    },
+    {
+      "keyword": "SSH",
+      "type": "NONUI"
+    }
+  ]
+}

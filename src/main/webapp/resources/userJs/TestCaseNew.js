@@ -1,13 +1,50 @@
-angular.module('testCase',[]).controller('testcaseController', function($scope,$http) {
+var app = angular.module('testCase',['ngSanitize', 'ui.select']);
 
-	$scope.startApplication = function(pageAction,testcaseId) {
+app.filter('propsFilter', function() {
+	  return function(items, props) {
+	    var out = [];
+
+	    if (angular.isArray(items)) {
+	      var keys = Object.keys(props);
+	        
+	      items.forEach(function(item) {
+	        var itemMatches = false;
+
+	        for (var i = 0; i < keys.length; i++) {
+	          var prop = keys[i];
+	          var text = props[prop].toLowerCase();
+	          if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
+	            itemMatches = true;
+	            break;
+	          }
+	        }
+
+	        if (itemMatches) {
+	          out.push(item);
+	        }
+	      });
+	    } else {
+	      // Let the output be the input untouched
+	      out = items;
+	    }
+
+	    return out;
+	  };
+	});
+
+
+app.controller('testcaseController', function($scope,$http,$timeout, $interval) {
+
+	$scope.startApplication = function(pageAction,testcaseId,userId) {
 		console.log("Checking page action: " + pageAction)
 		
-		
+		$scope.user = userId;
 		
 		if(pageAction=='create') {
 			console.log("Page action is create");
+			
 			$scope.createInitialize();
+			$scope.getUserDetails();
 			$scope.getAllApplications();
 			$scope.getAllOperationNames();
 		} else if(pageAction == 'SaveAsNew') {
@@ -212,6 +249,24 @@ angular.module('testCase',[]).controller('testcaseController', function($scope,$
 		
 	}
 	
+	$scope.getUserDetails = function() {
+		
+		$http.get("../webservice/getLoggedUserDetails")
+		.success(function (response) {
+			$scope.userDetail = response.userDetails;
+			
+			$scope.testattr ="gotdata";
+		})
+		.error(function(response) {
+			
+			$scope.errorMessage = response.exceptionMessage;
+			$scope.errorStatus = true;
+		})
+		
+	}
+	
+	
+	
 	
 	$scope.setAndSelectApplication = function(appId) {
 		console.log("---------------Selecting and Setting Application ======> " + appId);
@@ -291,6 +346,8 @@ $scope.saveInitialize = function(){
 		$scope.tempTestStep = {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''};
 		$scope.testStep = [{keyword:'',arg1:null,arg2: null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''},
 		                   {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''},
+		                   {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''},
+		                   {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''},
 		                   {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''}
 		                   ];
 		$scope.editTestCase = false;
@@ -308,21 +365,91 @@ $scope.saveInitialize = function(){
 	$scope.getAllApplications = function() {
 		console.log("---------GETTING ALL APPLICATIONS-----------");
 		
-		$http.get("../webservice/findAllApplications")
+		$http.post("../webservice/findApplicationsByUserId",$scope.user)
 			.success(function (response) {
-				$scope.applications = response;
+				$scope.applications = response.applicationList;
 				$scope.intializing = false;
 				$scope.testattr ="gotdata";
 			})
 			.error(function() {
 				
-				$scope.errorMessage = "Not able to get application data"
+				$scope.errorMessage = "Not able to get application data";
 				$scope.errorStatus = true;
 			})
 			
 	}
 	
+	 $scope.disabled = undefined;
+	  $scope.searchEnabled = undefined;
+
+	  $scope.setInputFocus = function (){
+	    $scope.$broadcast('UiSelectDemo1');
+	  };
+
+	  $scope.enable = function() {
+	    $scope.disabled = false;
+	  };
+
+	  $scope.disable = function() {
+	    $scope.disabled = true;
+	  };
+
+	  $scope.enableSearch = function() {
+	    $scope.searchEnabled = true;
+	  };
+
+	  $scope.disableSearch = function() {
+	    $scope.searchEnabled = false;
+	  };
+	  
+	  $scope.clear = function() {
+		    $scope.person.selected = undefined;
+		    
+	  };
 	
+	  $scope.counter = 0;
+	  $scope.someFunction = function (item, model){
+	    $scope.counter++;
+	    $scope.eventResult = {item: item, model: model};
+	  };
+
+	  $scope.removed = function (item, model) {
+	    $scope.lastRemoved = {
+	        item: item,
+	        model: model
+	    };
+	  };
+
+	  $scope.tagTransform = function (newTag) {
+	    var item = {
+	        name: newTag,
+	        email: newTag.toLowerCase()+'@email.com',
+	        age: 'unknown',
+	        country: 'unknown'
+	    };
+
+	    return item;
+	  };
+	  
+	  $scope.operation = {};
+	  
+	  $scope.appendToBodyDemo = {
+			    remainingToggleTime: 0,
+			    present: true,
+			    startToggleTimer: function() {
+			      var scope = $scope.appendToBodyDemo;
+			      var promise = $interval(function() {
+			        if (scope.remainingTime < 1000) {
+			          $interval.cancel(promise);
+			          scope.present = !scope.present;
+			          scope.remainingTime = 0;
+			        } else {
+			          scope.remainingTime -= 1000;
+			        }
+			      }, 1000);
+			      scope.remainingTime = 3000;
+			    }
+	  };
 	$scope.operatorSelectEvent = function(rowNumber,flag) {
 		
 		$scope.loading = true;
@@ -344,7 +471,7 @@ $scope.saveInitialize = function(){
 		
 		$scope.testattr = "got operation name" + temp.keyword;
 		
-		if($scope.testStep[i].keyword == '') {
+		if($scope.testStep[i].operation.keyword == '') {
 			
 			$scope.testStep[i].arg1_ph = "";
 			$scope.testStep[i].arg2_ph = "";
@@ -360,16 +487,41 @@ $scope.saveInitialize = function(){
 			
 			
 			
-		} else  {
+		} else if($scope.testStep[i].operation.type == 'NONUI')  {
 			
-			$http.post("../webservice/getOperation",$scope.testStep[i].keyword)
+			$http.post("../webservice/getNonUiOperationByName",$scope.testStep[i].operation.keyword)
 			.success(function(response){
 				
-				$scope.testStep[i].arg1_ph = response.arg1;
-				$scope.testStep[i].arg2_ph = response.arg2;
-				$scope.testStep[i].arg3_ph = response.arg3;
-				$scope.testStep[i].arg4_ph = response.arg4;
-				$scope.testStep[i].arg5_ph = response.arg5;
+				$scope.testStep[i].arg1_ph = response.operation.arg1;
+				$scope.testStep[i].arg2_ph = response.operation.arg2;
+				$scope.testStep[i].arg3_ph = response.operation.arg3;
+				$scope.testStep[i].arg4_ph = response.operation.arg4;
+				$scope.testStep[i].arg5_ph = response.operation.arg5;
+				
+				if(flag) {
+					$scope.testStep[i].arg1 = null;
+					$scope.testStep[i].arg2 = null;
+					$scope.testStep[i].arg3 = null;
+					$scope.testStep[i].arg4 = null;
+					$scope.testStep[i].arg5 = null;
+				}
+				$scope.testattr="Success for: " + temp.keyword + $scope.testStep[i].arg1_ph + $scope.testStep[i].arg2_ph + $scope.testStep[i].arg3_ph + $scope.testStep[i].arg4_ph + $scope.testStep[i].arg5_ph;
+			})
+			.error(function(){
+				$scope.errorMessage = "Not able to get operation value"
+				$scope.errorStatus= true;
+				$scope.testattr = "Error for:" + temp.keyword;
+			})
+		} else if($scope.testStep[i].operation.type == 'UI')  {
+			
+			$http.post("../webservice/getUiOperationByName",$scope.testStep[i].operation.keyword)
+			.success(function(response){
+				
+				$scope.testStep[i].arg1_ph = '';
+				$scope.testStep[i].arg2_ph = '';
+				$scope.testStep[i].arg3_ph = response.operation.arg1;
+				$scope.testStep[i].arg4_ph = response.operation.arg2;
+				$scope.testStep[i].arg5_ph = response.operation.arg3;
 				
 				if(flag) {
 					$scope.testStep[i].arg1 = null;
@@ -397,6 +549,13 @@ $scope.saveInitialize = function(){
 	}
 	
 	
+	
+	$scope.loadPackageConfigEvent = function(flag) {
+		
+		
+	}
+	
+	
 	$scope.getAllOperationNames = function() {
 		
 		$http.get("../webservice/getAllOperationNames")
@@ -415,16 +574,13 @@ $scope.saveInitialize = function(){
 	
 	$scope.applicationSelectEvent = function() {
 		$scope.loading = true;
-		$scope.package_id = null;
+		$scope.isApplicationSelected = true
 		if($scope.app_id == "") {
 			$scope.app_id = null;
 			$scope.packages = [{}];
 			
 			$scope.isApplicationSelected = false;
-			$scope.isPackageSelected = false;
-		} else {
-			$scope.applicationsLoaded = false;
-			$scope.getAllPackagesByApplicationId();
+			
 		}
 		$scope.loading = false;
 	}

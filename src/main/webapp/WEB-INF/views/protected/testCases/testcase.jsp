@@ -23,7 +23,18 @@
 
     <!-- Custom CSS -->
     <link href="../resources/themes/bowerTheme/dist/css/sb-admin-2.css" rel="stylesheet">
+	
+  <link rel="stylesheet" href="../resources/themes/bowerTheme/ui-select-master/dist/select.css">
+  
+   <!-- Select2 theme -->
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
 
+  <!--
+    Selectize theme
+    Less versions are available at https://github.com/brianreavis/selectize.js/tree/master/dist/less
+  -->
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css">
+	
    <!--  Custom Fonts -->
     <link href="../resources/themes/bowerTheme/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 	 <link href="../resources/themes/bowerTheme/dist/css/tech-m.css" rel="stylesheet">
@@ -40,7 +51,7 @@
 
     <div id="wrapper">
         <!-- Page Content -->
-       <div id="page-wrapper" ng-app="testCase" ng-controller="testcaseController" ng-init="startApplication('${testcaseAction}',${testcaseId})">
+       <div id="page-wrapper" ng-app="testCase" ng-controller="testcaseController" ng-init="startApplication('${testcaseAction}',${testcaseId},'${user}')">
        	<div class="container-fluid">
        		<div class="row">
                     <div class="col-lg-12">
@@ -100,31 +111,50 @@
 															<option value="">Select the application</option>
 															<option ng-repeat="x in applications" value="{{x.app_id}}" ng-selected="{{x.app_id == app_id}}">{{x.app_name}}</option>
 														</select>
+														
+														<!-- <ui-select ng-model="person.selected" theme="select2" ng-disabled="disabled" style="min-width: 300px;" title="Choose a person">
+													    <ui-select-match placeholder="Select a person in the list or search his name/age...">{{$select.selected.app_name}}</ui-select-match>
+													    <ui-select-choices repeat="person in people | propsFilter: {app_name: $select.search, app_id: $select.search}">
+													      <div ng-bind-html="person.app_name | highlight: $select.search"></div>
+													      <small>
+													        
+													        id: <span ng-bind-html="''+person.app_id | highlight: $select.search"></span>
+													      </small>
+													    </ui-select-choices>
+													  </ui-select> -->
 													
 													
 												</div>
 											</div>
+											<br>
 											<div class="row" ng-show="isApplicationSelected">
-												<div class="col-lg-12">
-													<label>Select Package</label>
-														<select name="package" id="package" ng-model="package_id" class="form-control" ng-change="packageSelectEvent()" ng-disabled="loading || viewTestcase || editTestCase">
-															<option value="" ng-selected="applicationsLoaded">Select Package</option>
-															<option ng-repeat="n in packages" value="{{n.package_id}}" ng-selected="{{n.package_id == package_id}}">{{n.package_name}}</option>
-													
-														</select>
-												</div>
-											</div>
-											<div class="row" ng-show="isPackageSelected">
 												<div class="col-lg-12">
 													<label>Enter Test Case Name</label>
 													<input class="form-control" placeholder="Enter Test Case Name" ng-model="testCaseName"  ng-disabled="loading || viewTestcase">
 												</div>
 											
 											</div>
+											<br>
+											<div class="row" ng-show="isApplicationSelected">
+												<div class="col-lg-6">
+													<label><input type="checkbox"  ng-model="isPackageSelected"  ng-disabled="loading || viewTestcase" value="true" ng-change="loadPackageConfigEvent(isPackageSelected)">
+													Load package attributes</label>
+													
+												</div>
+												<div class="col-lg-6" ng-show="isPackageSelected">
+													TBD
+													<!-- <select name="configuration" id="application" ng-model="app_id" class="form-control" ng-change="packageSelectEvent(app_id)" ng-disabled="loading || viewTestcase || editTestCase">
+															<option value="">Select Package</option>
+															<option ng-repeat="x in package" value="{{x.app_id}}" ng-selected="{{x.app_id == app_id}}">{{x.app_name}}</option>
+													</select> -->
+													
+												</div>
+											
+											</div>
 											
 										</div>
 										<div class="col-lg-6">
-											<div class="row" ng-show="isPackageSelected">
+											<div class="row" ng-show="isApplicationSelected">
 												<div class="col-lg-12">
 													<label>Test Case Description</label>
 													<textarea class="form-control" placeholder="Enter Test Case Description" rows="7" ng-model="testCaseDescription"  ng-disabled="loading || viewTestcase"></textarea>
@@ -133,7 +163,9 @@
 										</div>
 									</div>
 									<br>
-									<div class="row" ng-show="isPackageSelected">
+									
+									
+									<div class="row" ng-show="isApplicationSelected">
 										<div class="col-lg-12">
 											<div class="panel panel-default">
 												<div class="panel-heading">
@@ -159,10 +191,22 @@
 																	<td> <!-- <input type="hidden" ng-model="row.step_num" value="{{testStep.indexOf(row)}}" /> --> {{testStep.indexOf(row) + 1}}</td>
 																	
 																	<td>
-																		<select name="operation" id="operation" class="form-control" ng-model="row.keyword" ng-change="operatorSelectEvent(testStep.indexOf(row),true)"  ng-disabled="loading || viewTestcase">
+																		<!-- <select name="operation" id="operation" class="form-control" ng-model="row.keyword" ng-change="operatorSelectEvent(testStep.indexOf(row),true)"  ng-disabled="loading || viewTestcase">
 																			<option value="">-------</option>
 																			<option ng-repeat="oprtn in operationNames" value="{{oprtn}}" ng-selected="{{oprtn == row.keyword}}">{{oprtn}}</option>
-																		</select>
+																		</select> -->
+																		
+																		<ui-select ng-model="row.operation" theme="select2" ng-disabled="disabled" style="min-width: 300px;" title="Choose an Operation" ng-change="operatorSelectEvent(testStep.indexOf(row),true)">
+																	    <ui-select-match placeholder="Select or Search an operation">{{$select.selected.keyword}}</ui-select-match>
+																	    <ui-select-choices repeat="operation in operationNames.operationList | propsFilter: {keyword: $select.search, type: $select.search}">
+																	      <b><div ng-bind-html="operation.keyword | highlight: $select.search" ></div></b>
+																	    <small>
+																	        
+																	        Type: <span ng-bind-html="''+operation.type | highlight: $select.search"></span>
+																	      </small>
+																	    </ui-select-choices>
+																	  </ui-select>
+																		
 																	</td>
 																	<td>
 																		<input class="form-control" placeholder="{{row.arg1_ph}}" ng-model="row.arg1" ng-disabled="(row.arg1_ph =='') || (row.arg1_ph=='NA') || loading || viewTestcase">
@@ -221,6 +265,11 @@
     
    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js">
       </script>
+      <!-- Select Sanitize CSS -->
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular-sanitize.js"></script>
+	
+	<!-- ui-select files -->
+  <script src="../resources/themes/bowerTheme/ui-select-master/dist/select.js"></script>
     <!-- <script src="../resources/userJs/operationKeywords/app.js"></script>
     <script src="resources/userJs/operationKeywords/app_controller.js"></script>
     <script src="resources/userJs/operationKeywords/keyword_service.js"></script> -->

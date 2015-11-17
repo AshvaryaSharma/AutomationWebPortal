@@ -2,6 +2,7 @@ package com.automationtool.webportal.service;
 
 import com.automationtool.webportal.model.User;
 import com.automationtool.webportal.model.User_view;
+import com.automationtool.webportal.model.webservices.UserDetail;
 
 public interface UserService {
 
@@ -9,6 +10,6 @@ public interface UserService {
     
     User findBySso(String sso);
     
-    User_view findUserDetailsByID(String userId);
+    UserDetail findUserDetailsByID(String userId);
     
 }
