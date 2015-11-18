@@ -1,4 +1,4 @@
-var app = angular.module('testCase',['ngSanitize', 'ui.select']);
+var app = angular.module('testCase',['ngSanitize', 'ui.select','ngTouch', 'angucomplete-alt']);
 
 app.filter('propsFilter', function() {
 	  return function(items, props) {
@@ -33,7 +33,7 @@ app.filter('propsFilter', function() {
 	});
 
 
-app.controller('testcaseController', function($scope,$http,$timeout, $interval) {
+app.controller('testcaseController', function($scope,$http,$timeout, $interval,$rootScope) {
 
 	$scope.startApplication = function(pageAction,testcaseId,userId) {
 		console.log("Checking page action: " + pageAction)
@@ -343,12 +343,12 @@ $scope.saveInitialize = function(){
 		$scope.operationNames = [];
 		$scope.testCaseDescription = "";
 		$scope.testCaseName = "";
-		$scope.tempTestStep = {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''};
-		$scope.testStep = [{keyword:'',arg1:null,arg2: null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''},
-		                   {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''},
-		                   {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''},
-		                   {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''},
-		                   {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''}
+		$scope.tempTestStep = {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:'', pageObject:''};
+		$scope.testStep = [{keyword:'',arg1:null,arg2: null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:'', pageObject:''},
+		                   {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:'', pageObject:''},
+		                   {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:'', pageObject:''},
+		                   {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:'', pageObject:''},
+		                   {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:'', pageObject:''}
 		                   ];
 		$scope.editTestCase = false;
 		$scope.testcaseObject = {
@@ -484,10 +484,12 @@ $scope.saveInitialize = function(){
 			$scope.testStep[i].arg3 = null;
 			$scope.testStep[i].arg4 = null;
 			$scope.testStep[i].arg5 = null;
+			$scope.testStep[i].pageObject = null;
 			
 			
 			
 		} else if($scope.testStep[i].operation.type == 'NONUI')  {
+			$scope.testStep[i].pageObject = null;
 			
 			$http.post("../webservice/getNonUiOperationByName",$scope.testStep[i].operation.keyword)
 			.success(function(response){
@@ -504,6 +506,7 @@ $scope.saveInitialize = function(){
 					$scope.testStep[i].arg3 = null;
 					$scope.testStep[i].arg4 = null;
 					$scope.testStep[i].arg5 = null;
+					$scope.testStep[i].pageObject = null;
 				}
 				$scope.testattr="Success for: " + temp.keyword + $scope.testStep[i].arg1_ph + $scope.testStep[i].arg2_ph + $scope.testStep[i].arg3_ph + $scope.testStep[i].arg4_ph + $scope.testStep[i].arg5_ph;
 			})
@@ -550,10 +553,7 @@ $scope.saveInitialize = function(){
 	
 	
 	
-	$scope.loadPackageConfigEvent = function(flag) {
-		
-		
-	}
+	
 	
 	
 	$scope.getAllOperationNames = function() {
@@ -582,19 +582,138 @@ $scope.saveInitialize = function(){
 			$scope.isApplicationSelected = false;
 			
 		}
+		
+		$scope.loadApplicationPageNames();
+		$scope.loadConfigPackages();
+		
 		$scope.loading = false;
+	}
+	
+	
+	$scope.loadApplicationPageNames = function() {
+		
+		$scope.loading = true;
+		
+		
+		if($scope.app_id != null)
+			{
+			$http.post("../webservice/allPageNamesByApplication",$scope.app_id)
+			 .success(function(response) {
+				$scope.pageNames = response.pageNames;
+				$scope.testattr = "getPackages";
+			 })
+			 .error(function(response) {
+				 $scope.errorMessage = response.exceptionMessage;
+				 $scope.errorStatus= true;
+				
+			 })
+			
+			}
+		
+		
+		
+		$scope.loading = false;
+		
+	}
+	
+	
+	
+	$scope.pageNameSelectEvent = function(rowNumber) {
+		
+		console.log("::::GETTING PageName PAGE OBJECTS");
+		$scope.loading = true;
+		
+		$scope.testStep[rowNumber].pageObject = null;
+		$scope.testStep[rowNumber].arg2 = '';
+		
+		/*var pageId = null;
+		
+		for(i=0 ; i < $scope.pageNames.length; i++) {
+			
+			if($scope.pageNames[i].pageName == $scope.testStep[rowNumber].arg1) {
+				
+				pageId = $scope.pageNames[i].pageid;
+				break;
+			}
+			
+		}*/
+		console.log(":::::PAGE ID::::" + $scope.testStep[rowNumber].arg1.pageid);
+		
+		$http.post("../webservice/getPageObjectsByPageId",$scope.testStep[rowNumber].arg1.pageid)
+		 .success(function(response) {
+			 $scope.testStep[rowNumber].pageObject = response.list;
+			$scope.testattr = "getPackages";
+		 })
+		 .error(function(response) {
+			 $scope.errorMessage = response.exceptionMessage;
+			 $scope.errorStatus= true;
+			
+		 })
+		 
+		 $scope.loading = false;
+		
+		}
+		
+	
+	
+	
+	$scope.loadConfigPackages = function() {
+		
+		if($scope.app_id == null) {
+			$scope.packages = null; 
+		} else {
+			
+			$scope.configRequest = {};
+			$scope.configRequest.app_id = $scope.app_id;
+			$scope.configRequest.group_id = $scope.userDetail.groupId;
+			
+			$http.post("../webservice/getTestsuiteByAppAndGroup",$scope.configRequest)
+			 .success(function(response) {
+				$scope.packages = response.testSuite;
+				$scope.testattr = "getPackages";
+				$scope.applicationsLoaded = true;
+				$scope.isApplicationSelected = true;
+			 })
+			 .error(function() {
+				 $scope.errorMessage ="Not able to get any package for Application Selected"
+				 $scope.errorStatus= true;
+				$scope.testattr= "packageerror";
+			 })
+			
+		}
+		
 	}
 	
 	$scope.packageSelectEvent = function() {
 		$scope.loading = true;
 		
-		console.log("----------Package Select Event for Package =======> " + $scope.package_id);
-		if($scope.package_id == "") {
+		console.log("----------Package Select Event for Package =======> " + $scope.configTestPackageId);
+		if($scope.configTestPackageId == "") {
 			$scope.isPackageSelected = false;
 			$scope.package_id = null;
+			$scope.configParamList = null;
 			
 		} else {
+			
+			
+			
+			$http.post("../webservice/getTestsuiteConfiguration",$scope.configTestPackageId)
+			 .success(function(response) {
+				 console.log(":::: GOT SUCCESS:::::")
+				$scope.configParamList = response.configList;
+				$scope.testattr = "getPackages";
+				$scope.applicationsLoaded = true;
+				$scope.isApplicationSelected = true;
+			 })
+			 .error(function(response) {
+				 $scope.errorMessage = response.exceptionMessage;
+				 $scope.errorStatus= true;
+				$scope.testattr= "packageerror";
+			 })
+			 
+			 
 			$scope.isPackageSelected = true;
+			
 		}
 		
 		$scope.loading = false;

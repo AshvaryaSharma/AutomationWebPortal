@@ -29,6 +29,9 @@
    <!-- Select2 theme -->
   <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
 
+	<!-- Angucomplete theme -->
+  <link rel="stylesheet" href="../resources/themes/bowerTheme/angucomplete-alt-master/angucomplete-alt.css">
+	
   <!--
     Selectize theme
     Less versions are available at https://github.com/brianreavis/selectize.js/tree/master/dist/less
@@ -137,16 +140,16 @@
 											<br>
 											<div class="row" ng-show="isApplicationSelected">
 												<div class="col-lg-6">
-													<label><input type="checkbox"  ng-model="isPackageSelected"  ng-disabled="loading || viewTestcase" value="true" ng-change="loadPackageConfigEvent(isPackageSelected)">
+													<label><input type="checkbox"  ng-model="isPackageSelected"  ng-disabled="loading || viewTestcase" value="true">
 													Load package attributes</label>
 													
 												</div>
 												<div class="col-lg-6" ng-show="isPackageSelected">
-													TBD
-													<!-- <select name="configuration" id="application" ng-model="app_id" class="form-control" ng-change="packageSelectEvent(app_id)" ng-disabled="loading || viewTestcase || editTestCase">
+													
+													<select name="configuration" id="application" ng-model="configTestPackageId" class="form-control" ng-change="packageSelectEvent()" ng-disabled="loading || viewTestcase || editTestCase">
 															<option value="">Select Package</option>
-															<option ng-repeat="x in package" value="{{x.app_id}}" ng-selected="{{x.app_id == app_id}}">{{x.app_name}}</option>
-													</select> -->
+															<option ng-repeat="x in packages" value="{{x.testsuite_id}}" >{{x.testsuite_name}}</option>
+													</select>
 													
 												</div>
 											
@@ -172,6 +175,7 @@
 													Enter Test Case Steps
 												</div>
 												<div class="panel panel-body">
+												
 													<div class="table-responsive">
 														<table class="table table-striped">
 															<thead>
@@ -186,8 +190,11 @@
 																	<th>+/-</th>
 																</tr>
 															</thead>
+															
+															{{testStep}}
 															<tbody>
 																<tr ng-repeat="row in testStep">
+																	
 																	<td> <!-- <input type="hidden" ng-model="row.step_num" value="{{testStep.indexOf(row)}}" /> --> {{testStep.indexOf(row) + 1}}</td>
 																	
 																	<td>
@@ -209,19 +216,54 @@
 																		
 																	</td>
 																	<td>
-																		<input class="form-control" placeholder="{{row.arg1_ph}}" ng-model="row.arg1" ng-disabled="(row.arg1_ph =='') || (row.arg1_ph=='NA') || loading || viewTestcase">
+																		<ui-select ng-model="row.arg1" theme="select2" ng-disabled="disabled" style="min-width: 300px;" title="Choose an Page" ng-change="pageNameSelectEvent(testStep.indexOf(row))" ng-if="row.operation.type == 'UI'">
+																	    <ui-select-match placeholder="Select or Search an Page Name">{{$select.selected.pageName}}</ui-select-match>
+																	    <ui-select-choices repeat="page in pageNames | propsFilter: {pageName: $select.search}">
+																	      <b><div ng-bind-html="page.pageName | highlight: $select.search" ></div></b>
+																	    <small ng-if="page.url !== '' && page.url != null">
+																	        
+																	        URL: <span ng-bind-html="''+page.url | highlight: $select.search"></span>
+																	      </small>
+																	    </ui-select-choices>
+																	  </ui-select>
+																		
+																		<div ng-if="row.operation.type == 'NONUI' || row.operation == null">
+																		 <div angucomplete-alt id="ex1" placeholder="{{row.arg1_ph}}" maxlength="50" pause="100" selected-object="row.arg1" disable-input="(row.arg1_ph =='') || (row.arg1_ph=='NA') || loading || viewTestcase" local-data="configParamList" search-fields="parameter_name" title-field="parameter_name" minlength="1" input-class="form-control form-control-small" match-class="highlight" override-suggestions="true">
+																	          </div>
+																		</div>
+																		
 																	</td>
 																	<td>
-																		<input class="form-control" placeholder="{{row.arg2_ph}}" ng-model="row.arg2" ng-disabled="(row.arg2_ph =='') || (row.arg2_ph=='NA') || loading || viewTestcase">
+																		<ui-select ng-model="row.arg2" theme="select2" ng-disabled="disabled" style="min-width: 300px;" title="Choose an Page Object" ng-change="" ng-if="row.operation.type == 'UI'">
+																	    <ui-select-match placeholder="Select or Search an Page Object">{{$select.selected.pageObjectName}}</ui-select-match>
+																	    <ui-select-choices repeat="page in row.pageObject | propsFilter: {pageObjectName: $select.search, pageObjectType: $select.search}">
+																	      <b><div ng-bind-html="page.pageObjectName | highlight: $select.search" ></div></b>
+																	    <small ng-if="page.pageObjectType !== '' && page.pageObjectType != null">
+																	        
+																	        Type: <span ng-bind-html="''+page.pageObjectType | highlight: $select.search"></span>
+																	      </small>
+																	    </ui-select-choices>
+																	  </ui-select>
+																		<div ng-if="row.operation.type == 'NONUI' || row.operation == null">
+																		 <div angucomplete-alt id="ex1" placeholder="{{row.arg2_ph}}" maxlength="50" pause="100" selected-object="row.arg2" disable-input="(row.arg2_ph =='') || (row.arg2_ph=='NA') || loading || viewTestcase" local-data="configParamList" search-fields="parameter_name" title-field="parameter_name" minlength="1" input-class="form-control form-control-small" match-class="highlight" override-suggestions="true">
+																	          </div>
+																		</div>
 																	</td>
 																	<td>
-																		<input class="form-control" placeholder="{{row.arg3_ph}}" ng-model="row.arg3" ng-disabled="(row.arg3_ph =='') || (row.arg3_ph=='NA') || loading || viewTestcase">
+																			
+																	          <div angucomplete-alt id="ex1" placeholder="{{row.arg3_ph}}" maxlength="50" pause="100" selected-object="row.arg3" disable-input="(row.arg3_ph =='') || (row.arg3_ph=='NA') || loading || viewTestcase" local-data="configParamList" search-fields="parameter_name" title-field="parameter_name" minlength="1" input-class="form-control form-control-small" match-class="highlight" override-suggestions="true">
+																	          </div>
+																	        
+																	        
+																		<!-- <input class="form-control" placeholder="{{row.arg3_ph}}" ng-model="row.arg3" ng-disabled="(row.arg3_ph =='') || (row.arg3_ph=='NA') || loading || viewTestcase">
+																	 --></td>
+																	<td>
+																		 <div angucomplete-alt id="ex1" placeholder="{{row.arg4_ph}}" maxlength="50" pause="100" selected-object="row.arg4" disable-input="(row.arg4_ph =='') || (row.arg4_ph=='NA') || loading || viewTestcase" local-data="configParamList" search-fields="parameter_name" title-field="parameter_name" minlength="1" input-class="form-control form-control-small" match-class="highlight" override-suggestions="true">
+																	          </div>
 																	</td>
 																	<td>
-																		<input class="form-control" placeholder="{{row.arg4_ph}}" ng-model="row.arg4" ng-disabled="(row.arg4_ph =='') || (row.arg4_ph=='NA') || loading || viewTestcase">
-																	</td>
-																	<td>
-																		<input class="form-control" placeholder="{{row.arg5_ph}}" ng-model="row.arg5" ng-disabled="(row.arg5_ph =='') || (row.arg5_ph=='NA') || loading || viewTestcase">
+																		 <div angucomplete-alt id="ex1" placeholder="{{row.arg5_ph}}" maxlength="50" pause="100" selected-object="row.arg5" disable-input="(row.arg5_ph =='') || (row.arg5_ph=='NA') || loading || viewTestcase" local-data="configParamList" search-fields="parameter_name" title-field="parameter_name" minlength="1" input-class="form-control form-control-small" match-class="highlight" override-suggestions="true">
+																	          </div>
 																	</td>
 																	<td>
 																		<button type="button" class="btn btn-default btn-circle btn-xs" ng-click="addRowEvent(testStep.indexOf(row) + 1)" ng-disabled="loading || viewTestcase"><i class="fa fa-plus-circle"></i></button>
@@ -265,9 +307,13 @@
     
    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js">
       </script>
+      
+      <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.6/angular-touch.min.js"></script>
       <!-- Select Sanitize CSS -->
 	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular-sanitize.js"></script>
 	
+	
+	<script src="../resources/themes/bowerTheme/angucomplete-alt-master/angucomplete-alt.js"></script>
 	<!-- ui-select files -->
   <script src="../resources/themes/bowerTheme/ui-select-master/dist/select.js"></script>
     <!-- <script src="../resources/userJs/operationKeywords/app.js"></script>

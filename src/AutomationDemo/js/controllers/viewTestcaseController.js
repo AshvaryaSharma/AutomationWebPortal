@@ -1,6 +1,5 @@
-angular.module('viewTestCase',["checklist-model"]).controller('viewTestcaseController', function($scope,$http,$window) {
-
-
+'use strict';
+app.controller('viewTestcaseController', function($scope,$http, $window){
 	$scope.intializing = true;
 	
 	$scope.loading = false;
