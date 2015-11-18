@@ -1,0 +1,45 @@
+URL: /webservice/allPageNamesByApplication
+Method: post
+
+we need to pass application id
+input:
+1
+
+output:
+
+{
+  "status": "SUCCESS",
+  "exceptionMessage": null,
+  "pageNames": [
+    {
+      "pageid": 1,
+      "pageName": "Login",
+      "pageUrl": null,
+      "appId": 1
+    },
+    {
+      "pageid": 2,
+      "pageName": "MakeAPayment",
+      "pageUrl": null,
+      "appId": 1
+    },
+    {
+      "pageid": 3,
+      "pageName": "Profile",
+      "pageUrl": null,
+      "appId": 1
+    },
+    {
+      "pageid": 4,
+      "pageName": "UpdateProfile",
+      "pageUrl": null,
+      "appId": 1
+    },
+    {
+      "pageid": 5,
+      "pageName": "Billing",
+      "pageUrl": null,
+      "appId": 1
+    }
+  ]
+}
