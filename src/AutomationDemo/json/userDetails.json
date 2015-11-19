@@ -1,0 +1,12 @@
+{
+	"status":"SUCCESS",
+	"exceptionMessage":null,
+	"userDetails":
+	{
+		"sso_id":"ashvarya",
+		"first_name":"Ashvarya",
+		"last_name":"Sharma",
+		"email":"as0092571@techmahindra.com",
+		"groupId":1
+	}
+}

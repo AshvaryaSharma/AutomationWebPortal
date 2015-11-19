@@ -57,7 +57,7 @@
 												<label>Select Application</label>
 												<select name="application" id="application" class="form-control" ng-change="appChangeFunction()" ng-disabled="loading" ng-model="app_id">
 														<option value="">Select the application</option>
-														<option ng-repeat="app in safeAppData" value="{{app.app_id}}">{{app.app_name}}</option>
+														<option ng-repeat="app in safeAppData.applicationList" value="{{app.app_id}}">{{app.app_name}}</option>
 													</select>
 											</div>
 										</div>
@@ -104,16 +104,17 @@
 														<tbody>
 															<tr ng-repeat="row in testStep">
 																<td>
-																<ui-select ng-model="row.operation" theme="select2" ng-disabled="disabled" style="min-width: 300px;" title="Choose an Operation" ng-change="operatorSelectEvent(testStep.indexOf(row),true)">
+																<ui-select ng-model="row.operation" theme="select2" ng-disabled="disabled" style="min-width: 300px;" title="Choose an Operation" >
 																
 																	<ui-select-match placeholder="Select or Search an operation">{{$select.selected.keyword}}</ui-select-match>
+																 
+																	<ui-select-choices repeat="operation in safeOperationData.operationList | propsFilter: {keyword: $select.search, type: $select.search}">
 																
-																	<ui-select-choices repeat="operation in operationNames.operationList | propsFilter: {keyword: $select.search, type: $select.search}">
-																
-																		<b><div ng-bind-html="safeOperationKeywords | highlight: $select.search" ></div></b>
+																		<b><div ng-bind-html="operation.keyword | highlight: $select.search" ></div></b>
 																		<small>Type:
-																			<span ng-bind-html="''+safeOperationType | highlight: $select.search"> </span>
+																			<span ng-bind-html="''+operation.type | highlight: $select.search"> </span>
 																		</small>
+																		
 																	</ui-select-choices>
 																</ui-select>
 																</td>

@@ -1,0 +1,34 @@
+{
+  "status": "SUCCESS",
+  "exceptionMessage": null,
+  "operationList": [
+    {
+      "keyword": "Action_MouseClick",
+      "type": "UI"
+    },
+    {
+      "keyword": "Action_MouseOver",
+      "type": "UI"
+    },
+    {
+      "keyword": "Click",
+      "type": "UI"
+    },
+    {
+      "keyword": "EnterText",
+      "type": "UI"
+    },
+    {
+      "keyword": "OpenURL",
+      "type": "UI"
+    },
+    {
+      "keyword": "Open_DB",
+      "type": "NONUI"
+    },
+    {
+      "keyword": "SSH",
+      "type": "NONUI"
+    }
+  ]
+}

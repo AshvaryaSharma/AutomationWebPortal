@@ -167,8 +167,10 @@
 									</div>
 									<br>
 									
+									Note: To enter a Test Attribute in the fiels use format as: <label>{Test{variable}}</label>
 									
 									<div class="row" ng-show="isApplicationSelected">
+										
 										<div class="col-lg-12">
 											<div class="panel panel-default">
 												<div class="panel-heading">
@@ -191,7 +193,7 @@
 																</tr>
 															</thead>
 															
-															{{testStep}}
+															
 															<tbody>
 																<tr ng-repeat="row in testStep">
 																	
