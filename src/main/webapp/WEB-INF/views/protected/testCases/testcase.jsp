@@ -167,8 +167,15 @@
 									</div>
 									<br>
 									
-									Note: To enter a Test Attribute in the fiels use format as: <label>{Test{variable}}</label>
+									<div class="row" ng-show="isApplicationSelected">
+												<div class="col-lg-12">
+												<p>Note: To enter a Test Attribute in the fiels use format as: <label>{Test{"variable_name"}}</label></p>
+									<p>Example: For Using Test Attribute "URL" as input enter: <label>{Test{URL}}</label></p>
 									
+												</div>
+											
+											</div>
+									{{testStep}}
 									<div class="row" ng-show="isApplicationSelected">
 										
 										<div class="col-lg-12">

@@ -849,9 +849,21 @@ $scope.saveInitialize = function(){
 	
 	$scope.createTestcaseObject = function() {
 		
-		$scope.testcaseObject.package_id = $scope.package_id;
+		$scope.testcaseObject.app_id = $scope.app_id;
 		$scope.testcaseObject.testcase_name = $scope.testCaseName;
 		$scope.testcaseObject.testcase_description = $scope.testCaseDescription;
+		
+		for(var i=0; i < $scope.testStep.length; i++) {
+			
+			$scope.testcaseObject.teststeps[i].keyword = $scope.testStep[i].operation.keyword;
+			$scope.testcaseObject.teststeps[i].type = $scope.testStep[i].operation.type;
+			$scope.testcaseObject.teststeps[i].stepNo = i+1;
+			
+			if($scope.testStep[i].operation.type == 'UI') {
+				
+			}
+			
+		}
 		$scope.testcaseObject.teststeps = $scope.testStep;
 	}
 	
@@ -890,7 +902,7 @@ $scope.saveInitialize = function(){
 				console.log("####--Checking for arg3--#### " + $scope.testStep[i].arg3);
 				console.log("####--Checking for arg4--#### " + $scope.testStep[i].arg4);
 				console.log("####--Checking for arg5--#### " + $scope.testStep[i].arg5);
-				if($scope.testStep[i].keyword == "") {
+				if($scope.testStep[i].operation == undefined || $scope.testStep[i].operation.keyword == "") {
 					$scope.errorMessage = "Select keyword for Test Step no " + (i+1);
 					$scope.errorStatus= true;
 					break;
