@@ -1,0 +1,157 @@
+<safe-header></safe-header>
+<div id="wrapper">
+	<!-- Page Content -->
+   <div id="page-wrapper" ng-app="testCase">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header">Create Test Case</h1>
+			</div>
+			<!-- /.col-lg-12 -->
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<span class="safe-heading-label">Enter Test Case Details</span>
+					</div>
+					<div class="panel-body">
+						<form role="form">
+							<div class="row" ng-show="intializing || loading">
+								<div class="col-lg-12">
+									<center><img src="../resources/images/loading.gif" alt="Loading" height = "20" width="20"></center>
+								</div>
+							</div>
+							<div class="row" ng-show="errorStatus">
+								<div class="col-lg-12">
+									<div class="alert alert-danger">{{errorMessage}}</div>
+								</div>
+							</div>
+							<div class="row" ng-show="successStatus">
+								<div class="col-lg-12">
+									<div class="alert alert-success">{{successMessage}}</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-6">
+									<div class="row" ng-hide="intializing">
+										<div class="col-lg-12">
+											<label>Select Application</label>
+											<select name="application" id="application" class="form-control" ng-change="appChangeFunction()" ng-disabled="loading" ng-model="app_id">
+													<option value="">Select the application</option>
+													<option ng-repeat="app in safeAppData.applicationList" value="{{app.app_id}}">{{app.app_name}}</option>
+											</select>
+										</div>
+									</div>
+									<div class="row" ng-show="isApplicationSelected">
+										<div class="col-lg-12">
+											<label>Enter Test Case Name</label>
+											<input class="form-control" placeholder="Enter Test Case Name" ng-model="testCaseName" ng-change="testNameChange()">
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-6">
+									<div class="row" ng-show="isApplicationSelected">
+										<div class="col-lg-12">
+											<label>Test Case Description</label>
+											<textarea class="form-control" placeholder="Enter Test Case Description" rows="7" ng-model="testCaseDescription"  ng-disabled="loading"></textarea>
+										</div>
+									</div>
+								</div>
+							</div>
+							<br>
+							<div class="row" ng-show="isApplicationSelected">
+								<div class="col-lg-12">
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<span class="safe-heading-label">Enter Test Case Steps</span>
+										</div>
+										<div class="panel panel-body">
+											<div class="table-responsive">
+												<table class="table table-striped">
+													<thead>
+														<tr>
+															<th>#</th>
+															<th>Keyword</th>
+															<th>ARG1</th>
+															<th>ARG2</th>
+															<th>ARG3</th>
+															<th>ARG4</th>
+															<th>ARG5</th>
+															<th>+/-</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr ng-repeat="row in testStep">
+															<td>{{$index+1}}</td>
+															<td> 
+															<ui-select ng-model="row.operationSelected" ng-change="addOperation(row.operationSelected, $index)" theme="select2" ng-disabled="disabled" style="min-width: 300px;" title="Choose an Operation" >
+															
+																<ui-select-match placeholder="Select or Search an operation">{{$select.selected.keyword}}</ui-select-match>
+															 
+																<ui-select-choices repeat="operation in safeOperationData.operationList | propsFilter: {keyword: $select.search, type: $select.search}">
+															
+																	<b><div ng-bind-html="operation.keyword | highlight: $select.search" ></div></b>
+																	<small>Type:
+																		<span ng-bind-html="''+operation.type | highlight: $select.search"> </span>
+																	</small>
+																	
+																</ui-select-choices>
+															</ui-select>
+															</td>
+																<td>
+																	
+																	<input class="form-control" placeholder="{{row.arg1}}" ng-model="row.arg1" ng-disabled="(row.arg1=='NA') || (row.arg1==null) || loading">
+																</td>
+																<td>
+																	<input class="form-control" placeholder="{{row.arg2}}" ng-model="row.arg2" ng-disabled="(row.arg2=='NA') || (row.arg2==null) || loading">
+																</td>
+																<td>
+																	<input class="form-control" placeholder="{{row.arg3}}" ng-model="row.arg3" ng-disabled="(row.arg3=='NA') || (row.arg3==null) || loading">
+																</td>
+																<td>
+																	<input class="form-control" placeholder="{{row.arg4}}" ng-model="row.arg4" ng-disabled="(row.arg4 =='NA') || (row.arg4==null) || loading">
+																</td>
+																<td>
+																	<input class="form-control" placeholder="{{row.arg5}}" ng-model="row.arg5" ng-disabled="(row.arg5 =='NA') || (row.arg5==null) || loading">
+																</td>
+																<td>
+																	<button type="button" class="btn btn-default btn-circle btn-xs" ng-click="addRowEvent($index)" ng-disabled="loading"><i class="fa fa-plus-circle"></i></button>
+																	<button type="button" class="btn btn-default btn-circle btn-xs"  ng-click="removeRowEvent($index)"  ng-disabled="loading"><i class="fa fa-minus-circle"></i></button>
+																</td>b
+															</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+																
+							</div>
+							<div class="row">
+								
+								<div class="col-lg-6">
+									<button type="button" class="btn btn-default" ng-click="submitTestcase()"  ng-disabled="loading">Create</button>
+									<button type="reset" class="btn btn-default" ng-click=""  ng-disabled="loading">Reset</button>
+								</div>
+							
+							</div>
+							
+						</form>
+					</div>
+					
+				</div>
+			</div>
+		</div>	
+	
+	</div>
+   
+   
+   </div>
+	<!-- /#page-wrapper -->
+
+</div>
+<!-- /#wrapper -->
+
+<!-- jQuery -->
+<safe-footer></safe-footer>
