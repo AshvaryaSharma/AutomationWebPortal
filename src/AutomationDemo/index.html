@@ -8,28 +8,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-	<!-- Bootstrap Core CSS -->
-    <link href="lib/bootstrap.css" rel="stylesheet">
-
-    <!-- MetisMenu CSS -->
-    <link href="css/metisMenu.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="css/sb-admin-2.css" rel="stylesheet">
-    <link href="css/tech-m.css" rel="stylesheet">
-	<link href="css/custom.css" rel="stylesheet">
-	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
 	
-    <!-- Custom Fonts -->
-    <link href="css/font-awesome.css" rel="stylesheet" type="text/css">
-	
+    
 	<script src="lib/jquery-2.1.4.js"></script>
 	<script src="lib/bootstrap.js"></script>
-	<script src="lib/angular/angular.js"></script>
+	<!--<script src="lib/angular/angular.js"></script>-->
+	<!--<script src="lib/angular/angular-sanitize.js"></script>-->
+	<!--<script src="lib/angular/angular-touch.js"></script>-->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js">
+      </script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.6/angular-touch.min.js"></script>
+      <!-- Select Sanitize CSS -->
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular-sanitize.js"></script>
 	<script src="lib/angular/angular-route.js"></script>
 	<script src="lib/angular/angular-resource.js"></script>
 	<script src="lib/angular/angular-animate.js"></script>
-	<script src="lib/angular/angular-sanitize.js"></script>
+	<script src="js/ui-select-master/select.js"></script>
 	<script src="js/app.js"></script>
 	<script src="js/directives.js"></script>
 	<script src="https://ideas.techmahindra.com/BaseStyle/js/jquery.accordion.js"></script>
@@ -37,13 +31,33 @@
 	<script src="js/controllers/viewTestcaseController.js"></script>
 	<script src="js/services/testService.js"></script>
 	<script src="js/Checklist-model.js"></script>
+	
+	<script src="js/angucomplete-alt.js"></script>
     <!s-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+	<!-- Custom Fonts -->
+    <link href="css/font-awesome.css" rel="stylesheet" type="text/css">
+	<!-- Bootstrap Core CSS -->
+    <link href="lib/bootstrap.css" rel="stylesheet">
 
+    <!-- MetisMenu CSS -->
+    <link href="css/metisMenu.css" rel="stylesheet">
+
+	<!-- Custom CSS -->
+    <link href="css/sb-admin-2.css" rel="stylesheet">
+    <link href="css/tech-m.css" rel="stylesheet">
+	<link href="css/custom.css" rel="stylesheet">
+	<link href="css/select.css" rel="stylesheet">
+	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
+	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css">
+	<link rel="stylesheet" href="css/angucomplete-alt.css">
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
+	
+    
 </head>
 <body>
 	<div ng-view></div>
