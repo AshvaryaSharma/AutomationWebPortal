@@ -1,3 +1,6 @@
+button, table thead th, label, ul li a {
+	font-family: 'Open Sans', Sans Serif;
+}
 .container-fluid {
 	padding-left: 0px;
 	padding-right: 0px;
@@ -20,10 +23,17 @@
 }
 .nav .open > a, .nav .open > a:focus, .nav .open > a:hover {
 	color: #337ab7 !important;
+} 
+.footer {
+	font-family: 'Open Sans', Sans Serif; 
 }
 #safe-dropdown > a:hover {
 	color: #fff !important;
 }
+.safe-heading-label, .page-header {
+	font-family: 'Open Sans', Sans Serif !important; 
+}
+
 .footer {
 	font-family: 'Open Sans', Sans Serif;
 	padding-top: 10px;
