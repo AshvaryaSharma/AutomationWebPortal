@@ -1,0 +1,12 @@
+
+{
+  "status": "SUCCESS",
+  "exceptionMessage": null,
+  "operation": {
+    "keyword": "OpenURL",
+    "arg1": "URL_To_Open",
+    "arg2": "NA",
+    "arg3": "NA",
+    "description": "Checks whether specified Variable (in Argument 1) is empty or null, if found then stop the execution."
+  }
+}

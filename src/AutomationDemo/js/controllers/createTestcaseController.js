@@ -221,16 +221,17 @@ app.controller('createTestcaseController', function(createTestService, $scope, $
 		console.log("Removing the row::"+index);
 		$scope.loading = true;
 		var itr = 0;
-		for(itr=$scope.testStep.length-1; itr>= index; itr--) {
-			$scope.testStep[itr-1] = $scope.testStep[itr];
+		for(itr=index; itr < $scope.testStep.length; itr++) {
+			$scope.testStep[itr] = $scope.testStep[itr+1];
 		}
 		$scope.testStep.length = $scope.testStep.length - 1;
-		console.log("Length of testSteps::"+$scope.testStep.length+"Array::"+$scope.testStep);
-		//$scope.printTestSteps();
+		console.log("Length of testSteps::"+$scope.testStep.length+" Array::"+$scope.testStep);
+		$scope.printTestSteps();
 		$scope.loading = false;
 	}
 	/*Function, only for debugging purposes*/
 	$scope.printTestSteps = function() {
+		console.log(".........Printing the test steps......");
 		var itr = 0;
 		for(itr=0; itr < $scope.testStep.length; itr++) {
 			console.log(" "+itr+ "Keyword::"+$scope.testStep[itr].keyword+" Type::"+$scope.testStep[itr].type);
@@ -311,8 +312,33 @@ app.controller('createTestcaseController', function(createTestService, $scope, $
 		else {
 			$scope.errorMessage = "No operation Selected";
 		}
-		$scope.printTestSteps();
+		//$scope.printTestSteps();
 	};
+	$scope.reset = function() {
+		console.log("Resetting the values...");
+		$scope.isApplicationSelected = false;
+		$scope.loading = false;
+		$scope.successStatus = false;
+		$scope.errorMessage = null;
+		$scope.errorStatus = false;
+		var itr = 0;
+		for(itr in $scope.testStep) {
+			$scope.testStep[itr].keyword = '';
+			console.log("keyword:: "+$scope.testStep[itr].keyword);
+			$scope.testStep[itr].arg1 = null;
+			$scope.testStep[itr].arg2 = null;
+			$scope.testStep[itr].arg3 = null;
+			$scope.testStep[itr].arg4 = null;
+			$scope.testStep[itr].arg5 = null;
+			$scope.testStep[itr].arg1_ph = '';
+			$scope.testStep[itr].arg2_ph = '';
+			$scope.testStep[itr].arg3_ph = '';
+			$scope.testStep[itr].arg4_ph = '';
+			$scope.testStep[itr].arg5_ph = '';
+			console.log("ITR::::"+itr);
+		}
+		$scope.printTestSteps();
+	}
 	$scope.startApplication = function() {
 		//$scope.user = userId;
 		console.log("Page action is create");

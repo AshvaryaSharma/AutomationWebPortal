@@ -1,0 +1,27 @@
+
+{
+  "status": "SUCCESS",
+  "exceptionMessage": null,
+  "applicationList": [
+    {
+      "app_id": 1,
+      "app_description": "This contains test cases of MyATT Applicatioa",
+      "app_name": "MyAtt"
+    },
+    {
+      "app_id": 2,
+      "app_description": "This contatins test cases of OPSS Application",
+      "app_name": "OPSS"
+    },
+    {
+      "app_id": 3,
+      "app_description": "This Contains test cases of EDD application. This Contains test cases of EDD application. This Contains test cases of EDD application. This Contains",
+      "app_name": "EDD"
+    },
+    {
+      "app_id": 4,
+      "app_description": "Sales test case go here",
+      "app_name": "Sales"
+    }
+  ]
+}

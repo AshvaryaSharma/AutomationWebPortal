@@ -1,0 +1,17 @@
+/***********************************getUiOperationByName.json****************************************/
+URL: /webservice/getUiOperationByName
+Method: post
+
+input:
+OpenURL
+
+output:
+/**************************************getNonUiOperationByName.json**********************/
+URL: /webservice/getNonUiOperationByName
+Method: post
+
+input:
+SSH
+
+output:
+

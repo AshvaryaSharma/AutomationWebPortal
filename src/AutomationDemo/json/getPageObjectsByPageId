@@ -1,0 +1,47 @@
+URL: /webservice/getPageObjectsByPageId
+Method: post
+
+we need to pass pageid
+input:
+1
+
+output:
+
+{
+  "status": "SUCCESS",
+  "exceptionMessage": null,
+  "list": [
+    {
+      "pageObjectId": 1,
+      "pageNameId": 1,
+      "pageObjectName": "UserID",
+      "pageObjectType": "TXTBOX",
+      "pageObjectLocatorType": "XPATH",
+      "pageObjectLocatorInfo": ".//*[@id='userID']"
+    },
+    {
+      "pageObjectId": 2,
+      "pageNameId": 1,
+      "pageObjectName": "Password",
+      "pageObjectType": "TXTBOX",
+      "pageObjectLocatorType": "XPATH",
+      "pageObjectLocatorInfo": ".//*[@id='password']"
+    },
+    {
+      "pageObjectId": 3,
+      "pageNameId": 1,
+      "pageObjectName": "LoginButton",
+      "pageObjectType": "BUTTON",
+      "pageObjectLocatorType": "XPATH",
+      "pageObjectLocatorInfo": ".//*[@id='LoginButton']/input"
+    },
+    {
+      "pageObjectId": 7,
+      "pageNameId": 1,
+      "pageObjectName": "Continue_NoThanks",
+      "pageObjectType": "LINK",
+      "pageObjectLocatorType": "CSS",
+      "pageObjectLocatorInfo": ".btnLt>a"
+    }
+  ]
+}
