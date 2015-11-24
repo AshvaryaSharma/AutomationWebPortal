@@ -16,7 +16,7 @@
 						<span class="safe-heading-label">Enter Test Case Details</span>
 					</div>
 					<div class="panel-body">
-						<form role="form">
+						<form role="form" name="safeForm">
 							<div class="row" ng-show="intializing || loading">
 								<div class="col-lg-12">
 									<center><img src="../resources/images/loading.gif" alt="Loading" height = "20" width="20"></center>
@@ -32,6 +32,7 @@
 									<div class="alert alert-success">{{successMessage}}</div>
 								</div>
 							</div>
+							
 							<div class="row">
 								<div class="col-lg-6">
 									<div class="row" ng-hide="intializing">
@@ -84,7 +85,7 @@
 													<tbody>
 														<tr ng-repeat="row in testStep">
 															<td>{{$index+1}}</td>
-															<td> 
+															<td> {{row.operationSelected}}
 															<ui-select ng-model="row.operationSelected" ng-change="addOperation(row.operationSelected, $index)" theme="select2" ng-disabled="disabled" style="min-width: 300px;" title="Choose an Operation" >
 															
 																<ui-select-match placeholder="Select or Search an operation">{{$select.selected.keyword}}</ui-select-match>
