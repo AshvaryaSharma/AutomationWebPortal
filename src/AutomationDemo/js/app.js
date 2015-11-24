@@ -5,7 +5,7 @@ app.config(['$routeProvider', function($routeProvider){
 	$routeProvider.
 	when('/dashboard', {
 		templateUrl : 'partials/dashboard.html',
-		controller: ''
+		controller: 'dashboardController'
 	}).
 	when('/viewTestcases', {
 		templateUrl : 'partials/viewTestcase.html',
