@@ -18,11 +18,11 @@ public class TestcaseDaoImpl extends AbstractDao<Integer,Testcase> implements Te
 	}
 
 	@Override
-	public List<Testcase> getTestcasesByPackageId(int id) {
+	public List<Testcase> getAllTestCasesByApplicationId(int id) {
 		System.out.println("Getting all test cases for package id: " + id);
 		
-		Query query = getSession().createQuery("from Testcase where package_id =:package_id");
-		query.setInteger("package_id", id);
+		Query query = getSession().createQuery("from Testcase where app_id =:app_id");
+		query.setInteger("app_id", id);
 		List<Testcase> testcases = query.list();
 		return testcases;
 	}

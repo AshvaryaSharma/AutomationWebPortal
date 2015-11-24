@@ -100,7 +100,7 @@ public class WebserviceController {
 	}
 	
 	
-	@RequestMapping(value="/webservice/findAllApplications" , method = RequestMethod.GET)
+	/*@RequestMapping(value="/webservice/findAllApplications" , method = RequestMethod.GET)
 	public ResponseEntity<List<Application>> findAllApplications() {
 		List<Application> application = createTestcaseService.findAllApplications();
 		
@@ -110,7 +110,7 @@ public class WebserviceController {
 		
 		return new ResponseEntity<List<Application>>(application, HttpStatus.OK);
 	}
-	
+	*/
 	
 	@RequestMapping(value="/webservice/findApplicationsByUserId" , method = RequestMethod.POST)
 	public ResponseEntity<ApplicationList> findApplicationsByUserID(@RequestBody String userId) {
@@ -238,7 +238,7 @@ public class WebserviceController {
 		
 	}
 	
-	@RequestMapping(value ="/webservice/gettestcasesbypackageid" , method = RequestMethod.POST)
+	/*@RequestMapping(value ="/webservice/gettestcasesbypackageid" , method = RequestMethod.POST)
 	public ResponseEntity<List<Testcase>> findTestCasesByPackageId(@RequestBody int package_id) {
 		
 		System.out.println("Getting Test cases for package id: " + package_id);
@@ -248,11 +248,11 @@ public class WebserviceController {
 		}
 		return new ResponseEntity<List<Testcase>>(testcases,HttpStatus.OK);
 		
-	}
+	}*/
 	
 	@RequestMapping(value="/webservice/addNewTestCase" , method = RequestMethod.POST)
 	public ResponseEntity<Void> addNewTestCase(@RequestBody TestcaseSample testcase) {
-		System.out.println("Creating new test case in package with id: " + testcase.getPackage_id());
+		System.out.println("Creating new test case in Application with id: " + testcase.getApp_id());
 		
 		System.out.println("########## Testcase Object:#####################");
 		
@@ -363,7 +363,7 @@ public class WebserviceController {
 	
 	@RequestMapping(value="/webservice/updateTestCase" , method = RequestMethod.POST)
 	public ResponseEntity<Void> updateTestCase(@RequestBody TestcaseSample testcase) {
-		System.out.println("Creating new test case in package with id: " + testcase.getPackage_id());
+		System.out.println("Creating new test case in Application with id: " + testcase.getApp_id());
 		
 		System.out.println("########## UPDATE Testcase Object:#####################");
 		

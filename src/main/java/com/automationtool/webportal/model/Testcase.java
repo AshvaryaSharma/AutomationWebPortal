@@ -68,15 +68,15 @@ public class Testcase {
 	}
 	
 	@ManyToOne(optional=false)
-	@JoinColumn(name="package_id")
-	private Packages packages;
+	@JoinColumn(name="app_id")
+	private Application application;
 
-	public Packages getPackages() {
-		return packages;
+	public Application getApplication() {
+		return application;
 	}
 
-	public void setPackages(Packages packages) {
-		this.packages = packages;
+	public void setApplication(Application application) {
+		this.application = application;
 	}
 	
 }

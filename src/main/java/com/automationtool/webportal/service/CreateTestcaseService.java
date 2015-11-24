@@ -7,10 +7,11 @@ import com.automationtool.webportal.model.Packages;
 import com.automationtool.webportal.model.Testcase;
 import com.automationtool.webportal.model.viewModel.TestcaseSample;
 import com.automationtool.webportal.model.webservices.ApplicationList;
+import com.automationtool.webportal.model.webservices.TestcasesList;
 
 public interface CreateTestcaseService {
 	
-	List<Application> findAllApplications();
+	
 
 	List<Packages> findPackagesByApplicationId(int app_id);
 	
@@ -20,12 +21,18 @@ public interface CreateTestcaseService {
 	
 	boolean updateTestcase(TestcaseSample testcase);
 	
-	List<Testcase> getTestcasesByPackageId(int package_id);
+	
 
 	TestcaseSample getTestcase(int testcase_id);
 
 	void deleteTestCases(int[] testcaseIDs);
 
 	ApplicationList findApplicationsByUserId(String userId);
+
+	List<Application> findAllApplications();
+
+	TestcasesList getAllTestCasesByApplicationId(int appId);
+	
+	
 
 }

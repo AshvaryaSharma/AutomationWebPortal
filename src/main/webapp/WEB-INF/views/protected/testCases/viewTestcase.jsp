@@ -104,21 +104,12 @@
 													
 												</div>
 											</div>
-											<div class="row" ng-show="isApplicationSelected">
-												<div class="col-lg-12">
-													<label>Select Package</label>
-														<select name="package" id="package" ng-model="package_id" class="form-control" ng-change="packageSelectEvent()" ng-disabled="loading">
-															<option value="" ng-selected="applicationsLoaded">Select Package</option>
-															<option ng-repeat="n in packages" value="{{n.package_id}}">{{n.package_name}}</option>
-													
-														</select>
-												</div>
-											</div>
+											
 											
 											
 										</div>
 										<div class="col-lg-6">
-											<div class="row" ng-show="isPackageSelected">
+											<div class="row" ng-show="isApplicationSelected">
 												<div class="col-lg-12">
 													<label>Package Description</label>
 													<textarea class="form-control" placeholder="{{package_description}}" rows="4" disabled></textarea>
@@ -127,7 +118,7 @@
 										</div>
 									</div>
 									<br>
-									<div class="row" ng-show="isPackageSelected && (testcases.length > 0)">
+									<div class="row" ng-show="isApplicationSelected && (testcases.length > 0)">
 										<div class="col-lg-12">
 											<div class="panel panel-default">
 												<div class="panel-heading">
@@ -174,6 +165,7 @@
 												</div>
 											</div>
 										</div>
+										
 												<!-- {{testcasesTobeDeleted}} -->						
 									</div>
 									<div class="row">

@@ -52,4 +52,12 @@ public class ApplicationDaoImpl extends AbstractDao<BigInteger,Application> impl
 		return list;
 	}
 
+	@Override
+	public Application getApplicationById(int appid) {
+		Query query = getSession().createQuery("from Application where app_id = :appId");
+		query.setInteger("appId", appid);
+		Application list = (Application) query.uniqueResult();
+		return list;
+	}
+
 }

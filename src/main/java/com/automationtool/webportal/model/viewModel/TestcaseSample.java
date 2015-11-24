@@ -10,13 +10,13 @@ public class TestcaseSample {
 
 	@Override
 	public String toString() {
-		return "TestcaseSample [testcase_id=" + testcase_id + ", package_id="
-				+ package_id + ", testcase_name=" + testcase_name
+		return "TestcaseSample [testcase_id=" + testcase_id + ", app_id="
+				+ app_id + ", testcase_name=" + testcase_name
 				+ ", testcase_description=" + testcase_description
 				+ ", teststeps=" + Arrays.toString(teststeps) + "]";
 	}
 	private int testcase_id;
-	private int package_id;
+	private int app_id;
 	private String testcase_name;
 	private String testcase_description;
 	private Teststeps teststeps [];
@@ -24,10 +24,10 @@ public class TestcaseSample {
 	
 	
 	
-	public TestcaseSample(int package_id, String testcase_name,
+	public TestcaseSample(int app_id, String testcase_name,
 			String testcase_description, Teststeps[] teststeps) {
 		
-		this.package_id = package_id;
+		this.app_id = app_id;
 		this.testcase_name = testcase_name;
 		this.testcase_description = testcase_description;
 		this.teststeps = teststeps;
@@ -43,11 +43,11 @@ public class TestcaseSample {
 	public void setTestcase_id(int testcase_id) {
 		this.testcase_id = testcase_id;
 	}
-	public int getPackage_id() {
-		return package_id;
+	public int getApp_id() {
+		return app_id;
 	}
-	public void setPackage_id(int package_id) {
-		this.package_id = package_id;
+	public void setPackage_id(int app_id) {
+		this.app_id = app_id;
 	}
 	public String getTestcase_name() {
 		return testcase_name;

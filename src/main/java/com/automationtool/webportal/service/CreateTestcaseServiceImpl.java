@@ -20,6 +20,7 @@ import com.automationtool.webportal.model.Testcase;
 import com.automationtool.webportal.model.Teststeps;
 import com.automationtool.webportal.model.viewModel.TestcaseSample;
 import com.automationtool.webportal.model.webservices.ApplicationList;
+import com.automationtool.webportal.model.webservices.TestcasesList;
 
 @Service("createTestcaseService")
 @Transactional
@@ -60,10 +61,10 @@ public class CreateTestcaseServiceImpl implements CreateTestcaseService {
 	@Override
 	public boolean createTestcase(int package_id, String testcaseName,
 			String testcaseDescription) {
-		Packages pckg = packages.findPackageByPackageId(package_id);
+		Application app = application.getApplicationById(package_id);
 		Testcase testcase_new = new Testcase(testcaseName, testcaseDescription);
 		
-		testcase_new.setPackages(pckg);
+		testcase_new.setApplication(app);
 		boolean flag;
 		try {
 			testcase.createTestcase(testcase_new);
@@ -82,8 +83,9 @@ public class CreateTestcaseServiceImpl implements CreateTestcaseService {
 	public boolean createTestcase(TestcaseSample testcaseSample) {
 		boolean flag = false;
 		
-		Packages pckg = packages.findPackageByPackageId(testcaseSample.getPackage_id());
-		System.out.println("Got package: " + pckg);
+		
+		Application app = application.getApplicationById(testcaseSample.getApp_id());
+		System.out.println("Got application: " + app);
 		Testcase new_testCase = new Testcase(testcaseSample.getTestcase_name(), testcaseSample.getTestcase_description());
 		Teststeps new_testCase_teststeps [] = testcaseSample.getTeststeps();
 		System.out.println("Test steps for creating: " + Arrays.toString(testcaseSample.getTeststeps()));
@@ -92,8 +94,8 @@ public class CreateTestcaseServiceImpl implements CreateTestcaseService {
 			return false;
 		}
 		
-		System.out.println("Setting package for new test case: " + pckg.getPackage_id());
-		new_testCase.setPackages(pckg);
+		System.out.println("Setting applicati for new test case: " + app.getApp_name());
+		new_testCase.setApplication(app);
 		try {
 			testcase.createTestcase(new_testCase);
 			flag=true;
@@ -125,11 +127,7 @@ public class CreateTestcaseServiceImpl implements CreateTestcaseService {
 	}
 
 
-	@Override
-	public List<Testcase> getTestcasesByPackageId(int package_id) {
-		
-		return testcase.getTestcasesByPackageId(package_id);
-	}
+	
 
 
 	@Override
@@ -144,10 +142,10 @@ public class CreateTestcaseServiceImpl implements CreateTestcaseService {
 		}
 		Teststeps steps [] = teststeps.getTestSteps(testcase_id);
 		
-		testSample = new TestcaseSample(test.getPackages().getPackage_id(), test.getTestcase_name(), test.getTestcase_description(), steps);
-		testSample.setTestcase_id(testcase_id);
+//		testSample = new TestcaseSample(test.getApplication().getApp_id(), test.getTestcase_name(), test.getTestcase_description(), steps);
+//		testSample.setTestcase_id(testcase_id);
 		
-		return testSample;
+		return null;
 	}
 
 
@@ -171,7 +169,7 @@ public class CreateTestcaseServiceImpl implements CreateTestcaseService {
 
 		boolean flag = false;
 		
-		Packages pckg = packages.findPackageByPackageId(testcaseSample.getPackage_id());
+		Packages pckg = packages.findPackageByPackageId(testcaseSample.getApp_id());
 		System.out.println("Got package: " + pckg);
 		Testcase new_testCase = new Testcase(testcaseSample.getTestcase_name(), testcaseSample.getTestcase_description());
 		Teststeps new_testCase_teststeps [] = testcaseSample.getTeststeps();
@@ -182,7 +180,7 @@ public class CreateTestcaseServiceImpl implements CreateTestcaseService {
 		}
 
 		System.out.println("Setting package for new test case: " + pckg.getPackage_id());
-		new_testCase.setPackages(pckg);
+		/*new_testCase.setPackages(pckg);*/
 		new_testCase.setTestcase_id(testcaseSample.getTestcase_id());
 		try {
 			testcase.updateTestcase(new_testCase);
@@ -257,5 +255,35 @@ public class CreateTestcaseServiceImpl implements CreateTestcaseService {
 		
 		
 	}
+
+
+	@Override
+	public TestcasesList getAllTestCasesByApplicationId(int appId) {
+		TestcasesList testcaseList = null;
+		List<Testcase> testCases;
+		
+		try {
+			testCases = testcase.getAllTestCasesByApplicationId(appId);
+			if(testCases.isEmpty() || testCases == null) {
+				throw new Exception("No Testcases returned for Application");
+			}
+			testcaseList = new TestcasesList();
+			testcaseList.setStatus("SUCCESS");
+			testcaseList.setTestcasesList(testCases);
+		} catch (NullPointerException e) {
+			testcaseList = new TestcasesList("ERROR", "No Testcases returned for Application");
+		} catch(Exception e) {
+			testcaseList = new TestcasesList("ERROR", e.getMessage());
+		}
+		
+		return testcaseList;
+	}
+
+
+	
+
+
+	
+	
 
 }

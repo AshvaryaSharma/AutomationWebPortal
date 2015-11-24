@@ -345,14 +345,18 @@ $scope.saveInitialize = function(){
 		$scope.testCaseName = "";
 		$scope.tempTestStep = {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:'', pageObject:''};
 		$scope.testStep = [{keyword:'',arg1:null,arg2: null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:'', pageObject:''},
-		                   {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:'', pageObject:''},
-		                   {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:'', pageObject:''},
-		                   {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:'', pageObject:''},
+		                   {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''},
+		                   {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''},
+		                  
+		                   {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''},
+		                   {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''},
+		                   {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''},
+		                   {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''},
 		                   {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:'', pageObject:''}
 		                   ];
 		$scope.editTestCase = false;
 		$scope.testcaseObject = {
-				package_id : null,
+				app_id : null,
 				testcase_id : null,
 				testcase_name:'',
 				testcase_description: '',
@@ -832,11 +836,16 @@ $scope.saveInitialize = function(){
 			$scope.tempTestStep = {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''};
 			$scope.testStep = [{keyword:'',arg1:null,arg2: null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''},
 			                   {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''},
+			                   {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''},
+			                   {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''},
+			                   {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''},
+			                   {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''},
+			                   {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''},
 			                   {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''}
 			                   ];
 			
 			$scope.testcaseObject = {
-					package_id : null,
+					app_id : null,
 					testcase_id : null,
 					testcase_name:'',
 					testcase_description: '',
@@ -855,16 +864,65 @@ $scope.saveInitialize = function(){
 		
 		for(var i=0; i < $scope.testStep.length; i++) {
 			
+			
+			if(i>0) {
+				$scope.testcaseObject.teststeps.push({});
+			}
+			
 			$scope.testcaseObject.teststeps[i].keyword = $scope.testStep[i].operation.keyword;
 			$scope.testcaseObject.teststeps[i].type = $scope.testStep[i].operation.type;
 			$scope.testcaseObject.teststeps[i].stepNo = i+1;
 			
 			if($scope.testStep[i].operation.type == 'UI') {
+				$scope.testcaseObject.teststeps[i].arg1 = $scope.testStep[i].arg1.pageid;
+				$scope.testcaseObject.teststeps[i].arg2 = $scope.testStep[i].arg2.pageObjectId;
+			} else if($scope.testStep[i].operation.type == 'NONUI') {
+				
+				if($scope.testStep[i].arg1.title == undefined) {
+					$scope.testcaseObject.teststeps[i].arg1 = $scope.testStep[i].arg1.originalObject;
+				} else {
+					$scope.testcaseObject.teststeps[i].arg1 = "{Config{" +$scope.testStep[i].arg1.title +"}}";
+				}
+				
+				
+				if($scope.testStep[i].arg2.title == undefined) {
+					$scope.testcaseObject.teststeps[i].arg2 = $scope.testStep[i].arg2.originalObject;
+				} else {
+					$scope.testcaseObject.teststeps[i].arg2 = "{Config{" +$scope.testStep[i].arg2.title+"}}";
+				}
 				
 			}
 			
+			if($scope.testStep[i].arg3 != null) {
+				if($scope.testStep[i].arg3.title == undefined) {
+					$scope.testcaseObject.teststeps[i].arg3 = $scope.testStep[i].arg3.originalObject;
+				} else {
+					$scope.testcaseObject.teststeps[i].arg3 = "{Config{" +$scope.testStep[i].arg3.title+"}}";
+				}
+			}
+			
+			if($scope.testStep[i].arg4 != null) {
+				if($scope.testStep[i].arg4.title == undefined) {
+					$scope.testcaseObject.teststeps[i].arg4 = $scope.testStep[i].arg4.originalObject;
+				} else {
+					$scope.testcaseObject.teststeps[i].arg4 = "{Config{" +$scope.testStep[i].arg4.title+"}}";
+				}
+			}
+			
+			if($scope.testStep[i].arg5 != null) {
+				
+				if($scope.testStep[i].arg5.title == undefined) {
+					$scope.testcaseObject.teststeps[i].arg5 = $scope.testStep[i].arg5.originalObject;
+				} else {
+					$scope.testcaseObject.teststeps[i].arg5 = "{Config{" +$scope.testStep[i].arg5.title+"}}";
+				}
+				
+			}
+			
+			
+			
 		}
-		$scope.testcaseObject.teststeps = $scope.testStep;
+		
 	}
 	
 	

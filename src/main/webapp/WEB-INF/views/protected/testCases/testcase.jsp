@@ -175,7 +175,7 @@
 												</div>
 											
 											</div>
-									{{testStep}}
+									
 									<div class="row" ng-show="isApplicationSelected">
 										
 										<div class="col-lg-12">

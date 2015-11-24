@@ -17,8 +17,10 @@ import com.automationtool.webportal.model.webservices.ApplicationList;
 import com.automationtool.webportal.model.webservices.NonUIOperation;
 import com.automationtool.webportal.model.webservices.PageNames;
 import com.automationtool.webportal.model.webservices.PageObjectList;
+import com.automationtool.webportal.model.webservices.TestcasesList;
 import com.automationtool.webportal.model.webservices.UiOperationObj;
 import com.automationtool.webportal.model.webservices.UserDetail;
+import com.automationtool.webportal.service.CreateTestcaseService;
 import com.automationtool.webportal.service.OperationService;
 import com.automationtool.webportal.service.PageNameService;
 import com.automationtool.webportal.service.UserService;
@@ -36,6 +38,9 @@ public class NewWebservicesController {
 	@Autowired
 	UserService userService;
 	
+	@Autowired
+	CreateTestcaseService testcaseService;
+	
 	private static final Logger logger = Logger.getLogger(NewWebservicesController.class);
 	
 	@RequestMapping(value="/webservice/allPageNamesByApplication" , method = RequestMethod.POST)
@@ -49,6 +54,22 @@ public class NewWebservicesController {
 		}
 		
 		return new ResponseEntity<PageNames>(pageNames, HttpStatus.OK);
+	}
+	
+	
+	
+	
+	@RequestMapping(value="/webservice/gettestcasesByApplicationId" , method = RequestMethod.POST)
+	public ResponseEntity<TestcasesList> getAllTestCasesByApplication(@RequestBody int appId) {
+		
+		logger.info("--Getting All Test Cases for application" + appId);
+		TestcasesList testcaseList =  testcaseService.getAllTestCasesByApplicationId(appId);
+		
+		if(testcaseList.getStatus().equalsIgnoreCase("ERROR")) {
+			return new ResponseEntity<TestcasesList>(testcaseList, HttpStatus.EXPECTATION_FAILED);
+		}
+		
+		return new ResponseEntity<TestcasesList>(testcaseList, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/webservice/getLoggedUserDetails" , method = RequestMethod.GET)

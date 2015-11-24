@@ -17,6 +17,8 @@ public interface ApplicationDao {
 
 	List<Application> findApplicationsByAppIds(List<BigInteger> appId);
 
+	Application getApplicationById(int appid);
+
 	
 	
 }

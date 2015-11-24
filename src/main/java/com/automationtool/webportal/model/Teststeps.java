@@ -37,6 +37,42 @@ public class Teststeps {
 	@Column(name="arg5")
 	private String arg5;
 	
+	@Column(name="step_num")
+	private int stepNo;
+	
+	@Column(name="type")
+	private String type;
+	
+	public int getStepNo() {
+		return stepNo;
+	}
+
+	public Teststeps(String keyword, String arg1, String arg2, String arg3,
+			String arg4, String arg5, int stepNo, String type, Testcase testcase) {
+		super();
+		this.keyword = keyword;
+		this.arg1 = arg1;
+		this.arg2 = arg2;
+		this.arg3 = arg3;
+		this.arg4 = arg4;
+		this.arg5 = arg5;
+		this.stepNo = stepNo;
+		this.type = type;
+		this.testcase = testcase;
+	}
+
+	public void setStepNo(int stepNo) {
+		this.stepNo = stepNo;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 	@ManyToOne(optional=false)
 	@JoinColumn(name="testcase_id")
 	private Testcase testcase;
