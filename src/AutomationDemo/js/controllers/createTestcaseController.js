@@ -44,11 +44,11 @@ app.controller('createTestcaseController', function(createTestService, $scope, $
 	$scope.safeAppData = [];
 	$scope.operationSelected = {};
 	$scope.operationDetails = {};
-	$scope.testStep = [{keyword:'',arg1:null,arg2: null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''},
-						   {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''},
-						   {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''},
-						   {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''},
-						   {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''}
+	$scope.testStep = [{keyword:'',type:'',arg1:null,arg2: null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''},
+						   {keyword:'',type:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''},
+						   {keyword:'',type:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''},
+						   {keyword:'',type:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''},
+						   {keyword:'',type:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''}
 						   ];
 	var current = $rootScope.current;
 
@@ -131,6 +131,7 @@ app.controller('createTestcaseController', function(createTestService, $scope, $
 	/*Checking if any application is selected or not*/
 	$scope.appChangeFunction = function() {
 		$scope.isApplicationSelected = true;
+		console.log("isApplicationSelected::"+$scope.isApplicationSelected);
 	}
 	/*Checking if any testcase name been entered or not*/
 	$scope.testNameChange = function() {		
@@ -242,11 +243,11 @@ app.controller('createTestcaseController', function(createTestService, $scope, $
 		createTestService.getAppData()
 		.then(function(appData) {
 			$scope.safeAppData = appData;
-			console.log("Application Data::"+$scope.safeAppData.applicationList[0].app_name);
+			//console.log("Application Data::"+$scope.safeAppData.applicationList[0].app_name);
 		})
 		.catch(function(appData){
 			console.log("Application Data got Error!!!::::"+appData);
-			$scope.errorMessage = appDataError;
+			$scope.errorMessage = appData;
 		});
 		/*$http.post("../webservice/findApplicationsByUserId",$scope.user)
 		.success(function (response) {
@@ -325,6 +326,8 @@ app.controller('createTestcaseController', function(createTestService, $scope, $
 		for(itr in $scope.testStep) {
 			$scope.testStep[itr].keyword = '';
 			console.log("keyword:: "+$scope.testStep[itr].keyword);
+			$scope.testStep[itr].type = '';
+			console.log("type:: "+$scope.testStep[itr].type);
 			$scope.testStep[itr].arg1 = null;
 			$scope.testStep[itr].arg2 = null;
 			$scope.testStep[itr].arg3 = null;
@@ -337,6 +340,7 @@ app.controller('createTestcaseController', function(createTestService, $scope, $
 			$scope.testStep[itr].arg5_ph = '';
 			console.log("ITR::::"+itr);
 		}
+		console.log("isApplicationSelected::"+$scope.isApplicationSelected);
 		$scope.printTestSteps();
 	}
 	$scope.startApplication = function() {
@@ -359,5 +363,6 @@ app.controller('createTestcaseController', function(createTestService, $scope, $
 		$scope.intializing = false;
 	}
 	$scope.startApplication();
-	
+	$scope.printTestSteps();
+	console.log("Current::"+current);
 });
