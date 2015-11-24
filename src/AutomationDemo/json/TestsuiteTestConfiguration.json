@@ -1,0 +1,118 @@
+/webservice/getTestsuiteConfiguration
+
+Input:
+1
+
+Output:
+
+{
+  "status": "SUCCESS",
+  "exceptionMessage": null,
+  "configList": [
+    {
+      "pk": {
+        "testsuite": {
+          "testsuite_id": 1,
+          "testsuite_name": "My Test test suite",
+          "testsuite_description": "My FIrst Test suite description",
+          "application": {
+            "app_id": 1,
+            "app_description": "This contains test cases of MyATT Applicatioa",
+            "app_name": "MyAtt"
+          },
+          "group": {
+            "groupid": 1,
+            "team_name": "Automation"
+          }
+        },
+        "parameter_name": "Password"
+      },
+      "parameter_value": "test1ng",
+      "testsuite": {
+        "testsuite_id": 1,
+        "testsuite_name": "My Test test suite",
+        "testsuite_description": "My FIrst Test suite description",
+        "application": {
+          "app_id": 1,
+          "app_description": "This contains test cases of MyATT Applicatioa",
+          "app_name": "MyAtt"
+        },
+        "group": {
+          "groupid": 1,
+          "team_name": "Automation"
+        }
+      },
+      "parameter_name": "Password"
+    },
+    {
+      "pk": {
+        "testsuite": {
+          "testsuite_id": 1,
+          "testsuite_name": "My Test test suite",
+          "testsuite_description": "My FIrst Test suite description",
+          "application": {
+            "app_id": 1,
+            "app_description": "This contains test cases of MyATT Applicatioa",
+            "app_name": "MyAtt"
+          },
+          "group": {
+            "groupid": 1,
+            "team_name": "Automation"
+          }
+        },
+        "parameter_name": "URL"
+      },
+      "parameter_value": "www.google.com",
+      "testsuite": {
+        "testsuite_id": 1,
+        "testsuite_name": "My Test test suite",
+        "testsuite_description": "My FIrst Test suite description",
+        "application": {
+          "app_id": 1,
+          "app_description": "This contains test cases of MyATT Applicatioa",
+          "app_name": "MyAtt"
+        },
+        "group": {
+          "groupid": 1,
+          "team_name": "Automation"
+        }
+      },
+      "parameter_name": "URL"
+    },
+    {
+      "pk": {
+        "testsuite": {
+          "testsuite_id": 1,
+          "testsuite_name": "My Test test suite",
+          "testsuite_description": "My FIrst Test suite description",
+          "application": {
+            "app_id": 1,
+            "app_description": "This contains test cases of MyATT Applicatioa",
+            "app_name": "MyAtt"
+          },
+          "group": {
+            "groupid": 1,
+            "team_name": "Automation"
+          }
+        },
+        "parameter_name": "UserId"
+      },
+      "parameter_value": "abcxyz@att.net",
+      "testsuite": {
+        "testsuite_id": 1,
+        "testsuite_name": "My Test test suite",
+        "testsuite_description": "My FIrst Test suite description",
+        "application": {
+          "app_id": 1,
+          "app_description": "This contains test cases of MyATT Applicatioa",
+          "app_name": "MyAtt"
+        },
+        "group": {
+          "groupid": 1,
+          "team_name": "Automation"
+        }
+      },
+      "parameter_name": "UserId"
+    }
+  ]
+}

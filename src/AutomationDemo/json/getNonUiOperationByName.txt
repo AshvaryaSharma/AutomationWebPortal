@@ -1,0 +1,21 @@
+URL: /webservice/getNonUiOperationByName
+Method: post
+
+input:
+SSH
+
+output:
+
+{
+  "status": "SUCCESS",
+  "exceptionMessage": null,
+  "operation": {
+    "keyword": "SSH",
+    "arg1": "URL",
+    "arg2": "PORT",
+    "arg3": "NA",
+    "arg4": "NA",
+    "arg5": "NA",
+    "description": "Op open SSH"
+  }
+}
