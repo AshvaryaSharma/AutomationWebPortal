@@ -44,14 +44,16 @@ app.controller('createTestcaseController', function(createTestService, $scope, $
 	$scope.safeAppData = [];
 	$scope.operationSelected = {};
 	$scope.operationDetails = {};
-	$scope.testStep = [{keyword:'',type:'',arg1:null,arg2: null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''},
+	$scope.configParamList = null;
+	$scope.safeUserData = {};
+	$scope.packages = [];
+	$scope.testStep = [{keyword:'',type:'',arg1:null,arg2: null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:'', pageObject:''},
 						   {keyword:'',type:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''},
-						   {keyword:'',type:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''},
-						   {keyword:'',type:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''},
-						   {keyword:'',type:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''}
+						   {keyword:'',type:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:'', pageObject:''},
+						   {keyword:'',type:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:'', pageObject:''},
+						   {keyword:'',type:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:'', pageObject:''}
 						   ];
-	var current = $rootScope.current;
-
+	
 	/*START:: Plugin variables*/
 	$scope.disabled = undefined;
 	  $scope.searchEnabled = undefined;
@@ -164,7 +166,7 @@ app.controller('createTestcaseController', function(createTestService, $scope, $
 		$scope.testCaseDescription = "";
 		$scope.testCaseName = "";
 		$scope.isTestCaseNameSelected = false;
-		$scope.tempTestStep = {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''};
+		$scope.tempTestStep = {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:'', pageObject:''};
 		/*$scope.testStep = [{keyword:'',arg1:null,arg2: null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''},
 						   {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''},
 						   {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''},
@@ -206,14 +208,14 @@ app.controller('createTestcaseController', function(createTestService, $scope, $
 		$scope.loading = true;
 		console.log("Insert the element at::"+index);
 		$scope.printTestSteps();
-		$scope.testStep[$scope.testStep.length] = {keyword:'',arg1:null,arg2: null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''};
+		$scope.testStep[$scope.testStep.length] = {keyword:'',arg1:null,arg2: null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:'', pageObject:''};
 		var itr = 0;
 		console.log("Length::"+$scope.testStep.length);
 		for(itr = $scope.testStep.length-1; itr >= index; itr--) {
 			console.log("itr::"+itr);
 			$scope.testStep[itr] = $scope.testStep[itr-1];
 		}
-		$scope.testStep[index] = {keyword:'',arg1:null,arg2: null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''};
+		$scope.testStep[index] = {keyword:'',arg1:null,arg2: null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:'', pageObject:''};
 		console.log("New Length::"+$scope.testStep.length);
 		$scope.printTestSteps();
 		$scope.loading = false;
@@ -235,11 +237,10 @@ app.controller('createTestcaseController', function(createTestService, $scope, $
 		console.log(".........Printing the test steps......");
 		var itr = 0;
 		for(itr=0; itr < $scope.testStep.length; itr++) {
-			console.log(" "+itr+ "Keyword::"+$scope.testStep[itr].keyword+" Type::"+$scope.testStep[itr].type);
+			console.log(" "+itr+ "Keyword::"+$scope.testStep[itr].keyword+" Type::"+$scope.testStep[itr].type+"PageObject::"+$scope.testStep[itr].pageObject);
 		}
 	}
 	$scope.getAllApplications = function() {
-		console.log("---------GETTING ALL APPLICATIONS-----------");
 		createTestService.getAppData()
 		.then(function(appData) {
 			$scope.safeAppData = appData;
@@ -247,6 +248,7 @@ app.controller('createTestcaseController', function(createTestService, $scope, $
 		})
 		.catch(function(appData){
 			console.log("Application Data got Error!!!::::"+appData);
+			$scope.errorStatus = true;
 			$scope.errorMessage = appData;
 		});
 		/*$http.post("../webservice/findApplicationsByUserId",$scope.user)
@@ -281,7 +283,7 @@ app.controller('createTestcaseController', function(createTestService, $scope, $
 	}
 	$scope.addOperation = function(opSelected, index) {
 		$scope.operationSelected = opSelected;
-		console.log("opSelected::"+opSelected+"Index::"+index);
+		//console.log("opSelected::"+opSelected+"Index::"+index);
 		$scope.testStep[index].keyword = $scope.operationSelected.keyword;
 		$scope.testStep[index].type = $scope.operationSelected.type;
 		console.log("Index::"+index+" Keyword::"+$scope.testStep[index].keyword+"Type::"+$scope.testStep[index].type);
@@ -289,13 +291,18 @@ app.controller('createTestcaseController', function(createTestService, $scope, $
 	}
 	$scope.getOperationByName = function(index){
 		console.log("Getting operation by name");
+		console.log("++++++Selected Operation::"+$scope.operationSelected.type);
 		if($scope.operationSelected.type == 'UI') {
 			//createTestService.getUIOperationByName($scope.operationSelected.keyword)
+			console.log("Inside UI Operation******");
 			createTestService.getUIOperationByName()
 			.then(function(uiData) {
-				$scope.testStep[index].arg1 = uiData.operation.arg1;
-				$scope.testStep[index].arg2 = uiData.operation.arg2;
-				$scope.testStep[index].arg3 = uiData.operation.arg3;
+				$scope.testStep[index].arg1_ph = '';
+				$scope.testStep[index].arg2_ph = '';
+				$scope.testStep[index].arg3_ph = uiData.operation.arg1;
+				console.log("Placeholder arg3_ph::"+$scope.testStep[index].arg3_ph);
+				$scope.testStep[index].arg4_ph = uiData.operation.arg2;
+				$scope.testStep[index].arg5_ph = uiData.operation.arg3;
 			});
 		}
 		if($scope.operationSelected.type == 'NONUI') {
@@ -303,18 +310,82 @@ app.controller('createTestcaseController', function(createTestService, $scope, $
 			createTestService.getNonUIOperationByName()
 			.then(function(nonUiData) {
 				$scope.operationDetails = nonUiData;
-				$scope.testStep[index].arg1 = nonUiData.operation.arg1;
-				$scope.testStep[index].arg2 = nonUiData.operation.arg2;
-				$scope.testStep[index].arg3 = nonUiData.operation.arg3;
-				$scope.testStep[index].arg4 = nonUiData.operation.arg4;
-				$scope.testStep[index].arg5 = nonUiData.operation.arg5;
+				$scope.testStep[index].arg1_ph = nonUiData.operation.arg1;
+				$scope.testStep[index].arg2_ph = nonUiData.operation.arg2;
+				$scope.testStep[index].arg3_ph = nonUiData.operation.arg3;
+				$scope.testStep[index].arg4_ph = nonUiData.operation.arg4;
+				$scope.testStep[index].arg5_ph = nonUiData.operation.arg5;
 			});
 		}
-		else {
+		if($scope.operationSelected.type == '' || $scope.operationSelected.type == null) {
+			$scope.errorStatus = true;
 			$scope.errorMessage = "No operation Selected";
 		}
 		//$scope.printTestSteps();
 	};
+	/*********Function would get all page names by app_id***********/
+	function getPageNames(){
+		createTestService.getAllPageNamesByApplication()
+		.then(function(appData) {
+			$scope.safePageNames = appData;
+		})
+		.catch(function(appData){
+			console.log("Error in retrieving the page names!!!::::"+appData);
+			$scope.errorStatus = true;
+			$scope.errorMessage = appData;
+		});
+	}
+	/*****Retrieves the page objects on the basis of page_id******/
+	$scope.pageNameSelected = function(index) {
+		console.log("Selected Page Name["+index+"]::"+$scope.testStep[index].arg1.pageName);
+		$scope.testStep[index].pageObject = null;
+		$scope.testStep[index].arg2 = '';
+		$scope.printTestSteps();
+		createTestService.getPageObjectsByPageId()
+		.then(function(appData) {
+			$scope.testStep[index].pageObject = appData.list;
+		})
+		.catch(function(appData){
+			console.log("Error in retrieving the page objects!!!::::"+appData);
+			$scope.errorStatus = true;
+			$scope.errorMessage = "Not getting any page objects";
+		});
+		
+	};
+	
+	$scope.packageSelectionEvent = function(){
+		$scope.configRequest = {};
+		$scope.configRequest.app_id = $scope.app_id;
+		//$scope.configRequest.group_id = $scope.safeUserData.userDetails.group_id;
+		console.log("isPackageSelected::"+$scope.isPackageSelected);
+		if($scope.isPackageSelected == true) {
+			console.log("PackageSelected");
+			createTestService.getTestsuiteByAppAndGroup()
+			.then(function(appData) {
+				$scope.packages = appData.testSuite;
+			})
+			.catch(function(appData){
+				console.log("Error in retrieving the packages!!!::::"+appData);
+				$scope.errorStatus = true;
+				$scope.errorMessage = "Not getting any packages";
+			}); 
+		}
+	}
+	$scope.packageSelected = function() {
+		console.log("Selected Package::"+$scope.configTestPackageId);
+		createTestService.getTestsuiteConfiguration()
+		.then(function(appData) {
+			$scope.configParamList = appData.configList;
+			console.log("Test Suite Configuration Info::"+$scope.configParamList);
+			
+		})
+		.catch(function(appData){
+			console.log("Error in retrieving the packages!!!::::"+appData);
+			$scope.errorStatus = true;
+			$scope.errorMessage = "Not getting any packages";
+		});
+	}
+	/********Calling this function would reset the values on page*************/
 	$scope.reset = function() {
 		console.log("Resetting the values...");
 		$scope.isApplicationSelected = false;
@@ -322,26 +393,14 @@ app.controller('createTestcaseController', function(createTestService, $scope, $
 		$scope.successStatus = false;
 		$scope.errorMessage = null;
 		$scope.errorStatus = false;
-		var itr = 0;
-		for(itr in $scope.testStep) {
-			$scope.testStep[itr].keyword = '';
-			console.log("keyword:: "+$scope.testStep[itr].keyword);
-			$scope.testStep[itr].type = '';
-			console.log("type:: "+$scope.testStep[itr].type);
-			$scope.testStep[itr].arg1 = null;
-			$scope.testStep[itr].arg2 = null;
-			$scope.testStep[itr].arg3 = null;
-			$scope.testStep[itr].arg4 = null;
-			$scope.testStep[itr].arg5 = null;
-			$scope.testStep[itr].arg1_ph = '';
-			$scope.testStep[itr].arg2_ph = '';
-			$scope.testStep[itr].arg3_ph = '';
-			$scope.testStep[itr].arg4_ph = '';
-			$scope.testStep[itr].arg5_ph = '';
-			console.log("ITR::::"+itr);
-		}
+		$scope.testStep = [{keyword:'',arg1:null,arg2: null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:'', pageObject:''},
+						   {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:'', pageObject:''},
+						   {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:'', pageObject:''},
+						   {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:'', pageObject:''},
+						   {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:'', pageObject:''}
+						   ];
 		console.log("isApplicationSelected::"+$scope.isApplicationSelected);
-		$scope.printTestSteps();
+		//$scope.printTestSteps();
 	}
 	$scope.startApplication = function() {
 		//$scope.user = userId;
@@ -350,19 +409,16 @@ app.controller('createTestcaseController', function(createTestService, $scope, $
 		$scope.getUserDetails();
 		$scope.getAllApplications();
 		$scope.getAllOperationNames();
+		getPageNames();
+		//loadConfigPackages();
 		console.log("-----------------Initializing Complete--------------------");
-		console.log("------Test Steps-------: " + $scope.testStep);
-		for(var i=0; i < $scope.testStep.length; i++) {
-			console.log("Test Steps: " + $scope.testStep[i].keyword + " " +  $scope.testStep[i].arg1);
-		}
-		console.log("--------------Application ID: " + $scope.app_id);
-		console.log("--------------Package ID: " + $scope.package_id);
-		console.log("--------------TestcaseDescrption Name: " + $scope.testCaseName);
-		console.log("--------------Testcase Description: " + $scope.testCaseDescription);
+		console.log("Application ID: " + $scope.app_id);
+		console.log("Package ID: " + $scope.package_id);
+		console.log("TestcaseDescrption Name: " + $scope.testCaseName);
+		console.log("Testcase Description: " + $scope.testCaseDescription);
 
 		$scope.intializing = false;
 	}
 	$scope.startApplication();
-	$scope.printTestSteps();
-	console.log("Current::"+current);
+	//$scope.printTestSteps();
 });
