@@ -64,6 +64,24 @@ safeServices.factory('createTestService', function($resource, $http) {
 				return response.data;
 			})
 		return pageObjects;
+		},
+		getTestsuiteByAppAndGroup : function(){
+			//var testSuite = $http.post('json/getPageObjectsByPageId.json',configRequest)
+			var testSuite = $http.get('json/TestsuiteIDbyGroupandApplicationId.json') 
+			.then(function(response){
+				console.log(response);
+				return response.data;
+			})
+		return testSuite;
+		},
+		getTestsuiteConfiguration : function(){
+			//var testSuite = $http.post('json/TestsuiteTestConfiguration.json',configTestPackageId)
+			var testSuiteConfig = $http.get('json/TestsuiteTestConfiguration.json') 
+			.then(function(response){
+				console.log(response);
+				return response.data;
+			})
+		return testSuiteConfig;
 		}
 		
 	};
