@@ -14,4 +14,38 @@ input:
 SSH
 
 output:
+/*************************************allPageNamesByApplication.json**************************************************/
+URL: /webservice/allPageNamesByApplication
+Method: post
+
+we need to pass application id
+input:
+1
+
+output:
+/***************************************getPageObjectsByPageId.json*********************************************/
+URL: /webservice/getPageObjectsByPageId
+Method: post
+
+we need to pass pageid
+input:
+1
+
+output:
+/******************************************getTestsuiteByAppAndGroup.json************************************************************************/
+/webservice/getTestsuiteByAppAndGroup
+
+Input:
+{
+    "app_id" : 1,
+    "group_id" : 1
+}
+
+Output:
+
+
+
+
+
+
 
