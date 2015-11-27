@@ -1,19 +1,22 @@
 /*This will act like a Home Controller*/
 'use strict';
 app.controller('dashboardController', function(createTestService, $scope, $rootScope) {
+	$rootScope.isLogged=false;
 	var current = $rootScope.current = {};
-	$scope.safeUserData = {};
+	$rootScope.safeUserData = {};
 	console.log("Inside Dashboard Controller...");
 	
-	$scope.getUserDetails = function() {
+	 function getUserDetails() {
 		console.log("Getting user data...");
 		createTestService.getUserData().then(function(appData) {
-			current.safeUserData = $scope.safeUserData = appData;
-			console.log("******User Data::"+current.safeUserData.userDetails.first_name);
+			$scope.safeUserData = appData;
+			console.log("******User Data::"+$scope.safeUserData.userDetails.first_name);
+			$rootScope.safeUserData = $scope.safeUserData;
 		});
+		$rootScope.isLogged=true;
 	};
 	
-	$scope.getUserDetails();
+	getUserDetails();
 	//console.log("=========>User Data::"+current.safeUserData.userDetails);
 	
 });
