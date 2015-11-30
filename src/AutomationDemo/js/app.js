@@ -1,5 +1,5 @@
 'use strict';
-var app = angular.module('safe-app',['ngRoute','checklist-model','safeServices','ngSanitize','ui.select','angucomplete-alt']);
+var app = angular.module('safe-app',['ngRoute','checklist-model','safeServices','ngSanitize','ui.select','angucomplete-alt','safeSessionKeeper']);
 app.config(['$routeProvider', function($routeProvider){
 	console.log("Inside router");
 	$routeProvider.
