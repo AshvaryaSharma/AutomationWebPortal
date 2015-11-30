@@ -18,7 +18,7 @@
 						<form role="form">
 							<div class="row" ng-show="intializing || loading">
 								<div class="col-lg-12">
-									<center><img src="../resources/images/loading.gif" alt="Loading" height = "20" width="20"></center>
+									<center><img src="images/loading.gif" alt="Loading" height = "20" width="20"></center>
 								
 								</div>
 							
@@ -56,9 +56,9 @@
 											
 												<label>Select Application</label>
 										
-												<select name="application" id="application" ng-model="app_id" class="form-control" ng-change="applicationSelectEvent()" ng-disabled="loading">
+												<select name="application" id="application" ng-model="app_id" class="form-control" ng-change="appSelectionEvent()" ng-disabled="loading">
 													<option value="">Select the application</option>
-													<option ng-repeat="x in applications" value="{{x.app_id}}">{{x.app_name}}</option>
+													<option ng-repeat="app in safeAppData.applicationList" value="{{app.app_id}}">{{app.app_name}}</option>
 												</select>
 											
 											
@@ -67,9 +67,9 @@
 									<div class="row" ng-show="isApplicationSelected">
 										<div class="col-lg-12">
 											<label>Select Package</label>
-												<select name="package" id="package" ng-model="package_id" class="form-control" ng-change="packageSelectEvent()" ng-disabled="loading">
-													<option value="" ng-selected="applicationsLoaded">Select Package</option>
-													<option ng-repeat="n in packages" value="{{n.package_id}}">{{n.package_name}}</option>
+												<select name="package" id="package" ng-model="package_id" class="form-control" ng-change="packageSelectionEvent()" ng-disabled="loading">
+													<option value="" ng-selected="selectedPackage">Select Package</option>
+													<option ng-repeat="package in packages" value="{{package.testsuite_id}}">{{package.testsuite_name}}</option>
 											
 												</select>
 										</div>
