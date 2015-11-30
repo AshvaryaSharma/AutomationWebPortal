@@ -38,7 +38,7 @@
 									<div class="row" ng-hide="intializing">
 										<div class="col-lg-12">
 											<label>Select Application</label>
-											<select name="application" id="application" class="form-control" ng-change="appChangeFunction()" ng-disabled="loading" ng-model="app_id">
+											<select name="application" id="application" class="form-control" ng-change="appSelectionEvent()" ng-disabled="loading" ng-model="app_id">
 													<option value="">Select the application</option>
 													<option ng-repeat="app in safeAppData.applicationList" value="{{app.app_id}}">{{app.app_name}}</option>
 											</select>
@@ -52,7 +52,7 @@
 										<br>
 										<div ng-show="isApplicationSelected">
 												<div class="col-lg-12">
-													<label><input type="checkbox"  ng-model="isPackageSelected" ng-change="packageSelectionEvent()" ng-disabled="loading || viewTestcase" value="true">
+													<label><input type="checkbox"  ng-model="isPackageSelected" ng-change="loadPackages()" ng-disabled="loading || viewTestcase" value="true">
 													Load package attributes</label>
 													
 												</div>
