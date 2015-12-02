@@ -101,35 +101,71 @@
 										<div class="col-lg-6">
 											<div class="row">
 												<div class="col-lg-12">
+													<label>Select the Aplication</label>
 													<select name="application" id="application" ng-model="app_id" class="form-control" ng-change="applicationSelectEvent()" ng-disabled="loading || intializing">
 															<option value="">Select the application</option>
 															<option ng-repeat="x in applications" value="{{x.app_id}}" ng-selected="{{x.app_id == app_id}}">{{x.app_name}}</option>
 														</select>
 												</div>
 											</div>
+											<br>
 											<div class="row">
-												<input class="form-control" placeholeder="enter Test suite Name" ng-model="testsuiteName" ng-disabled="loading">
+												<div class="col-lg-12" ng-show="applicationSelected">
+													<label>Test Suite Name</label>
+													<input class="form-control" placeholeder="enter Test suite Name" ng-model="updateTestSuite.testsuite_name" ng-disabled="loading">
+												</div>
 											</div>
 										</div>
-										<div class="col-lg-6">
+										<div class="col-lg-6" ng-show="applicationSelected">
 											<label>Test Suite Description</label>
-											<textarea class="form-control" placeholder="Enter Test Suie Description" rows="7" ng-model="testsuiteDescription"  ng-disabled="loading"></textarea>
+											<textarea class="form-control" placeholder="Enter Test Suie Description" rows="7" ng-model="updateTestSuite.testsuite_description"  ng-disabled="loading"></textarea>
 												
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-lg-6">
+										<div class="col-lg-6"  ng-show="applicationSelected">
 											<button type="button" class="btn btn-default" ng-click="testsuiteCreateEdit()"  ng-disabled="loading">{{button}}</button>
 											<button type="button" class="btn btn-default" ng-click="resetTestsuite()"  ng-disabled="loading">Reset</button>
 													
 										</div>
 									</div>
-									<div class="row">
+									<br><br>
+									<div class="row" ng-show="applicationSelected">
 										<div class="col-lg-12">
 											<div class="panel panel-default">
 												<div class="panel-heading">
-													Edit Delete Test Suite Information
+													Edit | Delete - Test Suite Information
 												</div>
+											</div>
+											<div class="panel panel-body">
+												<table class="table table-striped table-bordered">
+															<thead>
+																<tr>
+																	<th>#</th>
+																	<th>Testcase Name</th>
+																	<th>Testcase Description</th>
+																	<th>Edit/Delete</th>
+																	
+																</tr>
+															</thead>
+															<tbody>
+																<tr ng-repeat="row in testsuites">
+																	<td>  {{$index + 1}}</td>
+																	
+																	<td>
+																		{{row.testsuite_name}}
+																	</td>
+																	<td>
+																		{{row.testsuite_description}}
+																	</td>
+																	
+																	<td>
+																		<button type="button" class="btn btn-default" ng-click="edit(row.testsuite_id)" ng-disabled="loading">Edit</button>
+																		<button type="button" class="btn btn-default"  ng-click="remove(row.testsuite_id)"  ng-disabled="loading">Delete</button>
+																	</td>
+																</tr>
+															</tbody>
+														</table>
 											</div>
 										</div>
 									</div>
@@ -143,4 +179,12 @@
       </div>
      
 </body>
+ <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js">
+      </script>
+      
+      <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.6/angular-touch.min.js"></script>
+      <!-- Select Sanitize CSS -->
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular-sanitize.js"></script>
+    <script src="../resources/userJs/testsuite.js"></script>
+
 </html>

@@ -172,9 +172,10 @@
                        
                           	
                       	<li id="lContactUs" class="dropdown">
-                        <a id="TestSuites" >Test Suites</a>
+                        <a id="TestSuites" class="dropdown-toggle" data-toggle="dropdown">Test Suites<i class="fa fa-angle-down"></i></a>
                             <ul class="dropdown-menu">
-                           
+                           	 <li><a id="GSDPAprSubMenu" href="testsuite">Add/EditTestsuite</a></li>
+								<li><a id="GSDPAprSubMenu" href="testsuiteMaster">Add Testcases to Testsuite</a></li>
                             </ul>
                         </li>			
                     </ul>

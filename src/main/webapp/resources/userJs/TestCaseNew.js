@@ -742,20 +742,20 @@ $scope.saveInitialize = function(){
 			 $scope.loading = false;
 	}
 	
-	$scope.addRowEvent = function(rowNum){
+	/*$scope.addRowEvent = function(rowNum){
 		$scope.loading = true;
 		var temp = $scope.tempTestStep;
 		
-		/*temp.step_num = rowNum + 1;*/
+		temp.step_num = rowNum + 1;
 		$scope.testStep.splice(rowNum,0,temp);
-		/*for(var i=0;i < $scope.testStep.length; i++) {
+		for(var i=0;i < $scope.testStep.length; i++) {
 			
 			$scope.testStep[i].step_num = i+1;
 			
-		}*/
+		}
 		
 		$scope.loading = false;
-	}
+	}*/
 	
 	$scope.resetAll = function() {
 		$scope.successStatus = false;
@@ -853,6 +853,35 @@ $scope.saveInitialize = function(){
 			};
 		
 		
+	}
+	
+	$scope.addRowEvent = function(index){
+		$scope.loading = true;
+		console.log("Insert the element at::"+index);
+		
+		$scope.testStep[$scope.testStep.length] = {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:'', pageObject:''};
+		var itr = 0;
+		console.log("Length::"+$scope.testStep.length);
+		for(itr = $scope.testStep.length-1; itr > index; itr--) {
+			console.log("itr::"+itr);
+			$scope.testStep[itr] = $scope.testStep[itr-1];
+		}
+		$scope.testStep[index+1] = {keyword:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:'', pageObject:''};
+		console.log("New Length::"+$scope.testStep.length);
+		
+		$scope.loading = false;
+	}
+	$scope.removeRowEvent = function(index){
+		console.log("Removing the row::"+index);
+		$scope.loading = true;
+		var itr = 0;
+		for(itr=index; itr < $scope.testStep.length; itr++) {
+			$scope.testStep[itr] = $scope.testStep[itr+1];
+		}
+		$scope.testStep.length = $scope.testStep.length - 1;
+		console.log("Length of testSteps::"+$scope.testStep.length+" Array::"+$scope.testStep);
+		
+		$scope.loading = false;
 	}
 	
 	

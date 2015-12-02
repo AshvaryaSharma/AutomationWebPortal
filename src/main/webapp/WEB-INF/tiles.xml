@@ -37,6 +37,16 @@
  		<put-attribute name="body" value="/WEB-INF/views/protected/testCases/viewTestcase.jsp" />
  	</definition>
  	
+ 	<definition name="testsuite" extends="master.page">
+ 		
+ 		<put-attribute name="body" value="/WEB-INF/views/protected/testCases/testsuite.jsp" />
+ 	</definition>
+ 	
+ 	<definition name="testsuiteMaster" extends="master.page">
+ 		
+ 		<put-attribute name="body" value="/WEB-INF/views/protected/testCases/testsuite_master.jsp" />
+ 	</definition>
+ 	
  	<definition name="try" extends="master.page">
  		
  		<put-attribute name="body" value="/WEB-INF/views/main.jsp" />

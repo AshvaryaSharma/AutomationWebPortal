@@ -14,7 +14,7 @@ import com.automationtool.webportal.model.viewModel.Testsuite;
 
 
 @Entity
-@Table(name = "testcase_testsuite")
+@Table(name = "testpackage")
 @AssociationOverrides({
 		@AssociationOverride(name = "pk.testsuite", 
 			joinColumns = @JoinColumn(name = "testsuite_id")),
@@ -42,17 +42,140 @@ public class TestsuiteTestcases {
 		getPk().setTestcase(testcase);
 	}
 	
-	@Column(name="parameter1")
-	private String parameter1;
-	@Column(name="parameter2")
-	private String parameter2;
-	@Column(name="parameter3")
-	private String parameter3;
-	@Column(name="parameter4")
-	private String parameter4;
-	@Column(name="parameter5")
-	private String parameter5;
+	@Column(name="param1_value")
+	private String param1_value;
 	
+	@Column(name="param2_value")
+	private String param2_value;
+	
+	@Column(name="param3_value")
+	private String param3_value;
+	
+	@Column(name="param4_value")
+	private String param4_value;
+	
+	@Column(name="param5_value")
+	private String param5_value;
+	
+	@Column(name="param1_name")
+	private String param1_name;
+	
+	@Column(name="param2_name")
+	private String param2_name;
+	
+	@Column(name="param3_name")
+	private String param3_name;
+	
+	@Column(name="param4_name")
+	private String param4_name;
+	
+	@Column(name="param5_name")
+	private String param5_name;
+	
+	@Column(name="browser")
+	private String browser;
+	
+	
+	@Override
+	public String toString() {
+		return "TestsuiteTestcases [pk=" + pk + ", param1_value="
+				+ param1_value + ", param2_value=" + param2_value
+				+ ", param3_value=" + param3_value + ", param4_value="
+				+ param4_value + ", param5_value=" + param5_value
+				+ ", param1_name=" + param1_name + ", param2_name="
+				+ param2_name + ", param3_name=" + param3_name
+				+ ", param4_name=" + param4_name + ", param5_name="
+				+ param5_name + ", browser=" + browser + "]";
+	}
+
+	public String getParam1_value() {
+		return param1_value;
+	}
+
+	public void setParam1_value(String param1_value) {
+		this.param1_value = param1_value;
+	}
+
+	public String getParam2_value() {
+		return param2_value;
+	}
+
+	public void setParam2_value(String param2_value) {
+		this.param2_value = param2_value;
+	}
+
+	public String getParam3_value() {
+		return param3_value;
+	}
+
+	public void setParam3_value(String param3_value) {
+		this.param3_value = param3_value;
+	}
+
+	public String getParam4_value() {
+		return param4_value;
+	}
+
+	public void setParam4_value(String param4_value) {
+		this.param4_value = param4_value;
+	}
+
+	public String getParam5_value() {
+		return param5_value;
+	}
+
+	public void setParam5_value(String param5_value) {
+		this.param5_value = param5_value;
+	}
+
+	public String getParam1_name() {
+		return param1_name;
+	}
+
+	public void setParam1_name(String param1_name) {
+		this.param1_name = param1_name;
+	}
+
+	public String getParam2_name() {
+		return param2_name;
+	}
+
+	public void setParam2_name(String param2_name) {
+		this.param2_name = param2_name;
+	}
+
+	public String getParam3_name() {
+		return param3_name;
+	}
+
+	public void setParam3_name(String param3_name) {
+		this.param3_name = param3_name;
+	}
+
+	public String getParam4_name() {
+		return param4_name;
+	}
+
+	public void setParam4_name(String param4_name) {
+		this.param4_name = param4_name;
+	}
+
+	public String getParam5_name() {
+		return param5_name;
+	}
+
+	public void setParam5_name(String param5_name) {
+		this.param5_name = param5_name;
+	}
+
+	public String getBrowser() {
+		return browser;
+	}
+
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
+
 	@EmbeddedId
 	public TestsuiteTestcasesId getPk() {
 		return pk;
@@ -60,36 +183,7 @@ public class TestsuiteTestcases {
 	public void setPk(TestsuiteTestcasesId pk) {
 		this.pk = pk;
 	}
-	public String getParameter1() {
-		return parameter1;
-	}
-	public void setParameter1(String parameter1) {
-		this.parameter1 = parameter1;
-	}
-	public String getParameter2() {
-		return parameter2;
-	}
-	public void setParameter2(String parameter2) {
-		this.parameter2 = parameter2;
-	}
-	public String getParameter3() {
-		return parameter3;
-	}
-	public void setParameter3(String parameter3) {
-		this.parameter3 = parameter3;
-	}
-	public String getParameter4() {
-		return parameter4;
-	}
-	public void setParameter4(String parameter4) {
-		this.parameter4 = parameter4;
-	}
-	public String getParameter5() {
-		return parameter5;
-	}
-	public void setParameter5(String parameter5) {
-		this.parameter5 = parameter5;
-	}
+	
 	public TestsuiteTestcases() {
 		
 	}
@@ -114,13 +208,8 @@ public class TestsuiteTestcases {
 		return (getPk() != null ? getPk().hashCode() : 0);
 	}
 
-	@Override
-	public String toString() {
-		return "TestsuiteTestcases [pk=" + pk + ", parameter1=" + parameter1
-				+ ", parameter2=" + parameter2 + ", parameter3=" + parameter3
-				+ ", parameter4=" + parameter4 + ", parameter5=" + parameter5
-				+ "]";
-	}
+	
+	
 	
 	
 	

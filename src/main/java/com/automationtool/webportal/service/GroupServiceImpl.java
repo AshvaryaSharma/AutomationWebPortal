@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.automationtool.webportal.dao.GroupDao;
 import com.automationtool.webportal.model.Group;
+import com.automationtool.webportal.model.webservices.GroupDesc;
 
 @Service("groupService")
 @Transactional
@@ -28,6 +29,24 @@ public class GroupServiceImpl implements GroupService {
 		}
 		
 		return grp;
+	}
+
+	@Override
+	public GroupDesc getGroup(int groupId) {
+		GroupDesc group;
+		
+		try {
+			
+			Group grp = getGroupById(groupId);
+			group = new GroupDesc();
+			group.setStatus("SUCCESS");
+			group.setGroup(grp);
+		} catch(Exception e) {
+			
+			group = new GroupDesc("ERROR",e.getLocalizedMessage());
+		}
+		
+		return group;
 	}
 
 }

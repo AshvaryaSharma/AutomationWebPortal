@@ -126,7 +126,8 @@ public class WebserviceController {
 	
 	@RequestMapping(value="/webservice/getTestsuiteByAppAndGroup" , method = RequestMethod.POST)
 	public ResponseEntity<TestsuiteList> findApplicationsByAppAndGroup(@RequestBody TestsuiteByAppAndGroup testReq) {
-		TestsuiteList testSuiteList = testsuiteService.findApplicationByAppAndGroup(testReq);
+		System.out.println("Getting testsuite for :" + testReq);
+		TestsuiteList testSuiteList = testsuiteService.findTestsuiteByAppAndGroup(testReq);
 		
 		if(testSuiteList.getStatus().equalsIgnoreCase("ERROR")) {
 			return new ResponseEntity<TestsuiteList>(testSuiteList, HttpStatus.EXPECTATION_FAILED);
@@ -150,7 +151,7 @@ public class WebserviceController {
 	
 	
 	
-	@RequestMapping(value="/webservice/createTestsuite" , method = RequestMethod.POST)
+	/*@RequestMapping(value="/webservice/createTestsuite" , method = RequestMethod.POST)
 	public ResponseEntity<Boolean> createNewTestsuite(@RequestBody Testsuite testsuite) {
 		boolean flag;
 		
@@ -163,7 +164,7 @@ public class WebserviceController {
 		}
 		
 		return new ResponseEntity<Boolean>(HttpStatus.OK);
-	}
+	}*/
 	
 	
 	@RequestMapping(value="/webservice/getAllTestsuite" , method = RequestMethod.GET)

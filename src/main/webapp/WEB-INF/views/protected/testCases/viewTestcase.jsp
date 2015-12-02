@@ -108,14 +108,7 @@
 											
 											
 										</div>
-										<div class="col-lg-6">
-											<div class="row" ng-show="isApplicationSelected">
-												<div class="col-lg-12">
-													<label>Package Description</label>
-													<textarea class="form-control" placeholder="{{package_description}}" rows="4" disabled></textarea>
-												</div>
-											</div>
-										</div>
+										
 									</div>
 									<br>
 									<div class="row" ng-show="isApplicationSelected && (testcases.length > 0)">

@@ -107,6 +107,22 @@ public class HelloWorldController {
 		return "testcase";
 	}
 	
+	@RequestMapping(value = { "/utility/testsuite"}, method = RequestMethod.GET)
+	public String viewTestsuite(ModelMap model){
+		model.addAttribute("user", getPrincipal());
+		model.addAttribute("team",getTeamName());
+		System.out.println("Testsuite View Page");
+		return "testsuite";
+	}
+	
+	@RequestMapping(value = { "/utility/testsuiteMaster"}, method = RequestMethod.GET)
+	public String testsuite(ModelMap model){
+		model.addAttribute("user", getPrincipal());
+		model.addAttribute("team",getTeamName());
+		System.out.println("Testsuite View Page");
+		return "testsuiteMaster";
+	}
+	
 	@RequestMapping(value = { "/utility/editTestCase"}, method = RequestMethod.GET)
 	public String editestCaseGet(@RequestParam("id") String id, ModelMap model){
 		model.addAttribute("user", getPrincipal());

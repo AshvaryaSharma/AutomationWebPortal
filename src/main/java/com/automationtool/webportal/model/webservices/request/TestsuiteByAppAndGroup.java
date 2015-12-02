@@ -22,6 +22,12 @@ public class TestsuiteByAppAndGroup {
 		this.group_id = group_id;
 	}
 
+	@Override
+	public String toString() {
+		return "TestsuiteByAppAndGroup [app_id=" + app_id + ", group_id="
+				+ group_id + "]";
+	}
+
 	public TestsuiteByAppAndGroup() {
 		
 		// TODO Auto-generated constructor stub

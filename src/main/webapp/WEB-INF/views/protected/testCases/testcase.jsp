@@ -212,7 +212,7 @@
 																			<option ng-repeat="oprtn in operationNames" value="{{oprtn}}" ng-selected="{{oprtn == row.keyword}}">{{oprtn}}</option>
 																		</select> -->
 																		
-																		<ui-select ng-model="row.operation" theme="select2" ng-disabled="disabled" style="min-width: 300px;" title="Choose an Operation" ng-change="operatorSelectEvent(testStep.indexOf(row),true)">
+																		<ui-select ng-model="row.operation"  ng-disabled="disabled"  title="Choose an Operation" ng-change="operatorSelectEvent(testStep.indexOf(row),true)">
 																	    <ui-select-match placeholder="Select or Search an operation">{{$select.selected.keyword}}</ui-select-match>
 																	    <ui-select-choices repeat="operation in operationNames.operationList | propsFilter: {keyword: $select.search, type: $select.search}">
 																	      <b><div ng-bind-html="operation.keyword | highlight: $select.search" ></div></b>
@@ -225,7 +225,7 @@
 																		
 																	</td>
 																	<td>
-																		<ui-select ng-model="row.arg1" theme="select2" ng-disabled="disabled" style="min-width: 300px;" title="Choose an Page" ng-change="pageNameSelectEvent(testStep.indexOf(row))" ng-if="row.operation.type == 'UI'">
+																		<ui-select ng-model="row.arg1" ng-disabled="disabled" title="Choose an Page" ng-change="pageNameSelectEvent(testStep.indexOf(row))" ng-if="row.operation.type == 'UI'">
 																	    <ui-select-match placeholder="Select or Search an Page Name">{{$select.selected.pageName}}</ui-select-match>
 																	    <ui-select-choices repeat="page in pageNames | propsFilter: {pageName: $select.search}">
 																	      <b><div ng-bind-html="page.pageName | highlight: $select.search" ></div></b>
@@ -243,7 +243,7 @@
 																		
 																	</td>
 																	<td>
-																		<ui-select ng-model="row.arg2" theme="select2" ng-disabled="disabled" style="min-width: 300px;" title="Choose an Page Object" ng-change="" ng-if="row.operation.type == 'UI'">
+																		<ui-select ng-model="row.arg2" ng-disabled="disabled" title="Choose an Page Object" ng-change="" ng-if="row.operation.type == 'UI'">
 																	    <ui-select-match placeholder="Select or Search an Page Object">{{$select.selected.pageObjectName}}</ui-select-match>
 																	    <ui-select-choices repeat="page in row.pageObject | propsFilter: {pageObjectName: $select.search, pageObjectType: $select.search}">
 																	      <b><div ng-bind-html="page.pageObjectName | highlight: $select.search" ></div></b>
@@ -275,8 +275,8 @@
 																	          </div>
 																	</td>
 																	<td>
-																		<button type="button" class="btn btn-default btn-circle btn-xs" ng-click="addRowEvent(testStep.indexOf(row) + 1)" ng-disabled="loading || viewTestcase"><i class="fa fa-plus-circle"></i></button>
-																		<button type="button" class="btn btn-default btn-circle btn-xs"  ng-click="removeRowEvent(testStep.indexOf(row) + 1)"  ng-disabled="loading || viewTestcase"><i class="fa fa-minus-circle"></i></button>
+																		<button type="button" class="btn btn-default btn-circle btn-xs" ng-click="addRowEvent($index)" ng-disabled="loading || viewTestcase"><i class="fa fa-plus-circle"></i></button>
+																		<button type="button" class="btn btn-default btn-circle btn-xs"  ng-click="removeRowEvent($index)"  ng-disabled="loading || viewTestcase"><i class="fa fa-minus-circle"></i></button>
 																	</td>
 																</tr>
 															</tbody>
