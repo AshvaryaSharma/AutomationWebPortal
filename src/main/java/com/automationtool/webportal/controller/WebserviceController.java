@@ -37,6 +37,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 
+
 import com.automationtool.webportal.model.Application;
 import com.automationtool.webportal.model.Operations;
 import com.automationtool.webportal.model.Packages;
@@ -47,6 +48,7 @@ import com.automationtool.webportal.model.viewModel.Testsuite;
 import com.automationtool.webportal.model.webservices.ApplicationList;
 import com.automationtool.webportal.model.webservices.ConfigurationList;
 import com.automationtool.webportal.model.webservices.OperationsList;
+import com.automationtool.webportal.model.webservices.TestcaseTemplate;
 import com.automationtool.webportal.model.webservices.TestsuiteList;
 import com.automationtool.webportal.model.webservices.UserDetail;
 import com.automationtool.webportal.model.webservices.request.TestsuiteByAppAndGroup;
@@ -371,9 +373,9 @@ public class WebserviceController {
 		System.out.println(testcase);
 		System.out.println("##########-----------------#####################");
 		
-		boolean flag = createTestcaseService.updateTestcase(testcase);
-		
-		if(flag == false) {
+		boolean flag1 = createTestcaseService.updateTestcase(testcase);
+		boolean flag2 = createTestcaseService.deleteTestStep(testcase);
+		if(flag1 == false || flag2==false) {
 			return new ResponseEntity<Void>(HttpStatus.EXPECTATION_FAILED);
 		}
 		return new ResponseEntity<Void>(HttpStatus.OK);
@@ -383,17 +385,17 @@ public class WebserviceController {
 	
 	
 	@RequestMapping(value="/webservice/getTestcaseByTestcaseId" , method = RequestMethod.POST)
-	public ResponseEntity<TestcaseSample> getTestcaseByTestcaseId(@RequestBody int testcase_id) {
+	public ResponseEntity<TestcaseTemplate> getTestcaseByTestcaseId(@RequestBody int testcase_id) {
 		System.out.println("Getting testcase details for test id: " + testcase_id);
 		
-		TestcaseSample testcaseSample = createTestcaseService.getTestcase(testcase_id);
+		TestcaseTemplate testcaseSample = createTestcaseService.getTestcase(testcase_id);
 		
 		System.out.println("Testcase: " + testcaseSample);
 		
 		if(testcaseSample == null) {
-			return new ResponseEntity<TestcaseSample>(HttpStatus.NO_CONTENT);
+			return new ResponseEntity<TestcaseTemplate>(HttpStatus.EXPECTATION_FAILED);
 		}
-		return new ResponseEntity<TestcaseSample>(testcaseSample,HttpStatus.OK);
+		return new ResponseEntity<TestcaseTemplate>(testcaseSample,HttpStatus.OK);
 		
 	}
 	

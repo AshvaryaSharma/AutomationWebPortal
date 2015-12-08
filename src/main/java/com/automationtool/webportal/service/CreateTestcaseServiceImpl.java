@@ -20,6 +20,7 @@ import com.automationtool.webportal.model.Testcase;
 import com.automationtool.webportal.model.Teststeps;
 import com.automationtool.webportal.model.viewModel.TestcaseSample;
 import com.automationtool.webportal.model.webservices.ApplicationList;
+import com.automationtool.webportal.model.webservices.TestcaseTemplate;
 import com.automationtool.webportal.model.webservices.TestcasesList;
 
 @Service("createTestcaseService")
@@ -131,21 +132,34 @@ public class CreateTestcaseServiceImpl implements CreateTestcaseService {
 
 
 	@Override
-	public TestcaseSample getTestcase(int testcase_id) {
-		TestcaseSample testSample;
+	public TestcaseTemplate getTestcase(int testcase_id) {
+		TestcaseTemplate testSample;
 		
-		Testcase test;
 		try {
-			test = testcase.getTestCaseByTestcaseId(testcase_id);
+			Testcase test;
+			try {
+				test = testcase.getTestCaseByTestcaseId(testcase_id);
+			} catch (Exception e) {
+				throw new Exception(e);
+			}
+			List<Teststeps> steps = teststeps.getTestSteps(testcase_id);
+			if(steps.size() == 0) {
+				throw new Exception("No Teststeps returned for Testcase");
+			}
+			testSample = new TestcaseTemplate();
+			testSample.setStatus("SUCCESS");
+			testSample.setTestcaseDesc(test);
+			testSample.setTeststeps(steps);
+			
 		} catch (Exception e) {
-			return null;
+			
+			testSample = new TestcaseTemplate("ERROR", e.getLocalizedMessage());
 		}
-		Teststeps steps [] = teststeps.getTestSteps(testcase_id);
 		
 //		testSample = new TestcaseSample(test.getApplication().getApp_id(), test.getTestcase_name(), test.getTestcase_description(), steps);
 //		testSample.setTestcase_id(testcase_id);
 		
-		return null;
+		return testSample;
 	}
 
 
@@ -167,7 +181,7 @@ public class CreateTestcaseServiceImpl implements CreateTestcaseService {
 	@Override
 	public boolean updateTestcase(TestcaseSample testcaseSample) {
 
-		boolean flag = false;
+		/*boolean flag = false;
 		
 		Packages pckg = packages.findPackageByPackageId(testcaseSample.getApp_id());
 		System.out.println("Got package: " + pckg);
@@ -180,7 +194,7 @@ public class CreateTestcaseServiceImpl implements CreateTestcaseService {
 		}
 
 		System.out.println("Setting package for new test case: " + pckg.getPackage_id());
-		/*new_testCase.setPackages(pckg);*/
+		new_testCase.setPackages(pckg);
 		new_testCase.setTestcase_id(testcaseSample.getTestcase_id());
 		try {
 			testcase.updateTestcase(new_testCase);
@@ -198,6 +212,51 @@ public class CreateTestcaseServiceImpl implements CreateTestcaseService {
 					step.setTestcase(new_testCase);	
 				}
 				
+				teststeps.updateTestSteps(new_testCase_teststeps);
+				
+			} catch(Exception e) {
+				
+				flag = false;
+				e.printStackTrace();
+				
+			}
+		}
+		
+		System.out.println("Flag value returning " + flag);
+		return flag;*/
+		
+boolean flag = false;
+		
+		
+		Application app = application.getApplicationById(testcaseSample.getApp_id());
+		System.out.println("Got application: " + app);
+		Testcase new_testCase = new Testcase(testcaseSample.getTestcase_name(), testcaseSample.getTestcase_description());
+		new_testCase.setTestcase_id(testcaseSample.getTestcase_id());
+		Teststeps new_testCase_teststeps [] = testcaseSample.getTeststeps();
+		System.out.println("Test steps for creating: " + Arrays.toString(testcaseSample.getTeststeps()));
+		System.out.println("No of Test steps: " + testcaseSample.getTeststeps().length);
+		if(testcaseSample.getTeststeps().length == 0) {
+			return false;
+		}
+		
+		System.out.println("Setting application for new test case: " + app.getApp_name());
+		new_testCase.setApplication(app);
+		try {
+			testcase.updateTestcase(new_testCase);
+			flag=true;
+		} catch (Exception e) {
+			flag= false;
+			e.printStackTrace();
+		}
+		
+		if(flag) {
+			
+			try {
+				
+				for(Teststeps step : new_testCase_teststeps) {
+					step.setTestcase(new_testCase);	
+				}
+				teststeps.deleteTestSteps(new_testCase_teststeps);
 				teststeps.updateTestSteps(new_testCase_teststeps);
 				
 			} catch(Exception e) {
@@ -277,6 +336,55 @@ public class CreateTestcaseServiceImpl implements CreateTestcaseService {
 		}
 		
 		return testcaseList;
+	}
+
+
+	@Override
+	public boolean deleteTestStep(TestcaseSample testcaseSample) {
+boolean flag = false;
+		
+		
+		Application app = application.getApplicationById(testcaseSample.getApp_id());
+		System.out.println("Got application: " + app);
+		Testcase new_testCase = new Testcase(testcaseSample.getTestcase_name(), testcaseSample.getTestcase_description());
+		new_testCase.setTestcase_id(testcaseSample.getTestcase_id());
+		Teststeps new_testCase_teststeps [] = testcaseSample.getTeststeps();
+		System.out.println("Test steps for creating: " + Arrays.toString(testcaseSample.getTeststeps()));
+		System.out.println("No of Test steps: " + testcaseSample.getTeststeps().length);
+		if(testcaseSample.getTeststeps().length == 0) {
+			return false;
+		}
+		
+		System.out.println("Setting application for new test case: " + app.getApp_name());
+		new_testCase.setApplication(app);
+		try {
+			testcase.updateTestcase(new_testCase);
+			flag=true;
+		} catch (Exception e) {
+			flag= false;
+			e.printStackTrace();
+		}
+		
+		if(flag) {
+			
+			try {
+				
+				for(Teststeps step : new_testCase_teststeps) {
+					step.setTestcase(new_testCase);	
+				}
+				teststeps.deleteTestSteps(new_testCase_teststeps);
+				
+				
+			} catch(Exception e) {
+				
+				flag = false;
+				e.printStackTrace();
+				
+			}
+		}
+		
+		System.out.println("Flag value returning " + flag);
+		return flag;
 	}
 
 

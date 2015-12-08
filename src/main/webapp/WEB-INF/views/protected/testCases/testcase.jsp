@@ -146,7 +146,7 @@
 												</div>
 												<div class="col-lg-6" ng-show="isPackageSelected">
 													
-													<select name="configuration" id="application" ng-model="configTestPackageId" class="form-control" ng-change="packageSelectEvent()" ng-disabled="loading || viewTestcase || editTestCase">
+													<select name="configuration" id="application" ng-model="configTestPackageId" class="form-control" ng-change="packageSelectEvent()" ng-disabled="loading || viewTestcase">
 															<option value="">Select Package</option>
 															<option ng-repeat="x in packages" value="{{x.testsuite_id}}" >{{x.testsuite_name}}</option>
 													</select>
@@ -212,7 +212,7 @@
 																			<option ng-repeat="oprtn in operationNames" value="{{oprtn}}" ng-selected="{{oprtn == row.keyword}}">{{oprtn}}</option>
 																		</select> -->
 																		
-																		<ui-select ng-model="row.operation"  ng-disabled="disabled"  title="Choose an Operation" ng-change="operatorSelectEvent(testStep.indexOf(row),true)">
+																		<ui-select ng-model="row.operation"  ng-disabled="disabled || viewTestcase"  title="Choose an Operation" ng-change="operatorSelectEvent(testStep.indexOf(row),true)">
 																	    <ui-select-match placeholder="Select or Search an operation">{{$select.selected.keyword}}</ui-select-match>
 																	    <ui-select-choices repeat="operation in operationNames.operationList | propsFilter: {keyword: $select.search, type: $select.search}">
 																	      <b><div ng-bind-html="operation.keyword | highlight: $select.search" ></div></b>
@@ -225,7 +225,7 @@
 																		
 																	</td>
 																	<td>
-																		<ui-select ng-model="row.arg1" ng-disabled="disabled" title="Choose an Page" ng-change="pageNameSelectEvent(testStep.indexOf(row))" ng-if="row.operation.type == 'UI'">
+																		<ui-select ng-model="row.arg1" ng-disabled="disabled || viewTestcase" title="Choose an Page" ng-change="pageNameSelectEvent(testStep.indexOf(row))" ng-if="row.operation.type == 'UI'">
 																	    <ui-select-match placeholder="Select or Search an Page Name">{{$select.selected.pageName}}</ui-select-match>
 																	    <ui-select-choices repeat="page in pageNames | propsFilter: {pageName: $select.search}">
 																	      <b><div ng-bind-html="page.pageName | highlight: $select.search" ></div></b>
@@ -237,13 +237,13 @@
 																	  </ui-select>
 																		
 																		<div ng-if="row.operation.type == 'NONUI' || row.operation == null">
-																		 <div angucomplete-alt id="ex1" placeholder="{{row.arg1_ph}}" maxlength="50" pause="100" selected-object="row.arg1" disable-input="(row.arg1_ph =='') || (row.arg1_ph=='NA') || loading || viewTestcase" local-data="configParamList" search-fields="parameter_name" title-field="parameter_name" minlength="1" input-class="form-control form-control-small" match-class="highlight" override-suggestions="true">
+																		 <div angucomplete-alt id="ex1" placeholder="{{row.arg1_ph}}" maxlength="50" pause="100" selected-object="row.arg1" disable-input="(row.arg1_ph =='') || (row.arg1_ph=='NA') || loading || viewTestcase" local-data="configParamList" search-fields="parameter_name" title-field="parameter_name" minlength="1" input-class="form-control form-control-small" match-class="highlight" override-suggestions="true"  initial-value="row.arg1">
 																	          </div>
 																		</div>
 																		
 																	</td>
 																	<td>
-																		<ui-select ng-model="row.arg2" ng-disabled="disabled" title="Choose an Page Object" ng-change="" ng-if="row.operation.type == 'UI'">
+																		<ui-select ng-model="row.arg2" ng-disabled="disabled || viewTestcase" title="Choose an Page Object" ng-change="" ng-if="row.operation.type == 'UI'">
 																	    <ui-select-match placeholder="Select or Search an Page Object">{{$select.selected.pageObjectName}}</ui-select-match>
 																	    <ui-select-choices repeat="page in row.pageObject | propsFilter: {pageObjectName: $select.search, pageObjectType: $select.search}">
 																	      <b><div ng-bind-html="page.pageObjectName | highlight: $select.search" ></div></b>
@@ -254,24 +254,24 @@
 																	    </ui-select-choices>
 																	  </ui-select>
 																		<div ng-if="row.operation.type == 'NONUI' || row.operation == null">
-																		 <div angucomplete-alt id="ex1" placeholder="{{row.arg2_ph}}" maxlength="50" pause="100" selected-object="row.arg2" disable-input="(row.arg2_ph =='') || (row.arg2_ph=='NA') || loading || viewTestcase" local-data="configParamList" search-fields="parameter_name" title-field="parameter_name" minlength="1" input-class="form-control form-control-small" match-class="highlight" override-suggestions="true">
+																		 <div angucomplete-alt id="ex1" placeholder="{{row.arg2_ph}}" maxlength="50" pause="100" selected-object="row.arg2" disable-input="(row.arg2_ph =='') || (row.arg2_ph=='NA') || loading || viewTestcase" local-data="configParamList" search-fields="parameter_name" title-field="parameter_name" minlength="1" input-class="form-control form-control-small" match-class="highlight" override-suggestions="true" initial-value="row.arg2">
 																	          </div>
 																		</div>
 																	</td>
 																	<td>
 																			
-																	          <div angucomplete-alt id="ex1" placeholder="{{row.arg3_ph}}" maxlength="50" pause="100" selected-object="row.arg3" disable-input="(row.arg3_ph =='') || (row.arg3_ph=='NA') || loading || viewTestcase" local-data="configParamList" search-fields="parameter_name" title-field="parameter_name" minlength="1" input-class="form-control form-control-small" match-class="highlight" override-suggestions="true">
+																	          <div angucomplete-alt id="ex1" placeholder="{{row.arg3_ph}}" maxlength="50" pause="100" selected-object="row.arg3" disable-input="(row.arg3_ph =='') || (row.arg3_ph=='NA') || loading || viewTestcase" local-data="configParamList" search-fields="parameter_name" title-field="parameter_name" minlength="1" input-class="form-control form-control-small" match-class="highlight" override-suggestions="true" initial-value="row.arg3">
 																	          </div>
 																	        
 																	        
 																		<!-- <input class="form-control" placeholder="{{row.arg3_ph}}" ng-model="row.arg3" ng-disabled="(row.arg3_ph =='') || (row.arg3_ph=='NA') || loading || viewTestcase">
 																	 --></td>
 																	<td>
-																		 <div angucomplete-alt id="ex1" placeholder="{{row.arg4_ph}}" maxlength="50" pause="100" selected-object="row.arg4" disable-input="(row.arg4_ph =='') || (row.arg4_ph=='NA') || loading || viewTestcase" local-data="configParamList" search-fields="parameter_name" title-field="parameter_name" minlength="1" input-class="form-control form-control-small" match-class="highlight" override-suggestions="true">
+																		 <div angucomplete-alt id="ex1" placeholder="{{row.arg4_ph}}" maxlength="50" pause="100" selected-object="row.arg4" disable-input="(row.arg4_ph =='') || (row.arg4_ph=='NA') || loading || viewTestcase" local-data="configParamList" search-fields="parameter_name" title-field="parameter_name" minlength="1" input-class="form-control form-control-small" match-class="highlight" override-suggestions="true"  initial-value="row.arg4">
 																	          </div>
 																	</td>
 																	<td>
-																		 <div angucomplete-alt id="ex1" placeholder="{{row.arg5_ph}}" maxlength="50" pause="100" selected-object="row.arg5" disable-input="(row.arg5_ph =='') || (row.arg5_ph=='NA') || loading || viewTestcase" local-data="configParamList" search-fields="parameter_name" title-field="parameter_name" minlength="1" input-class="form-control form-control-small" match-class="highlight" override-suggestions="true">
+																		 <div angucomplete-alt id="ex1" placeholder="{{row.arg5_ph}}" maxlength="50" pause="100" selected-object="row.arg5" disable-input="(row.arg5_ph =='') || (row.arg5_ph=='NA') || loading || viewTestcase" local-data="configParamList" search-fields="parameter_name" title-field="parameter_name" minlength="1" input-class="form-control form-control-small" match-class="highlight" override-suggestions="true"  initial-value="row.arg5">
 																	          </div>
 																	</td>
 																	<td>
@@ -280,6 +280,7 @@
 																	</td>
 																</tr>
 															</tbody>
+															
 														</table>
 													</div>
 												</div>

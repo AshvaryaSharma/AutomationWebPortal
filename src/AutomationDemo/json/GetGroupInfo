@@ -1,0 +1,16 @@
+url: /webservice/getGroupInfo
+
+request: 
+
+1
+
+response:
+
+{
+  "status": "SUCCESS",
+  "exceptionMessage": null,
+  "group": {
+    "groupid": 1,
+    "team_name": "Automation"
+  }
+}

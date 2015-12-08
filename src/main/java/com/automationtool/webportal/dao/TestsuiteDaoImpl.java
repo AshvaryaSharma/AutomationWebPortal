@@ -149,7 +149,12 @@ public class TestsuiteDaoImpl implements Serializable, TestsuiteDao {
 		
 		System.out.println("::::::::::ADDING::::::::::" + testcaseTestSuite);
 		
-		session.persist(testcaseTestSuite);
+		try {
+			session.persist(testcaseTestSuite);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 	}
@@ -161,6 +166,38 @@ public class TestsuiteDaoImpl implements Serializable, TestsuiteDao {
 		query.setInteger("testsuite_id", testsuiteId);
 		
 		return query.list();
+	}
+
+	@Override
+	public void updateTestcasesToTestcases(TestcaseToTestsuites test) {
+		init();
+		System.out.println("Adding: " + test);
+		TestsuiteTestcases testcaseTestSuite = new TestsuiteTestcases();
+		testcaseTestSuite.setTestcase(test.getTestcase());
+		testcaseTestSuite.setTestsuite(test.getTestsuite());
+		testcaseTestSuite.setBrowser(test.getBrowser());
+		testcaseTestSuite.setParam1_name(test.getParam1_name());
+		testcaseTestSuite.setParam1_value(test.getParam1_value());
+		testcaseTestSuite.setParam2_name(test.getParam2_name());
+		testcaseTestSuite.setParam2_value(test.getParam2_value());
+		testcaseTestSuite.setParam3_name(test.getParam3_name());
+		testcaseTestSuite.setParam3_value(test.getParam3_value());
+		testcaseTestSuite.setParam4_name(test.getParam4_name());
+		testcaseTestSuite.setParam4_value(test.getParam4_value());
+		testcaseTestSuite.setParam5_name(test.getParam5_name());
+		testcaseTestSuite.setParam5_value(test.getParam5_value());
+		
+		System.out.println("::::::::::ADDING::::::::::" + testcaseTestSuite);
+		
+		session.update(testcaseTestSuite);
+		
+	}
+
+	@Override
+	public void deleteTestcasesFromTestsuite(TestsuiteTestcases testcases) {
+		 init();
+		 session.delete(testcases);
+		
 	}
 
 }

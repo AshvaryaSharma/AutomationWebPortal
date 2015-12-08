@@ -33,4 +33,8 @@ public interface TestsuiteDao {
 
 	public List<TestsuiteTestcases> getTestcasesForTestsuites(int testsuiteId);
 
+	public void updateTestcasesToTestcases(TestcaseToTestsuites test);
+
+	public void deleteTestcasesFromTestsuite(TestsuiteTestcases test);
+
 }

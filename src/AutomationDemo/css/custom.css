@@ -1,3 +1,6 @@
+a, button, table thead th, label, ul li a , span {
+	font-family: 'Open Sans', Sans Serif;
+}
 .container-fluid {
 	padding-left: 0px;
 	padding-right: 0px;
@@ -27,11 +30,37 @@
 #safe-dropdown > a:hover {
 	color: #fff !important;
 }
+.safe-heading-label, .page-header {
+	font-family: 'Open Sans', Sans Serif !important; 
+}
+
 .footer {
 	font-family: 'Open Sans', Sans Serif;
 	padding-top: 10px;
 	font-size: 12px;
 } 
+.tag-line {
+	line-height: 27px !important;
+	margin-top:10px !important;
+}
+.mobile {
+	display: none;
+}
+.desktop {
+	display: none;
+}
+.pad-left-10px {
+	padding-left: 10px;
+}
+.pad-left-5px {
+	padding-left: 5px;
+}
+.vertical-align-middle {
+	vertical-slign: middle;
+}
+.clear-left {
+	clear:left;
+}
 @media (max-width: 768px) {
   #navbar li { width:100%; }
 }
@@ -42,9 +71,13 @@
 	#safe-logo {
 		margin-top: -50px !important;
 	}
+	.mobile {
+		display:block;
+	}
 }
 @media (min-width: 1200px) {
-	#tag-line {
-		padding-left: 120px !important;
+	
+	.desktop {
+		display: block;
 	}
 }

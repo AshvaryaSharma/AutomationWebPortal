@@ -39,7 +39,8 @@ app.controller('testcaseController', function($scope,$http,$timeout, $interval,$
 		console.log("Checking page action: " + pageAction)
 		
 		$scope.user = userId;
-		
+		$scope.pageAction = pageAction;
+		$scope.pageTestid = testcaseId;
 		if(pageAction=='create') {
 			console.log("Page action is create");
 			
@@ -48,12 +49,13 @@ app.controller('testcaseController', function($scope,$http,$timeout, $interval,$
 			$scope.getAllApplications();
 			$scope.getAllOperationNames();
 		} else if(pageAction == 'SaveAsNew') {
+			console.log("Page action: SAVE AS")
+			$scope.getUserDetails();
+			/*$scope.saveInitialize();
 			
-			$scope.saveInitialize();
 			
 			
-			
-			$scope.saveAsNewInitialize(testcaseId);
+			$scope.saveAsNewInitialize(testcaseId);*/
 			/*$scope.getAllOperationNames();
 			$scope.getAllApplications();*/
 			
@@ -63,13 +65,19 @@ app.controller('testcaseController', function($scope,$http,$timeout, $interval,$
 			
 		} else if(pageAction == 'view') {
 			
-			$scope.saveInitialize();
-			$scope.saveAsNewInitialize(testcaseId);
+			console.log("Page Action: VIEW")
+			$scope.getUserDetails();
+			$scope.viewTestcase = true;
+			/*$scope.saveInitialize();
+			$scope.saveAsNewInitialize(testcaseId);*/
 			$scope.viewTestcase = true;
 			
 		} else if(pageAction == 'edit') {
-			$scope.saveInitialize();
-			$scope.editInitialize(testcaseId);
+			console.log("Page Action: EDIT")
+			$scope.getUserDetails();
+			/*$scope.saveInitialize();
+			$scope.saveAsNewInitialize(testcaseId);*/
+			/*$scope.editInitialize(testcaseId);*/
 			$scope.editTestCase = true;
 			$scope.successMessage = "Test Case Updated Successfully"
 			
@@ -162,13 +170,16 @@ app.controller('testcaseController', function($scope,$http,$timeout, $interval,$
 		
 	}
 	
+	
+	
+	
 	$scope.saveAsNewInitialize = function(testcaseId) {
 		console.log("Initializing the page for testcaseid: " + testcaseId);
 		$scope.getAllOperationNames();
 		$scope.getAllApplications();
 		$scope.app_id = null;
 		$scope.package_id = null;
-		$scope.testStep = [{}];
+		$scope.testStep = [];
 		
 		console.log("Application id: " + $scope.app_id);
 		console.log("Package ID:" + $scope.package_id);
@@ -179,43 +190,75 @@ app.controller('testcaseController', function($scope,$http,$timeout, $interval,$
 			.success(function (response) {
 				
 				
-				$scope.package_id = response.package_id;
-				$scope.testCaseName = response.testcase_name;
-				$scope.testCaseDescription = response.testcase_description;
-				$scope.app_id = response.teststeps[0].testcase.packages.application.app_id;
+				$scope.app_id = response.testcaseDesc.application.app_id;
+				if($scope.pageAction != 'SaveAsNew') {
+					$scope.testcase_id = response.testcaseDesc.testcase_id;
+					$scope.testCaseName = response.testcaseDesc.testcase_name;
+					$scope.testCaseDescription = response.testcaseDesc.testcase_description;
+					
+				}
+				/*$scope.testCaseName = response.testcaseDesc.testcase_name;
+				$scope.testCaseDescription = response.testcaseDesc.testcase_description;*/
 				
+				$scope.setAndSelectApplication($scope.app_id);
 				console.log("Initilized " +
 						
 						+ "package_id: " + $scope.package_id
 						+ "testcase_name: " + $scope.testCaseName
 						+ "testcase_description: " + $scope.testCaseDescription
 						+ "app_id: " + $scope.app_id);
+				$scope.testStep = [];
+					
+						
+						for(i=0;i < response.teststeps.length; i++) {
+							console.log("initialising Step id: " + response.teststeps[i].keyword);
+							var step ={};
+							step.operation = {};
+							step.operation.keyword = response.teststeps[i].keyword;
+							step.operation.type = response.teststeps[i].type;
+							/*if(step.operation.type == 'UI'){
+								step.arg1 = response.teststeps[i].arg1;
+								step.arg2 = response.teststeps[i].arg2;
+							} else {
+								
+								step.arg1 = response.teststeps[i].arg1_init;
+								step.arg2 = response.teststeps[i].arg2_init;
+							}
+							
+							step.arg3 = response.teststeps[i].arg3_init;
+							step.arg4 = response.teststeps[i].arg4_init;
+							step.arg5 = response.teststeps[i].arg5_init;*/
+							
+							step.arg1 = response.teststeps[i].arg1;
+							step.arg2 = response.teststeps[i].arg2;
+							step.arg3 = response.teststeps[i].arg3;
+							step.arg4 = response.teststeps[i].arg4;
+							step.arg5 = response.teststeps[i].arg5;
+							
+							if($scope.pageAction != 'SaveAsNew') {
+							step.teststep_id = response.teststeps[i].teststep_id;
+							}
+							
+							
+							console.log("adding step: " + step.operation.keyword);
+							
+							$scope.testStep.push(step);
+							console.log("Teststep: " + $scope.testStep[i].operation.keyword)
+							$scope.operatorSelectEvent(i,false);
+							$scope.testStep[i].arg1 = response.teststeps[i].arg1;
+							$scope.testStep[i].arg2 = response.teststeps[i].arg2;
+							$scope.testStep[i].arg3 = response.teststeps[i].arg3;
+							$scope.testStep[i].arg4 = response.teststeps[i].arg4;
+							$scope.testStep[i].arg5 = response.teststeps[i].arg5;
+							$scope.testStep[i].type = response.teststeps[i].type;
+							console.log("Added test step: " + $scope.testStep[i].operation.keyword);
+							
+							
+						}
+						
+					
 				
-				for(i=0;i < response.teststeps.length; i++) {
-					console.log("initialising Step id: " + response.teststeps[i].keyword);
-					var step ={};
-					
-					step.keyword = response.teststeps[i].keyword;
-					
-					step.arg1 = response.teststeps[i].arg1;
-					step.arg2 = response.teststeps[i].arg2;
-					step.arg3 = response.teststeps[i].arg3;
-					step.arg4 = response.teststeps[i].arg4;
-					step.arg5 = response.teststeps[i].arg5;
-					
-					
-					
-					$scope.testStep.splice(i,0,step);
-					$scope.operatorSelectEvent(i,false);
-					$scope.testStep[i].arg1 = response.teststeps[i].arg1;
-					$scope.testStep[i].arg2 = response.teststeps[i].arg2;
-					$scope.testStep[i].arg3 = response.teststeps[i].arg3;
-					$scope.testStep[i].arg4 = response.teststeps[i].arg4;
-					$scope.testStep[i].arg5 = response.teststeps[i].arg5;
-					console.log("Added test step: " + $scope.testStep[i].keyword);
-				}
 				
-				$scope.testStep.splice($scope.testStep.length -1,1);
 				
 				console.log("Printing response" + response.package_id);
 				console.log("Got test case: " + $scope.testcaseObject);
@@ -230,9 +273,9 @@ app.controller('testcaseController', function($scope,$http,$timeout, $interval,$
 				$scope.packageSelectEvent();*/
 				
 				
-				$scope.setAndSelectApplication($scope.app_id);
 				
-				$scope.setAndSelectPackage(response.package_id);
+				
+				/*$scope.setAndSelectPackage(response.package_id);*/
 				
 				
 				$scope.testcaseObject.testcase_id = null;
@@ -249,6 +292,34 @@ app.controller('testcaseController', function($scope,$http,$timeout, $interval,$
 		
 	}
 	
+	
+	$scope.getPageName = function() {
+		
+		
+		console.log("No of pages: " + $scope.pageNames.length);
+		for(var j=0; j < $scope.testStep.length; j++) {
+			if( $scope.testStep[j].operation.type == 'UI') {
+				
+				for(var i =0; i < $scope.pageNames.length ; i++) {
+					
+					if($scope.pageNames[i].pageid == $scope.testStep[j].arg1) {
+						console.log("Got Page Name for ID: " + $scope.testStep[j].arg1)
+						$scope.testStep[j].arg1 = $scope.pageNames[i];
+						console.log("SET pageName: " + $scope.pageNames[i].pageName + " for operation: "+ $scope.testStep[j].operation.keyword);
+						$scope.pageNameSelectEvent(j);
+						break;
+					}
+					
+				}
+			}
+			
+			
+		}
+		
+		
+		
+	}
+	
 	$scope.getUserDetails = function() {
 		
 		$http.get("../webservice/getLoggedUserDetails")
@@ -256,6 +327,20 @@ app.controller('testcaseController', function($scope,$http,$timeout, $interval,$
 			$scope.userDetail = response.userDetails;
 			
 			$scope.testattr ="gotdata";
+			
+			console.log(":::::::--------GOT USER DATA--------:::::::::::")
+			if($scope.pageAction != 'create') {
+				$scope.saveInitialize();
+				$scope.saveAsNewInitialize($scope.pageTestid);
+			}
+			if ($scope.pageAction == 'edit') {
+				console.log(":::::::--------EDIT TEST CASE SET--------:::::::::::")
+				$scope.editTestCase = true;
+				
+			} else if($scope.pageAction == 'view') {
+				console.log(":::::::--------VIEW TEST CASE SET--------:::::::::::")
+				$scope.viewTestcase = true;
+			}
 		})
 		.error(function(response) {
 			
@@ -586,7 +671,7 @@ $scope.saveInitialize = function(){
 			$scope.isApplicationSelected = false;
 			
 		}
-		
+		console.log("Loaing page name and config pacages for appid" + $scope.app_id);
 		$scope.loadApplicationPageNames();
 		$scope.loadConfigPackages();
 		
@@ -605,6 +690,11 @@ $scope.saveInitialize = function(){
 			 .success(function(response) {
 				$scope.pageNames = response.pageNames;
 				$scope.testattr = "getPackages";
+				console.log("Got page names");
+				if($scope.pageAction != 'create') {
+					$scope.getPageName();
+				}
+				
 			 })
 			 .error(function(response) {
 				 $scope.errorMessage = response.exceptionMessage;
@@ -628,8 +718,9 @@ $scope.saveInitialize = function(){
 		$scope.loading = true;
 		
 		$scope.testStep[rowNumber].pageObject = null;
+		if($scope.pageAction == 'create') {
 		$scope.testStep[rowNumber].arg2 = '';
-		
+		}
 		/*var pageId = null;
 		
 		for(i=0 ; i < $scope.pageNames.length; i++) {
@@ -647,6 +738,15 @@ $scope.saveInitialize = function(){
 		 .success(function(response) {
 			 $scope.testStep[rowNumber].pageObject = response.list;
 			$scope.testattr = "getPackages";
+			if($scope.pageAction != 'create') {
+				console.log("----CHECKING FOR PAGE OBJECT IN ACTION: " + $scope.pageAction);
+				for(var i=0;i<$scope.testStep[rowNumber].pageObject.length; i++) {
+					if($scope.testStep[rowNumber].pageObject[i].pageObjectId == $scope.testStep[rowNumber].arg2) {
+						console.log("Page Object found for page Object: " + $scope.testStep[rowNumber].arg2);
+						$scope.testStep[rowNumber].arg2 = $scope.testStep[rowNumber].pageObject[i];
+					}
+				}
+			}
 		 })
 		 .error(function(response) {
 			 $scope.errorMessage = response.exceptionMessage;
@@ -677,6 +777,7 @@ $scope.saveInitialize = function(){
 				$scope.testattr = "getPackages";
 				$scope.applicationsLoaded = true;
 				$scope.isApplicationSelected = true;
+				console.log(":::::GOT Confif Suites::::")
 			 })
 			 .error(function() {
 				 $scope.errorMessage ="Not able to get any package for Application Selected"
@@ -788,7 +889,7 @@ $scope.saveInitialize = function(){
 				})
 				.error(function() {
 					$scope.testattr = "ERROR on creation";
-					$scope.errorMessage = "Error in creating test case"
+					$scope.errorMessage = "Error in updating test case"
 					$scope.errorStatus= true;
 				})
 				
@@ -849,7 +950,7 @@ $scope.saveInitialize = function(){
 					testcase_id : null,
 					testcase_name:'',
 					testcase_description: '',
-					teststeps:[{}]
+					teststeps:[]
 			};
 		
 		
@@ -890,7 +991,9 @@ $scope.saveInitialize = function(){
 		$scope.testcaseObject.app_id = $scope.app_id;
 		$scope.testcaseObject.testcase_name = $scope.testCaseName;
 		$scope.testcaseObject.testcase_description = $scope.testCaseDescription;
-		
+		if($scope.pageAction == 'edit') {
+			$scope.testcaseObject.testcase_id = $scope.testcase_id;
+		}
 		for(var i=0; i < $scope.testStep.length; i++) {
 			
 			
@@ -901,6 +1004,7 @@ $scope.saveInitialize = function(){
 			$scope.testcaseObject.teststeps[i].keyword = $scope.testStep[i].operation.keyword;
 			$scope.testcaseObject.teststeps[i].type = $scope.testStep[i].operation.type;
 			$scope.testcaseObject.teststeps[i].stepNo = i+1;
+			$scope.testcaseObject.teststeps[i].teststep_id = $scope.testStep[i].teststep_id;
 			
 			if($scope.testStep[i].operation.type == 'UI') {
 				$scope.testcaseObject.teststeps[i].arg1 = $scope.testStep[i].arg1.pageid;
@@ -968,11 +1072,11 @@ $scope.saveInitialize = function(){
 			$scope.errorStatus= true;
 			
 		}
-		else if($scope.package_id == null) {
+		/*else if($scope.package_id == null) {
 			
 			$scope.errorMessage = "Selecting a package is required"
 			$scope.errorStatus= true;
-		} else if($scope.testCaseName == "" || $scope.testCaseName == null) {
+		}*/ else if($scope.testCaseName == "" || $scope.testCaseName == null) {
 			$scope.errorMessage = "Test Case Name is required"
 			$scope.errorStatus= true;
 			

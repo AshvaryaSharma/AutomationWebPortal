@@ -203,6 +203,7 @@ public class TestsuiteSeriveImpl implements TestsuiteService {
 			status.setStatus("SUCCESS");
 			
 		} catch(Exception e) {
+			e.printStackTrace();
 			status = new WebserviceTemplate("ERROR" , e.getLocalizedMessage());
 			
 		}
@@ -229,6 +230,46 @@ public class TestsuiteSeriveImpl implements TestsuiteService {
 		}
 		
 		return testcaseList;
+	}
+
+	@Override
+	public WebserviceTemplate updateTestcasesToTestsuites(
+			TestcaseToTestsuites[] testcases) {
+		WebserviceTemplate status = null;
+		System.out.println("Updating test cases to test suite: " + testcases);
+		try {
+			
+			for(TestcaseToTestsuites test : testcases) {
+				testsuites.updateTestcasesToTestcases(test);
+				
+			}
+			status = new WebserviceTemplate();
+			status.setStatus("SUCCESS");
+			
+		} catch(Exception e) {
+			status = new WebserviceTemplate("ERROR" , e.getLocalizedMessage());
+			
+		}
+		return status;
+	}
+
+	@Override
+	public WebserviceTemplate deleteTestcasesFromTestsuite(TestsuiteTestcases[] testcases) {
+		WebserviceTemplate status = null;
+		try {
+			for(TestsuiteTestcases test : testcases) {
+				System.out.println("deleting: " + testcases);
+				testsuites.deleteTestcasesFromTestsuite(test);
+				System.out.println("DELETED");
+			}
+			
+			status = new WebserviceTemplate();
+			status.setStatus("SUCCESS");
+		} catch(Exception e) {
+			status = new WebserviceTemplate("ERROR" , e.getLocalizedMessage());
+			
+		}
+		return status;
 	}
 
 	

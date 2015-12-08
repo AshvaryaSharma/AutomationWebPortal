@@ -20,12 +20,119 @@ angular.module('testsuitemaster',["checklist-model"]).controller('testsuiteMaste
 	$scope.testsuiteEdit = function() {
 		
 		$scope.loading = true;
-		$scope.editTestcasesForTestsuite = true;
+		$scope.testcasesTobeEdit = {};
+		$scope.testcasesTobeEdit.id = [];
+		$scope.listEditTestcasesForTestsuite = true;
 		$scope.selectApplication = false;
 		$scope.getSelectedTestSuite();
 		$scope.getEditTestcasesForTestsuites();
 		
 	}
+	
+	$scope.testsuiteTestCaseDelete = function() {
+		
+		$scope.errorMessage = "";
+		$scope.errorStatus = false;
+		
+		if($scope.testcasesTobeEdit.id.length == 0) {
+			
+			$scope.errorMessage = "Select at least one test case for delete";
+			$scope.errorStatus = true;
+		} else {
+			$scope.loading = true;
+			$scope.createDeleteTestCasesFromTestsuiteReq();
+			
+			$http.post("../webservice/deleteTestcasesFromTestsuite",$scope.deleteTestcaseObj)
+			.success(function(response) {
+				$scope.successStatus = true;
+				$scope.successMessage = "Testcases successfully deleted from test suite";
+				$scope.testcasesTobeEdit = {};
+				$scope.testcasesTobeEdit.id = [];
+				$scope.getEditTestcasesForTestsuites();
+				$scope.loading = false;
+				
+				/*$scope.EditTestcasesList();*/
+			})
+			.error(function(response){
+				
+				$scope.errorMessage =response.exceptionMessage;
+				$scope.errorStatus= true;
+				$scope.loading = false;
+			})
+			
+		}
+		
+	}
+	
+	$scope.createDeleteTestCasesFromTestsuiteReq = function() {
+		$scope.deleteTestcaseObj = [];
+		for(var i=0; i < $scope.testcasesTobeEdit.id.length ; i++) {
+			console.log("checking for: " + $scope.testcasesTobeEdit.id[i]);
+			
+			for(var j =0; j < $scope.editTestcasesList.length;j++) {
+				console.log("Matching with: " +$scope.editTestcasesList[j].testcase.testcase_id );
+				if($scope.testcasesTobeEdit.id[i] == $scope.editTestcasesList[j].testcase.testcase_id) {
+					$scope.deleteTestcaseObj.push($scope.editTestcasesList[j]);
+					break;
+				}
+			}
+		}
+	}
+	
+	$scope.testsuiteTestcaseSelectUpdate = function() {
+		
+		$scope.errorMessage = "";
+		$scope.errorStatus = false;
+		
+		if($scope.testcasesTobeEdit.id.length == 0) {
+			
+			$scope.errorMessage = "Select at least one test case for update";
+			$scope.errorStatus = true;
+		} else{
+			
+			$scope.loading = true;
+			$scope.listEditTestcasesForTestsuite = false;
+			$scope.editTestcasesForTestsuite = true;
+			
+			$scope.testCasesSelectedToBeAdded = [];
+			for(var i=0;i < $scope.editTestcasesList.length; i++) {
+				
+				for(var j=0; j < $scope.testcasesTobeEdit.id.length; j++) {
+					if( $scope.editTestcasesList[i].testcase.testcase_id == $scope.testcasesTobeEdit.id[j]) {
+						$scope.temp = {};
+						$scope.temp = $scope.editTestcasesList[i].testcase;
+						$scope.temp.param1_value = $scope.editTestcasesList[i].param1_value;
+						$scope.temp.param2_value = $scope.editTestcasesList[i].param2_value;
+						$scope.temp.param3_value = $scope.editTestcasesList[i].param3_value;
+						$scope.temp.param4_value = $scope.editTestcasesList[i].param4_value;
+						$scope.temp.param5_value = $scope.editTestcasesList[i].param5_value;
+						
+						$scope.temp.param1_name = $scope.editTestcasesList[i].param1_name;
+						$scope.temp.param2_name = $scope.editTestcasesList[i].param2_name;
+						$scope.temp.param3_name = $scope.editTestcasesList[i].param3_name;
+						$scope.temp.param4_name = $scope.editTestcasesList[i].param4_name;
+						$scope.temp.param5_name = $scope.editTestcasesList[i].param5_name;
+						
+						$scope.temp.browser = $scope.editTestcasesList[i].browser;
+						
+						$scope.testCasesSelectedToBeAdded.push($scope.temp);
+						
+						break;
+						
+					}
+				}
+				
+			}
+			
+			$scope.loading = false;
+			
+		}
+		
+		
+	}
+	
+	
+	
 	
 	$scope.createEditTestcasesList = function() {
 		$scope.testCasesSelectedToBeAdded = [];
@@ -91,7 +198,8 @@ angular.module('testsuitemaster',["checklist-model"]).controller('testsuiteMaste
 		$http.post("../webservice/getTestcasesForTestsuites",$scope.testsuite_id)
 		.success(function(response) {
 			$scope.editTestcasesList = response.testcases;
-			$scope.createEditTestcasesList();
+			$scope.loading = false;
+			/*$scope.EditTestcasesList();*/
 		})
 		.error(function(response){
 			
@@ -102,6 +210,133 @@ angular.module('testsuitemaster',["checklist-model"]).controller('testsuiteMaste
 		
 	}
 	
+	
+	$scope.createUpdateTestcasesToTestsuiteObject = function() {
+		
+		$scope.testsuiteTestcasesObj = [];
+		
+		$scope.temp = {};
+		for(var i=0; i < $scope.testCasesSelectedToBeAdded.length ; i++) {
+			$scope.temp.testsuite = $scope.selectedTestSuite;
+			for(var j=0; j < $scope.editTestcasesList.length ; j++) {
+				if($scope.editTestcasesList[j].testcase.testcase_id == $scope.testCasesSelectedToBeAdded[i].testcase_id) {
+					
+					$scope.temp.testcase = $scope.editTestcasesList[j].testcase;
+					break;
+				}
+				
+			}
+			
+			if($scope.testCasesSelectedToBeAdded[i].browser != undefined) {
+				
+				$scope.temp.browser = $scope.testCasesSelectedToBeAdded[i].browser;
+			} else {
+				$scope.temp.browser = "NA";
+			}
+			
+			if($scope.testCasesSelectedToBeAdded[i].param1_name != undefined) {
+				
+				$scope.temp.param1_name = $scope.testCasesSelectedToBeAdded[i].param1_name;
+			} else {
+				$scope.temp.param1_name = "";
+			}
+			
+			if($scope.testCasesSelectedToBeAdded[i].param2_name != undefined) {
+				
+				$scope.temp.param2_name = $scope.testCasesSelectedToBeAdded[i].param2_name;
+			} else {
+				$scope.temp.param2_name = "";
+			}
+			
+			if($scope.testCasesSelectedToBeAdded[i].param3_name != undefined) {
+				
+				$scope.temp.param3_name = $scope.testCasesSelectedToBeAdded[i].param3_name;
+			} else {
+				$scope.temp.param3_name = "";
+			}
+			
+			if($scope.testCasesSelectedToBeAdded[i].param4_name != undefined) {
+				
+				$scope.temp.param4_name = $scope.testCasesSelectedToBeAdded[i].param4_name;
+			} else {
+				$scope.temp.param4_name = "";
+			}
+			
+			if($scope.testCasesSelectedToBeAdded[i].param5_name != undefined) {
+				
+				$scope.temp.param5_name = $scope.testCasesSelectedToBeAdded[i].param5_name;
+			} else {
+				$scope.temp.param5_name = "";
+			}
+			
+			
+			if($scope.testCasesSelectedToBeAdded[i].param1_value != undefined) {
+				
+				$scope.temp.param1_value = $scope.testCasesSelectedToBeAdded[i].param1_value;
+			} else {
+				$scope.temp.param1_value = "";
+			}
+			
+			if($scope.testCasesSelectedToBeAdded[i].param2_value != undefined) {
+				
+				$scope.temp.param2_value = $scope.testCasesSelectedToBeAdded[i].param2_value;
+			} else {
+				$scope.temp.param2_value = "";
+			}
+			
+			if($scope.testCasesSelectedToBeAdded[i].param3_value != undefined) {
+				
+				$scope.temp.param3_value = $scope.testCasesSelectedToBeAdded[i].param3_value;
+			} else {
+				$scope.temp.param3_value = "";
+			}
+			
+			if($scope.testCasesSelectedToBeAdded[i].param4_value != undefined) {
+				
+				$scope.temp.param4_value = $scope.testCasesSelectedToBeAdded[i].param4_value;
+			} else {
+				$scope.temp.param4_value = "";
+			}
+			
+			if($scope.testCasesSelectedToBeAdded[i].param5_value != undefined) {
+				
+				$scope.temp.param5_value = $scope.testCasesSelectedToBeAdded[i].param5_value;
+			} else {
+				$scope.temp.param5_value = "";
+			}
+			
+			
+			$scope.testsuiteTestcasesObj.push($scope.temp);
+		
+	}
+}
+	
+	
+	
+	$scope.updateTestcasesToTestsuite = function() {
+		
+		$scope.checkAddTestCases();
+		if($scope.errorStatus == false) {
+			
+			
+			$scope.createUpdateTestcasesToTestsuiteObject();
+			
+			
+			$http.post("../webservice/updateTestcasesToTestsuite",$scope.testsuiteTestcasesObj)
+			.success(function(response) {
+				$scope.init();
+				$scope.successMessage = "Test cases successfully updated to test suite"; 
+				$scope.successStatus = true;
+				
+			})
+			.error(function(response){
+				$scope.loading = false;
+				$scope.errorMessage =response.exceptionMessage;
+				$scope.errorStatus= true;
+			})
+		}
+		
+	}
 	
 	$scope.getGroup = function() {
 		
@@ -382,6 +617,16 @@ angular.module('testsuitemaster',["checklist-model"]).controller('testsuiteMaste
 			$scope.testcasesTobeAdded.id = $scope.testcases.map(function(item){ return item.testcase_id;})
 		} else {
 			$scope.testcasesTobeAdded.id = [];
+		}
+	}
+	
+	
+$scope.toggleEditAllTestcases = function() {
+		
+		if($scope.isEditAllTestcasesChecked) {
+			$scope.testcasesTobeEdit.id = $scope.editTestcasesList.map(function(item){ return item.testcase.testcase_id;})
+		} else {
+			$scope.testcasesTobeEdit.id = [];
 		}
 	}
 	

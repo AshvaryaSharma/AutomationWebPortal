@@ -21,7 +21,7 @@ angular.module('application',[]).controller('applicationController', function($s
 		$scope.loading = true;
 		$scope.button = "Create";
 		
-		$scope.getAllApplicationList();
+		$scope.getUserDetails();
 		
 		if(!$scope.errorStatus) {
 			$scope.intializing = false;
@@ -69,7 +69,7 @@ angular.module('application',[]).controller('applicationController', function($s
 			}
 			
 			$scope.applicationList = [{}];
-			$scope.getAllApplicationList();
+			$scope.getAllApplications();
 			$scope.loading = false;
 		}
 		
@@ -112,7 +112,7 @@ angular.module('application',[]).controller('applicationController', function($s
 		})
 		
 		$scope.applicationList = [{}];
-		$scope.getAllApplicationList();
+		$scope.getAllApplications();
 		$scope.loading = false;
 		
 	}
@@ -164,22 +164,58 @@ angular.module('application',[]).controller('applicationController', function($s
 		$scope.button = 'Edit';
 		
 	}
+	
+	
+	
 
-	$scope.getAllApplicationList = function() {
-		
+	$scope.getAllApplications = function() {
 		console.log("---------GETTING ALL APPLICATIONS-----------");
 		
-		$http.get("../webservice/findAllApplications")
+		$http.post("../webservice/findApplicationsByUserId",$scope.userDetail.sso_id)
 			.success(function (response) {
-				$scope.applicationList = response;
-				
-				
+				$scope.applicationList = response.applicationList;
+				$scope.intializing = false;
+				$scope.testattr ="gotdata";
+				$scope.loading = false;
 			})
 			.error(function() {
 				
-				$scope.errorMessage = "Not able to get application data"
+				$scope.errorMessage = response.exceptionMessage;
 				$scope.errorStatus = true;
 			})
+			
+	}
+	
+$scope.getGroup = function() {
+		
+		$http.post("../webservice/getGroupInfo",$scope.userDetail.groupId)
+		.success(function(response) {
+			$scope.group = response.group;
+		})
+		.error(function(response){
+			$scope.loading = false;
+			$scope.errorMessage =response.exceptionMessage;
+			$scope.errorStatus= true;
+		})
+		
+	}
+	
+$scope.getUserDetails = function() {
+		
+		$http.get("../webservice/getLoggedUserDetails")
+		.success(function (response) {
+			$scope.userDetail = response.userDetails;
+			console.log("User Details: " + $scope.userDetail.groupId);
+			$scope.getGroup();
+			$scope.getAllApplications();
+			$scope.testattr ="gotdata";
+		})
+		.error(function(response) {
+			
+			$scope.errorMessage = response.exceptionMessage;
+			$scope.errorStatus = true;
+		})
+		
 	}
 	
 	

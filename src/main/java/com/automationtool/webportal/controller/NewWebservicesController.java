@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.automationtool.webportal.model.Group;
 import com.automationtool.webportal.model.TestsuiteDescription;
+import com.automationtool.webportal.model.TestsuiteTestcases;
 import com.automationtool.webportal.model.User;
 import com.automationtool.webportal.model.User_view;
 import com.automationtool.webportal.model.webservices.ApplicationList;
@@ -202,6 +203,34 @@ public class NewWebservicesController {
 		
 		
 		WebserviceTemplate status = testsuiteService.addTestcasesToTestsuites(testcases);
+		
+		if(status.getStatus().equalsIgnoreCase("ERROR")) {
+			return new ResponseEntity<WebserviceTemplate>(status, HttpStatus.EXPECTATION_FAILED);
+		}
+		
+		return new ResponseEntity<WebserviceTemplate>(status, HttpStatus.OK);
+	}
+	
+	
+	@RequestMapping(value="/webservice/updateTestcasesToTestsuite" , method = RequestMethod.POST)
+	public ResponseEntity<WebserviceTemplate> updateTestcasesToTestsuite(@RequestBody TestcaseToTestsuites [] testcases) {
+		
+		
+		WebserviceTemplate status = testsuiteService.updateTestcasesToTestsuites(testcases);
+		
+		if(status.getStatus().equalsIgnoreCase("ERROR")) {
+			return new ResponseEntity<WebserviceTemplate>(status, HttpStatus.EXPECTATION_FAILED);
+		}
+		
+		return new ResponseEntity<WebserviceTemplate>(status, HttpStatus.OK);
+	}
+	
+	
+	@RequestMapping(value="/webservice/deleteTestcasesFromTestsuite" , method = RequestMethod.POST)
+	public ResponseEntity<WebserviceTemplate> deleteTestcasesFromTestsuite(@RequestBody TestsuiteTestcases [] testcases) {
+		
+		
+		WebserviceTemplate status = testsuiteService.deleteTestcasesFromTestsuite(testcases);
 		
 		if(status.getStatus().equalsIgnoreCase("ERROR")) {
 			return new ResponseEntity<WebserviceTemplate>(status, HttpStatus.EXPECTATION_FAILED);

@@ -153,13 +153,8 @@
                                 
                             </ul>
                         </li>
-						<li id="lMidMenu" class="dropdown">
-							<a id="MidMenu" href="package">Packages</a>
-                            <ul class="dropdown-menu">
-                               
-                            </ul>
-                        </li>
-                        <sec:authorize access="hasRole('ADMIN')">
+						
+                        <sec:authorize access="hasRole('DBA')">
                         
 						<li id="lAnnMenu" class="dropdown">
 							<a id="AnnMenu" href="application">Applications</a>
@@ -174,7 +169,8 @@
                       	<li id="lContactUs" class="dropdown">
                         <a id="TestSuites" class="dropdown-toggle" data-toggle="dropdown">Test Suites<i class="fa fa-angle-down"></i></a>
                             <ul class="dropdown-menu">
-                           	 <li><a id="GSDPAprSubMenu" href="testsuite">Add/EditTestsuite</a></li>
+                           	 <sec:authorize access="hasRole('ADMIN')"><li><a id="GSDPAprSubMenu" href="testsuite">Add/EditTestsuite</a></li>
+                           	 </sec:authorize>
 								<li><a id="GSDPAprSubMenu" href="testsuiteMaster">Add Testcases to Testsuite</a></li>
                             </ul>
                         </li>			

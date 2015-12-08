@@ -321,6 +321,47 @@
 											</div>
 										</div>
 									</div>
+									
+									<div class="row" ng-show="listEditTestcasesForTestsuite">
+										
+									
+										<div class="col-lg-12">
+											<h2>Select Test Cases to be Edit in Testsuite: <label>{{selectedTestSuite.testsuite_name}}</label></h2>
+											<br><br>
+												<table class="table table-striped table-bordered">
+															<thead>
+																<tr>
+																	<th><input type="checkbox" ng-model="isEditAllTestcasesChecked" ng-change="toggleEditAllTestcases()" ></th>
+																	<th>Testcase Name</th>
+																	<th>Testcase Description</th>
+																	
+																	
+																</tr>
+															</thead>
+															<tbody>
+																<tr ng-repeat="row in editTestcasesList">
+																	<td>  <input type="checkbox" checklist-model="testcasesTobeEdit.id" checklist-value="row.testcase.testcase_id" ></td>
+																	
+																	<td>
+																		{{row.testcase.testcase_name}}
+																	</td>
+																	<td>
+																		{{row.testcase.testcase_description}}
+																	</td>
+																	
+																	
+																</tr>
+															</tbody>
+														</table>
+											<br><br>
+											<button type="button" class="btn btn-default" ng-click="testsuiteTestcaseSelectUpdate()"  ng-disabled="loading">Update</button>
+											<button type="button" class="btn btn-default" ng-click="testsuiteTestCaseDelete()"  ng-disabled="loading">Delete</button>
+											
+											<button type="button" class="btn btn-default" ng-click="testsuiteTestCaseSelectEditBack()"  ng-disabled="loading">Back</button>
+											 
+										
+									</div>
+									
 								</form>
 							</div>
 						</div>

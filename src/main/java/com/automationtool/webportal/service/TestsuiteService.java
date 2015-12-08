@@ -10,7 +10,9 @@ import java.util.List;
 
 
 
+
 import com.automationtool.webportal.model.TestsuiteDescription;
+import com.automationtool.webportal.model.TestsuiteTestcases;
 import com.automationtool.webportal.model.viewModel.Testsuite;
 import com.automationtool.webportal.model.webservices.ConfigurationList;
 import com.automationtool.webportal.model.webservices.TestcasesList;
@@ -40,6 +42,11 @@ public interface TestsuiteService {
 	WebserviceTemplate addTestcasesToTestsuites(TestcaseToTestsuites[] testcases);
 
 	TestcasesTestsuitesList getTestcasesForTestsuites(int testsuiteId);
+
+	WebserviceTemplate updateTestcasesToTestsuites(
+			TestcaseToTestsuites[] testcases);
+
+	WebserviceTemplate deleteTestcasesFromTestsuite(TestsuiteTestcases[] testcases);
 	
 	
 }

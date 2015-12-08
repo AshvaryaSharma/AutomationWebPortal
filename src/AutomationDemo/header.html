@@ -1,0 +1,112 @@
+<div class="container-fluid">
+<!-- Navigation -->
+	<nav class="navbar navbar-default navbar-static-top vertical-align-middle" role="navigation" style="margin-bottom:0;">
+		<div class="row vertical-align-middle">
+			<div id="logo" class="col-xs-8 col-lg-2">
+				<a class="navbar-brand" href="index.html"><img class="navbar navbar-top-links navbar-left" src="images/logo_techm.png">
+				</a>
+			</div>
+			<div id="user-name" class="col-xs-5 col-lg-3 desktop" style="margin-left: 270px;">
+				<span class="badge">Welcome <strong>Ashverya</strong></span>
+				<span><strong>Team: </strong> <b>Automation</b></span><br>
+				<span class="glyphicon glyphicon-home"><a class="pad-left-5px" style="color: #fff;" href="#/dashbaord">HOME</a></span>
+				<span class="glyphicon glyphicon-log-out pad-left-10px"><a class="pad-left-5px" style="color: #fff;" href="#/logout">LOGOUT</a></span>
+			</div>
+			
+			<div id="safe-logo" class="col-xs-5 col-lg-2 pull-right">
+				<a  href="index.html"><img src="images/safe.png"></a>
+			</div>
+			<div class="clearfix desktop"></div>
+			<div class="clear-left mobile"></div>
+			<div id="user-name" class="col-xs-5 col-lg-3 mobile" style="margin-top: 21px;">
+				<span class="badge">Welcome <strong>Ashverya</strong></span>
+				<span><strong>Team: </strong> <b>Automation</b></span>
+				<span class="glyphicon glyphicon-home"><a class="pad-left-5px" style="color: #fff;" href="#/dashbaord">HOME</a></span>
+				<span class="glyphicon glyphicon-log-out pad-left-10px"><a class="pad-left-5px" style="color: #fff;" href="#/logout">LOGOUT</a></span>
+			</div>
+			
+			<div class="col-xs-5 col-xs-offset-2 col-lg-3 pull-right tag-line">
+				<span class="each word vertical-align-middle">
+					<span class="first-letter">S</span>implified 
+					<span class="first-letter">A</span>utomation 
+					<span class="first-letter">F</span>ramework for
+					<span class="first-letter">E</span>fficiency
+				</span>
+			</div>
+		</div>
+	</nav>
+<nav role="navigation" class="navbar">
+	<div class="navbar-header">
+		<button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
+			<span class="sr-only">Toggle Navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</button>
+	</div>
+	
+	<div id="navbarCollapse" class="navbar-collapse collapse">
+		<ul class="nav nav-pills" id="menu">
+			<li role="presentation" class="dropdown" id="safe-dropdown">
+				<a data-toggle="dropdown" class="dropdown-toggle" href="javascript:void(0);">Test Cases<b class="caret"></b></a>
+				<ul role="menu" class="dropdown-menu">
+					<li><a href="#/createTestcase">Create Test Case</a></li>
+					<li><a href="#/viewTestcases">View Test Cases</a></li>
+				</ul>
+			</li>
+			<li role="presentation"><a href="javascript:void(0);">Packages</a></li>
+			<li role="presentation"><a href="javascript:void(0);">Applications</a></li>
+		</ul>
+	</div>
+</nav>
+</div>
+<script>
+		
+		var menu = document.getElementById("menu");
+		var collapse = document.getElementById("navbarCollapse");
+		var dropdown = document.getElementById("safe-dropdown");
+		var bar = document.querySelector(".navbar-toggle");
+			
+		console.log("DropDown::"+dropdown);
+		console.log("Menu::"+menu);
+		console.log("Bar::"+bar);
+		
+		bar.onclick = openMenu;
+		dropdown.onmouseover = addOpenFunc;
+		//dropdown.onmouseout = removeOpenFunc;
+		window.onresize = resizeFunc;
+		
+		function resizeFunc() {
+			console.log("We are resizing..."+window.innerWidth);
+			if(window.innerWidth > 767) {
+				console.log("Removing nav-stacked...");
+				menu.classList.remove("nav-stacked");
+			}
+			if(window.innerWidth < 767) {
+				console.log("Adding nav-stacked...");
+				collapse.classList.add("collapse");
+			}
+		};
+		function openMenu(){
+			var menu = document.getElementById("menu");
+			console.log("Inside Menu..."+menu);
+			if(!collapse.classList.contains("collapse")) {
+				collapse.classList.add("collapse");
+				menu.classList.remove("nav-stacked");
+				
+			}
+			else {
+				menu.classList.add("nav-stacked");
+				collapse.classList.remove("collapse");
+			}
+			
+		};
+		function addOpenFunc() {
+			console.log("Opening the dropdown on onmouseover...");
+			dropdown.classList.add("open");
+		}
+		function removeOpenFunc() {
+			console.log("Removing the dropdown on mouseout...");
+			dropdown.classList.remove("open");
+		}
+	</script>

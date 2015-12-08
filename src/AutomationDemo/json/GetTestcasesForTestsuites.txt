@@ -1,0 +1,141 @@
+url: /webservice/getTestcasesForTestsuites
+
+
+request:
+1
+
+
+response:
+
+{
+  "status": "SUCCESS",
+  "exceptionMessage": null,
+  "testcases": [
+    {
+      "pk": {
+        "testsuite": {
+          "testsuite_id": 1,
+          "testsuite_name": "My Test test suite",
+          "testsuite_description": "My FIrst Test suite description",
+          "application": {
+            "app_id": 1,
+            "app_description": "This contains test cases of MyATT Application",
+            "app_name": "MyAtt"
+          },
+          "group": {
+            "groupid": 1,
+            "team_name": "Automation"
+          }
+        },
+        "testcase": {
+          "testcase_id": 59,
+          "testcase_name": "New Test",
+          "testcase_description": "New Test CAse",
+          "application": {
+            "app_id": 1,
+            "app_description": "This contains test cases of MyATT Application",
+            "app_name": "MyAtt"
+          }
+        }
+      },
+      "param1_value": "",
+      "param2_value": "",
+      "param3_value": "",
+      "param4_value": "",
+      "param5_value": "",
+      "param1_name": "",
+      "param2_name": "",
+      "param3_name": "",
+      "param4_name": "",
+      "param5_name": "",
+      "browser": "FIREFOX",
+      "testcase": {
+        "testcase_id": 59,
+        "testcase_name": "New Test",
+        "testcase_description": "New Test CAse",
+        "application": {
+          "app_id": 1,
+          "app_description": "This contains test cases of MyATT Application",
+          "app_name": "MyAtt"
+        }
+      },
+      "testsuite": {
+        "testsuite_id": 1,
+        "testsuite_name": "My Test test suite",
+        "testsuite_description": "My FIrst Test suite description",
+        "application": {
+          "app_id": 1,
+          "app_description": "This contains test cases of MyATT Application",
+          "app_name": "MyAtt"
+        },
+        "group": {
+          "groupid": 1,
+          "team_name": "Automation"
+        }
+      }
+    },
+    {
+      "pk": {
+        "testsuite": {
+          "testsuite_id": 1,
+          "testsuite_name": "My Test test suite",
+          "testsuite_description": "My FIrst Test suite description",
+          "application": {
+            "app_id": 1,
+            "app_description": "This contains test cases of MyATT Application",
+            "app_name": "MyAtt"
+          },
+          "group": {
+            "groupid": 1,
+            "team_name": "Automation"
+          }
+        },
+        "testcase": {
+          "testcase_id": 57,
+          "testcase_name": "Test Case NameDesc",
+          "testcase_description": "Test Case Descr",
+          "application": {
+            "app_id": 1,
+            "app_description": "This contains test cases of MyATT Application",
+            "app_name": "MyAtt"
+          }
+        }
+      },
+      "param1_value": "",
+      "param2_value": "",
+      "param3_value": "",
+      "param4_value": "",
+      "param5_value": "",
+      "param1_name": "",
+      "param2_name": "",
+      "param3_name": "",
+      "param4_name": "",
+      "param5_name": "",
+      "browser": "IE",
+      "testcase": {
+        "testcase_id": 57,
+        "testcase_name": "Test Case NameDesc",
+        "testcase_description": "Test Case Descr",
+        "application": {
+          "app_id": 1,
+          "app_description": "This contains test cases of MyATT Application",
+          "app_name": "MyAtt"
+        }
+      },
+      "testsuite": {
+        "testsuite_id": 1,
+        "testsuite_name": "My Test test suite",
+        "testsuite_description": "My FIrst Test suite description",
+        "application": {
+          "app_id": 1,
+          "app_description": "This contains test cases of MyATT Application",
+          "app_name": "MyAtt"
+        },
+        "group": {
+          "groupid": 1,
+          "team_name": "Automation"
+        }
+      }
+    }
+  ]
+}
