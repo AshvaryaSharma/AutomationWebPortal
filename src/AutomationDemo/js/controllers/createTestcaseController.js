@@ -61,6 +61,7 @@ angular.module("safe-app")
 		$scope.configParamList = null;
 		$scope.safeUserData = {};
 		$scope.packages = [];
+		$scope.errorStatus = false;
 		$scope.testStep = [{keyword:'',type:'',arg1:null,arg2: null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:'', pageObject:''},
 							   {keyword:'',type:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:''},
 							   {keyword:'',type:'',arg1:null,arg2:null,arg3:null,arg4:null,arg5:null,arg1_ph:'',arg2_ph:'',arg3_ph:'',arg4_ph:'',arg5_ph:'', pageObject:''},
@@ -427,6 +428,56 @@ angular.module("safe-app")
 							   ];
 			console.log("isApplicationSelected::"+$scope.isApplicationSelected);
 		}
+		/*
+		**@function submitTestcase :- It gets called on clicking the "Create" button, it checks the submitted values for any possible error and display the error, if any.
+		*/
+		$scope.submitTestcase = function() {
+			var itr = 0;
+			if($scope.errorStatus) {
+				//updateErrorStatus();
+			}
+			for(itr=0; itr< $scope.testStep.length; itr++) {
+				if($scope.testStep[itr].operationSelected == null || $scope.testStep[itr].operationSelected == undefined) {
+					$scope.errorStatus = true;
+					$scope.errorMessage = 'Select a keyword';
+				}
+				else{
+					if($scope.testStep[itr].arg1 == null || $scope.testStep[itr].arg1 == ''){
+						console.log("Arg1 not submitted..."+$scope.testStep[itr].arg1);
+						$scope.errorStatus = true;
+						$scope.errorMessage = 'Select arg1';
+					}
+					else {
+						if($scope.testStep[itr].arg2 == null || $scope.testStep[itr].arg2 == ''){
+						console.log("Error!!!!!!!!!"+$scope.testStep[itr].arg2);
+						$scope.errorStatus = true;
+						$scope.errorMessage = 'Select arg2';
+						}
+						else {
+							
+							if($scope.testStep[itr].operationSelected.type == 'UI') {
+								if($scope.testStep[itr].arg3 == null || $scope.testStep[itr].arg3 == '') {
+									$scope.errorStatus = true;
+									$scope.errorMessage = 'Select arg3';
+								}
+								else {
+									$scope.errorStatus = false;
+									$scope.errorMessage = '';
+								}
+							}
+							
+						}
+					}
+					
+				}
+			}
+			if($scope.errorStatus === false){
+				//Call the API to insert the data
+				console.log("inserting the data...");
+				printTestSteps();
+			}
+		}
+		
 		/*
 		**@function startApplication :- It is called at the time of page load. This is the first function to be called in this controller.
 		*/
