@@ -1,12 +1,3 @@
-URL: /webservice/allPageNamesByApplication
-Method: post
-
-we need to pass application id
-input:
-1
-
-output:
-
 {
   "status": "SUCCESS",
   "exceptionMessage": null,

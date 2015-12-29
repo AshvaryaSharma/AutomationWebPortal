@@ -42,6 +42,15 @@ Input:
 }
 
 Output:
+/************************************************getTestsuiteConfiguration.json**************************************************************/
+
+/webservice/getTestsuiteConfiguration
+
+Input:
+1
+
+Output:
+
 
 
 
