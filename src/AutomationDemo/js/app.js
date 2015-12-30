@@ -5,7 +5,6 @@ app.config(['$routeProvider', function($routeProvider){
 	$routeProvider.
 	when('/dashboard', {
 		templateUrl : 'partials/dashboard.html',
-		//resolve : dashboardController.resolve,
 		controller: 'dashboardController'
 	}).
 	when('/viewTestcases', {
@@ -15,6 +14,14 @@ app.config(['$routeProvider', function($routeProvider){
 	when('/createTestcase', {
 		templateUrl: 'partials/createTestcase.html',
 		controller: 'createTestcaseController'
+	}).
+	when('/createTestsuite',{
+		templateUrl: 'partials/createTestsuite.html',
+		controller: 'createTestsuiteController'
+	}).
+	when('/viewTestsuite',{
+		templateUrl: 'partials/viewTestsuite.html',
+		controller: 'viewTestsuiteController'
 	}).
 	otherwise({
 		redirectTo: '/dashboard'
