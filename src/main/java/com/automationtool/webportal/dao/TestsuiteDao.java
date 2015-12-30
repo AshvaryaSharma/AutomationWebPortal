@@ -7,6 +7,7 @@ import com.automationtool.webportal.model.Testcase;
 import com.automationtool.webportal.model.TestsuiteDescription;
 import com.automationtool.webportal.model.TestsuiteTestcases;
 import com.automationtool.webportal.model.viewModel.Testsuite;
+import com.automationtool.webportal.model.viewModel.UpdateParamList;
 import com.automationtool.webportal.model.webservices.request.TestCaseAppAndTestsuiteId;
 import com.automationtool.webportal.model.webservices.request.TestcaseToTestsuites;
 import com.automationtool.webportal.model.webservices.request.TestsuiteByAppAndGroup;
@@ -36,5 +37,9 @@ public interface TestsuiteDao {
 	public void updateTestcasesToTestcases(TestcaseToTestsuites test);
 
 	public void deleteTestcasesFromTestsuite(TestsuiteTestcases test);
+
+	public void updateTestParam(UpdateParamList config, int testsuiteId);
+
+	public void deleteTestParam(String config, int testsuiteid);
 
 }

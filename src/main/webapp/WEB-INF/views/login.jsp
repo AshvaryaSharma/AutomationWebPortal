@@ -74,7 +74,7 @@
 								</c:if>
                         <div class="form-group">
                             <label for="form-username" class="col-sm-4" width="60%">
-                                Lan ID *</label>
+                                Username *</label>
                                 <div class="col-sm-8">
                             <input name="ssoId" type="text" id="username" tabindex="1" autocomplete="off" class="form-username form-control" autofocus/>
                                 </div>

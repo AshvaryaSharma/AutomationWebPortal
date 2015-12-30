@@ -14,8 +14,12 @@
     <title>Automation Tool</title>
     
     
-
-    <!-- Bootstrap Core CSS -->
+ <link href="../resources/themes/bowerTheme/angular-foundation-gh-pages/assets/foundation.css" rel="stylesheet">
+  
+  
+  
+  
+   <!--  Bootstrap Core CSS -->
     <link href="../resources/themes/bowerTheme/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
@@ -28,9 +32,13 @@
   
    <!-- Select2 theme -->
   <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
+  
+  	
 
 	<!-- Angucomplete theme -->
   <link rel="stylesheet" href="../resources/themes/bowerTheme/angucomplete-alt-master/angucomplete-alt.css">
+	
+
 	
   <!--
     Selectize theme
@@ -56,7 +64,9 @@
         <!-- Page Content -->
        <div id="page-wrapper" ng-app="testCase" ng-controller="testcaseController" ng-init="startApplication('${testcaseAction}',${testcaseId},'${user}')">
        	<div class="container-fluid">
+       	
        		<div class="row">
+       		
                     <div class="col-lg-12">
                         <h1 class="page-header">${heading}</h1>
                     </div>
@@ -140,7 +150,7 @@
 											<br>
 											<div class="row" ng-show="isApplicationSelected">
 												<div class="col-lg-6">
-													<label><input type="checkbox"  ng-model="isPackageSelected"  ng-disabled="loading || viewTestcase" value="true">
+													<label><input type="checkbox"  ng-model="isPackageSelected" ng-change="packageCheckboxEvent()"  ng-disabled="loading || viewTestcase" value="true">
 													Load package attributes</label>
 													
 												</div>
@@ -237,9 +247,12 @@
 																	  </ui-select>
 																		
 																		<div ng-if="row.operation.type == 'NONUI' || row.operation == null">
-																		 <div angucomplete-alt id="ex1" placeholder="{{row.arg1_ph}}" maxlength="50" pause="100" selected-object="row.arg1" disable-input="(row.arg1_ph =='') || (row.arg1_ph=='NA') || loading || viewTestcase" local-data="configParamList" search-fields="parameter_name" title-field="parameter_name" minlength="1" input-class="form-control form-control-small" match-class="highlight" override-suggestions="true"  initial-value="row.arg1">
+																		 <!-- <div angucomplete-alt id="ex1" placeholder="{{row.arg1_ph}}" maxlength="50" pause="100" selected-object="row.arg1" disable-input="(row.arg1_ph =='') || (row.arg1_ph=='NA') || loading || viewTestcase" local-data="configParamList" search-fields="parameter_name" title-field="parameter_name" minlength="1" input-class="form-control form-control-small" match-class="highlight" override-suggestions="true"  initial-value="row.arg1">
 																	          </div>
-																		</div>
+																		</div> -->
+																		
+																		 <input type="text" ng-model="row.arg1" typeahead-on-select="selectConfigParam(testStep.indexOf(row),1)" typeahead="param.parameter_name for param in configParamList | filter:$viewValue | limitTo:8" class="form-control" ng-disabled="(row.arg1_ph =='') || (row.arg1_ph=='NA') || loading || viewTestcase" placeholder="{{row.arg1_ph}}">
+																		
 																		
 																	</td>
 																	<td>
@@ -254,25 +267,37 @@
 																	    </ui-select-choices>
 																	  </ui-select>
 																		<div ng-if="row.operation.type == 'NONUI' || row.operation == null">
-																		 <div angucomplete-alt id="ex1" placeholder="{{row.arg2_ph}}" maxlength="50" pause="100" selected-object="row.arg2" disable-input="(row.arg2_ph =='') || (row.arg2_ph=='NA') || loading || viewTestcase" local-data="configParamList" search-fields="parameter_name" title-field="parameter_name" minlength="1" input-class="form-control form-control-small" match-class="highlight" override-suggestions="true" initial-value="row.arg2">
-																	          </div>
+																		 <!-- <div angucomplete-alt id="ex1" placeholder="{{row.arg2_ph}}" maxlength="50" pause="100" selected-object="row.arg2" disable-input="(row.arg2_ph =='') || (row.arg2_ph=='NA') || loading || viewTestcase" local-data="configParamList" search-fields="parameter_name" title-field="parameter_name" minlength="1" input-class="form-control form-control-small" match-class="highlight" override-suggestions="true" initial-value="row.arg2">
+																	          </div> -->
+																	          
+																	          <input type="text" ng-model="row.arg2" typeahead-on-select="selectConfigParam(testStep.indexOf(row),2)" typeahead="param.parameter_name for param in configParamList | filter:$viewValue | limitTo:8" class="form-control" ng-disabled="(row.arg2_ph =='') || (row.arg2_ph=='NA') || loading || viewTestcase" placeholder="{{row.arg2_ph}}">
+																	          
 																		</div>
 																	</td>
 																	<td>
 																			
-																	          <div angucomplete-alt id="ex1" placeholder="{{row.arg3_ph}}" maxlength="50" pause="100" selected-object="row.arg3" disable-input="(row.arg3_ph =='') || (row.arg3_ph=='NA') || loading || viewTestcase" local-data="configParamList" search-fields="parameter_name" title-field="parameter_name" minlength="1" input-class="form-control form-control-small" match-class="highlight" override-suggestions="true" initial-value="row.arg3">
-																	          </div>
+																	         <!--  <div angucomplete-alt id="ex1" placeholder="{{row.arg3_ph}}" maxlength="50" pause="100" selected-object="row.arg3" disable-input="(row.arg3_ph =='') || (row.arg3_ph=='NA') || loading || viewTestcase" local-data="configParamList" search-fields="parameter_name" title-field="parameter_name" minlength="1" input-class="form-control form-control-small" match-class="highlight" override-suggestions="true" initial-value="row.arg3">
+																	          </div> -->
+																	          
+																	            <input type="text" ng-model="row.arg3" typeahead-on-select="selectConfigParam(testStep.indexOf(row),3)" typeahead="param.parameter_name for param in configParamList | filter:$viewValue | limitTo:8" class="form-control" ng-disabled="(row.arg3_ph =='') || (row.arg3_ph=='NA') || loading || viewTestcase" placeholder="{{row.arg3_ph}}">
+
 																	        
 																	        
 																		<!-- <input class="form-control" placeholder="{{row.arg3_ph}}" ng-model="row.arg3" ng-disabled="(row.arg3_ph =='') || (row.arg3_ph=='NA') || loading || viewTestcase">
 																	 --></td>
 																	<td>
-																		 <div angucomplete-alt id="ex1" placeholder="{{row.arg4_ph}}" maxlength="50" pause="100" selected-object="row.arg4" disable-input="(row.arg4_ph =='') || (row.arg4_ph=='NA') || loading || viewTestcase" local-data="configParamList" search-fields="parameter_name" title-field="parameter_name" minlength="1" input-class="form-control form-control-small" match-class="highlight" override-suggestions="true"  initial-value="row.arg4">
-																	          </div>
+																		 <!-- <div angucomplete-alt id="ex1" placeholder="{{row.arg4_ph}}" maxlength="50" pause="100" selected-object="row.arg4" disable-input="(row.arg4_ph =='') || (row.arg4_ph=='NA') || loading || viewTestcase" local-data="configParamList" search-fields="parameter_name" title-field="parameter_name" minlength="1" input-class="form-control form-control-small" match-class="highlight" override-suggestions="true"  initial-value="row.arg4">
+																	          </div> -->
+																	          
+																	           <input type="text" ng-model="row.arg4" typeahead-on-select="selectConfigParam(testStep.indexOf(row),4)" typeahead="param.parameter_name for param in configParamList | filter:$viewValue | limitTo:8" class="form-control" ng-disabled="(row.arg4_ph =='') || (row.arg4_ph=='NA') || loading || viewTestcase" placeholder="{{row.arg4_ph}}">
+																	          
 																	</td>
 																	<td>
-																		 <div angucomplete-alt id="ex1" placeholder="{{row.arg5_ph}}" maxlength="50" pause="100" selected-object="row.arg5" disable-input="(row.arg5_ph =='') || (row.arg5_ph=='NA') || loading || viewTestcase" local-data="configParamList" search-fields="parameter_name" title-field="parameter_name" minlength="1" input-class="form-control form-control-small" match-class="highlight" override-suggestions="true"  initial-value="row.arg5">
-																	          </div>
+																		 <!-- <div angucomplete-alt id="ex1" placeholder="{{row.arg5_ph}}" maxlength="50" pause="100" selected-object="row.arg5" disable-input="(row.arg5_ph =='') || (row.arg5_ph=='NA') || loading || viewTestcase" local-data="configParamList" search-fields="parameter_name" title-field="parameter_name" minlength="1" input-class="form-control form-control-small" match-class="highlight" override-suggestions="true"  initial-value="row.arg5">
+																	          </div> -->
+																	          
+																	           <input type="text" ng-model="row.arg5" typeahead-on-select="selectConfigParam(testStep.indexOf(row),5)" typeahead="param.parameter_name for param in configParamList | filter:$viewValue | limitTo:8" class="form-control" ng-disabled="(row.arg5_ph =='') || (row.arg5_ph=='NA') || loading || viewTestcase" placeholder="{{row.arg5_ph}}">
+																	          
 																	</td>
 																	<td>
 																		<button type="button" class="btn btn-default btn-circle btn-xs" ng-click="addRowEvent($index)" ng-disabled="loading || viewTestcase"><i class="fa fa-plus-circle"></i></button>
@@ -324,6 +349,11 @@
 	
 	
 	<script src="../resources/themes/bowerTheme/angucomplete-alt-master/angucomplete-alt.js"></script>
+	<!-- START -->
+	<script src="../resources/themes/bowerTheme/angular-foundation-gh-pages/mm-foundation-tpls-0.8.0.js"></script>
+	
+	<!-- END -->
+	
 	<!-- ui-select files -->
   <script src="../resources/themes/bowerTheme/ui-select-master/dist/select.js"></script>
     <!-- <script src="../resources/userJs/operationKeywords/app.js"></script>

@@ -19,6 +19,11 @@
  		
  		<put-attribute name="body" value="/WEB-INF/views/protected/dashboard.jsp" />
  	</definition>
+ 	
+ 	<definition name="users" extends="master.page">
+ 		
+ 		<put-attribute name="body" value="/WEB-INF/views/protected/manageUsers.jsp" />
+ 	</definition>
  	<definition name="package" extends="master.page">
  		
  		<put-attribute name="body" value="/WEB-INF/views/protected/testCases/package.jsp" />

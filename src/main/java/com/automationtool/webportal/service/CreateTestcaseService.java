@@ -9,6 +9,7 @@ import com.automationtool.webportal.model.viewModel.TestcaseSample;
 import com.automationtool.webportal.model.webservices.ApplicationList;
 import com.automationtool.webportal.model.webservices.TestcaseTemplate;
 import com.automationtool.webportal.model.webservices.TestcasesList;
+import com.automationtool.webportal.model.webservices.UserRoles;
 
 public interface CreateTestcaseService {
 	
@@ -35,6 +36,8 @@ public interface CreateTestcaseService {
 	TestcasesList getAllTestCasesByApplicationId(int appId);
 
 	boolean deleteTestStep(TestcaseSample testcase);
+
+	
 	
 	
 

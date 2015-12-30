@@ -18,10 +18,12 @@ import com.automationtool.webportal.model.Application;
 import com.automationtool.webportal.model.Packages;
 import com.automationtool.webportal.model.Testcase;
 import com.automationtool.webportal.model.Teststeps;
+import com.automationtool.webportal.model.UserProfile;
 import com.automationtool.webportal.model.viewModel.TestcaseSample;
 import com.automationtool.webportal.model.webservices.ApplicationList;
 import com.automationtool.webportal.model.webservices.TestcaseTemplate;
 import com.automationtool.webportal.model.webservices.TestcasesList;
+import com.automationtool.webportal.model.webservices.UserRoles;
 
 @Service("createTestcaseService")
 @Transactional
@@ -256,7 +258,7 @@ boolean flag = false;
 				for(Teststeps step : new_testCase_teststeps) {
 					step.setTestcase(new_testCase);	
 				}
-				teststeps.deleteTestSteps(new_testCase_teststeps);
+				
 				teststeps.updateTestSteps(new_testCase_teststeps);
 				
 			} catch(Exception e) {
@@ -386,6 +388,9 @@ boolean flag = false;
 		System.out.println("Flag value returning " + flag);
 		return flag;
 	}
+
+
+	
 
 
 	

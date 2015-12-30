@@ -102,7 +102,7 @@ public class WebserviceController {
 	}
 	
 	
-	/*@RequestMapping(value="/webservice/findAllApplications" , method = RequestMethod.GET)
+	@RequestMapping(value="/webservice/findAllApplications" , method = RequestMethod.GET)
 	public ResponseEntity<List<Application>> findAllApplications() {
 		List<Application> application = createTestcaseService.findAllApplications();
 		
@@ -112,7 +112,7 @@ public class WebserviceController {
 		
 		return new ResponseEntity<List<Application>>(application, HttpStatus.OK);
 	}
-	*/
+	
 	
 	@RequestMapping(value="/webservice/findApplicationsByUserId" , method = RequestMethod.POST)
 	public ResponseEntity<ApplicationList> findApplicationsByUserID(@RequestBody String userId) {

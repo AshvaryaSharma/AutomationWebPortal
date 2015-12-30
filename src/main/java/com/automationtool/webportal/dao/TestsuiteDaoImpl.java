@@ -2,12 +2,14 @@ package com.automationtool.webportal.dao;
 
 import com.automationtool.webportal.model.Application;
 import com.automationtool.webportal.model.Configuration;
+import com.automationtool.webportal.model.ConfigurationId;
 import com.automationtool.webportal.model.Testcase;
 import com.automationtool.webportal.model.Teststeps;
 import com.automationtool.webportal.model.TestsuiteDescription;
 import com.automationtool.webportal.model.TestsuiteTestcases;
 import com.automationtool.webportal.model.TestsuiteTestcasesId;
 import com.automationtool.webportal.model.viewModel.Testsuite;
+import com.automationtool.webportal.model.viewModel.UpdateParamList;
 import com.automationtool.webportal.model.webservices.request.TestCaseAppAndTestsuiteId;
 import com.automationtool.webportal.model.webservices.request.TestcaseToTestsuites;
 import com.automationtool.webportal.model.webservices.request.TestsuiteByAppAndGroup;
@@ -199,5 +201,45 @@ public class TestsuiteDaoImpl implements Serializable, TestsuiteDao {
 		 session.delete(testcases);
 		
 	}
+
+	@Override
+	public void updateTestParam(UpdateParamList config, int testsuiteid) {
+		init();
+		TestsuiteDescription testsuiteDescription = new TestsuiteDescription();
+		testsuiteDescription.setTestsuite_id(testsuiteid);
+		ConfigurationId configId = new ConfigurationId();
+		configId.setTestsuite(testsuiteDescription);
+		configId.setParameter_name(config.getParameter_name());
+		Configuration updateConfig = new Configuration();
+		updateConfig.setPk(configId);
+		updateConfig.setParameter_name(config.getParameter_name());
+		updateConfig.setParameter_value(config.getParameter_value());
+		
+		
+		session.saveOrUpdate(updateConfig);
+		
+		
+		
+	}
+
+	@Override
+	public void deleteTestParam(String config, int testsuiteid) {
+
+		init();
+		TestsuiteDescription testsuiteDescription = new TestsuiteDescription();
+		testsuiteDescription.setTestsuite_id(testsuiteid);
+		ConfigurationId configId = new ConfigurationId();
+		configId.setTestsuite(testsuiteDescription);
+		configId.setParameter_name(config);
+		Configuration deleteConfig = new Configuration();
+		deleteConfig.setPk(configId);
+		deleteConfig.setParameter_name(config);
+	
+		session.delete(deleteConfig);
+		
+	}
+
+	
+	
 
 }

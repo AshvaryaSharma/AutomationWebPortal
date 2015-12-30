@@ -18,6 +18,7 @@ import com.automationtool.webportal.model.User;
 import com.automationtool.webportal.model.User_view;
 import com.automationtool.webportal.model.webservices.ApplicationList;
 import com.automationtool.webportal.model.webservices.GroupDesc;
+import com.automationtool.webportal.model.webservices.GroupList;
 import com.automationtool.webportal.model.webservices.NonUIOperation;
 import com.automationtool.webportal.model.webservices.PageNames;
 import com.automationtool.webportal.model.webservices.PageObjectList;
@@ -26,9 +27,11 @@ import com.automationtool.webportal.model.webservices.TestcasesTestsuitesList;
 import com.automationtool.webportal.model.webservices.TestsuiteList;
 import com.automationtool.webportal.model.webservices.UiOperationObj;
 import com.automationtool.webportal.model.webservices.UserDetail;
+import com.automationtool.webportal.model.webservices.UserRoles;
 import com.automationtool.webportal.model.webservices.WebserviceTemplate;
 import com.automationtool.webportal.model.webservices.request.TestCaseAppAndTestsuiteId;
 import com.automationtool.webportal.model.webservices.request.TestcaseToTestsuites;
+import com.automationtool.webportal.model.webservices.request.TestsuiteConfig;
 import com.automationtool.webportal.service.CreateTestcaseService;
 import com.automationtool.webportal.service.GroupService;
 import com.automationtool.webportal.service.OperationService;
@@ -283,6 +286,43 @@ public class NewWebservicesController {
 		return new ResponseEntity<WebserviceTemplate>(status, HttpStatus.OK);
 	}
 	
+	
+	
+	@RequestMapping(value="/webservice/updateTestConfigParams" , method = RequestMethod.POST)
+	public ResponseEntity<WebserviceTemplate> createTestsuite(@RequestBody TestsuiteConfig testsuiteConfig) {
+		
+		logger.info("--Updating Testsuite Configurations: " + testsuiteConfig);
+		WebserviceTemplate deleteStatus;
+		if(testsuiteConfig.getDeleteParamList() != null) {
+			System.out.println("Delete length is zero");
+			deleteStatus = testsuiteService.deleteTestsuiteConfig(testsuiteConfig.getDeleteParamList(), testsuiteConfig.getTestsuiteId());
+			
+		} else {
+			deleteStatus = new WebserviceTemplate();
+			deleteStatus.setStatus("Success");
+		}
+		if(deleteStatus.getStatus().equalsIgnoreCase("ERROR")) {
+			logger.error("Got Error in Deleting: " + deleteStatus.getExceptionMessage());
+			return new ResponseEntity<WebserviceTemplate>(deleteStatus, HttpStatus.EXPECTATION_FAILED);
+		}
+		WebserviceTemplate status;
+		if(testsuiteConfig.getUpdateParamList() !=null) {
+			logger.info("Updating config params for testsuite: " + testsuiteConfig.getTestsuiteId());
+			status = testsuiteService.updateTestsuiteConfig(testsuiteConfig.getUpdateParamList(),testsuiteConfig.getTestsuiteId());
+			
+		} else {
+			
+			status = new WebserviceTemplate();
+			status.setStatus("Success");
+		}
+		if(status.getStatus().equalsIgnoreCase("ERROR")) {
+			logger.error("Got Error in Update: " + status.getExceptionMessage());
+			return new ResponseEntity<WebserviceTemplate>(status, HttpStatus.EXPECTATION_FAILED);
+		}
+		
+		return new ResponseEntity<WebserviceTemplate>(status, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/webservice/getGroupInfo" , method = RequestMethod.POST)
 	public ResponseEntity<WebserviceTemplate> getGroupInfo(@RequestBody int groupId) {
 		
@@ -294,6 +334,48 @@ public class NewWebservicesController {
 		}
 		
 		return new ResponseEntity<WebserviceTemplate>(group, HttpStatus.OK);
+	}
+	
+	
+	@RequestMapping(value="/webservice/getAllGroups" , method = RequestMethod.GET)
+	public ResponseEntity<GroupList> getAllGroups() {
+		
+		logger.info("--Getting All the groups");
+		GroupList group = groupService.getGroup();
+		
+		if(group.getStatus().equalsIgnoreCase("ERROR")) {
+			return new ResponseEntity<GroupList>(group, HttpStatus.EXPECTATION_FAILED);
+		}
+		
+		return new ResponseEntity<GroupList>(group, HttpStatus.OK);
+	}
+	
+	
+	@RequestMapping(value="/webservice/checkUserExists" , method = RequestMethod.POST)
+	public ResponseEntity<WebserviceTemplate> checkUserExists(@RequestBody String ssoId) {
+		
+		logger.info("--Checking username: " + ssoId);
+		WebserviceTemplate user = userService.checkUserExists(ssoId);
+		
+		if(user.getStatus().equalsIgnoreCase("ERROR")) {
+			return new ResponseEntity<WebserviceTemplate>(user, HttpStatus.EXPECTATION_FAILED);
+		}
+		
+		return new ResponseEntity<WebserviceTemplate>(user, HttpStatus.OK);
+	}
+	
+	
+	@RequestMapping(value="/webservice/getAllRoles" , method = RequestMethod.GET)
+	public ResponseEntity<WebserviceTemplate> getAllRoles() {
+		
+		logger.info("--Getting All Roles ");
+		UserRoles roles = userService.getAllRoles();
+		
+		if(roles.getStatus().equalsIgnoreCase("ERROR")) {
+			return new ResponseEntity<WebserviceTemplate>(roles, HttpStatus.EXPECTATION_FAILED);
+		}
+		
+		return new ResponseEntity<WebserviceTemplate>(roles, HttpStatus.OK);
 	}
 	
 	

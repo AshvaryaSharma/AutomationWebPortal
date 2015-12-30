@@ -14,6 +14,7 @@ import com.automationtool.webportal.model.Testcase;
 import com.automationtool.webportal.model.TestsuiteDescription;
 import com.automationtool.webportal.model.TestsuiteTestcases;
 import com.automationtool.webportal.model.viewModel.Testsuite;
+import com.automationtool.webportal.model.viewModel.UpdateParamList;
 import com.automationtool.webportal.model.webservices.ApplicationList;
 import com.automationtool.webportal.model.webservices.ConfigurationList;
 import com.automationtool.webportal.model.webservices.TestcasesList;
@@ -23,6 +24,7 @@ import com.automationtool.webportal.model.webservices.WebserviceTemplate;
 import com.automationtool.webportal.model.webservices.request.TestCaseAppAndTestsuiteId;
 import com.automationtool.webportal.model.webservices.request.TestcaseToTestsuites;
 import com.automationtool.webportal.model.webservices.request.TestsuiteByAppAndGroup;
+import com.automationtool.webportal.model.webservices.request.TestsuiteConfig;
 
 
 @Service("testsuiteService")
@@ -271,6 +273,57 @@ public class TestsuiteSeriveImpl implements TestsuiteService {
 		}
 		return status;
 	}
+
+	@Override
+	public WebserviceTemplate updateTestsuiteConfig(
+			UpdateParamList[] updateParamLists, int testsuiteId) {
+		
+		WebserviceTemplate status = null;
+		try {
+			for(UpdateParamList config : updateParamLists) {
+				System.out.println("updating: " + config);
+				testsuites.updateTestParam(config,testsuiteId);
+				System.out.println("UPDATED");
+			}
+			
+			status = new WebserviceTemplate();
+			status.setStatus("SUCCESS");
+		} catch(Exception e) {
+			e.printStackTrace();
+			status = new WebserviceTemplate("ERROR" , e.getLocalizedMessage());
+			
+		}
+		return status;
+		
+	}
+
+	@Override
+	public WebserviceTemplate deleteTestsuiteConfig(String[] deleteParamList,
+			int testsuiteid) {
+		WebserviceTemplate status = null;
+		try {
+			
+			if(deleteParamList.length > 0) {
+				for(String config : deleteParamList) {
+					System.out.println("Deleting: " + config);
+					testsuites.deleteTestParam(config, testsuiteid);
+					System.out.println("DELETED");
+				}
+				
+			}
+			status = new WebserviceTemplate();
+			status.setStatus("SUCCESS");
+		} catch(Exception e) {
+			status = new WebserviceTemplate("ERROR" , e.getLocalizedMessage());
+			
+		}
+		return status;
+		
+		
+		
+	}
+
+	
 
 	
 

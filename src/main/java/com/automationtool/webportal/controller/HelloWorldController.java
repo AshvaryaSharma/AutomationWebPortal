@@ -143,6 +143,13 @@ public class HelloWorldController {
 		return "viewTestcase";
 	}
 	
+	@RequestMapping(value = { "/utility/users"}, method = RequestMethod.GET)
+	public String viewmanageUsersPage(ModelMap model){
+		model.addAttribute("user", getPrincipal());
+		model.addAttribute("team",getTeamName());
+		return "users";
+	}
+	
 	
 	@RequestMapping(value = { "/utility/application"}, method = RequestMethod.GET)
 	public String viewApplicationPage(ModelMap model){

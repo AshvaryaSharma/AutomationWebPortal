@@ -171,9 +171,9 @@ angular.module('application',[]).controller('applicationController', function($s
 	$scope.getAllApplications = function() {
 		console.log("---------GETTING ALL APPLICATIONS-----------");
 		
-		$http.post("../webservice/findApplicationsByUserId",$scope.userDetail.sso_id)
+		$http.get("../webservice/findAllApplications")
 			.success(function (response) {
-				$scope.applicationList = response.applicationList;
+				$scope.applicationList = response;
 				$scope.intializing = false;
 				$scope.testattr ="gotdata";
 				$scope.loading = false;

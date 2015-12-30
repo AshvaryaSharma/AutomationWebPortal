@@ -6,6 +6,7 @@ import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
 import com.automationtool.webportal.model.Testcase;
+import com.automationtool.webportal.model.UserProfile;
 
 @Repository("testcaseDao")
 public class TestcaseDaoImpl extends AbstractDao<Integer,Testcase> implements TestcaseDao {
@@ -53,6 +54,8 @@ public class TestcaseDaoImpl extends AbstractDao<Integer,Testcase> implements Te
 		
 		getSession().update(testcase);
 	}
+
+	
 
 	
 	

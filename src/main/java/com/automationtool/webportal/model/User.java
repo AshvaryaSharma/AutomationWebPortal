@@ -45,6 +45,10 @@ public class User {
 		return state;
 	}
 
+	public User() {
+		
+	}
+
 	public void setState(String state) {
 		this.state = state;
 	}

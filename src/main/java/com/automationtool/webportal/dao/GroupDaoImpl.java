@@ -1,5 +1,7 @@
 package com.automationtool.webportal.dao;
 
+import java.util.List;
+
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
@@ -18,6 +20,14 @@ public class GroupDaoImpl extends AbstractDao<Integer,Group> implements GroupDao
 		
 		return (Group) query.uniqueResult();
 		
+	}
+
+	@Override
+	public List<Group> getAllGroups() {
+		Query query = getSession().createQuery("from Group");
+		
+		
+		return query.list();
 	}
 
 }

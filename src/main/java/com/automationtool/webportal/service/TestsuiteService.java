@@ -11,9 +11,13 @@ import java.util.List;
 
 
 
+
+
+
 import com.automationtool.webportal.model.TestsuiteDescription;
 import com.automationtool.webportal.model.TestsuiteTestcases;
 import com.automationtool.webportal.model.viewModel.Testsuite;
+import com.automationtool.webportal.model.viewModel.UpdateParamList;
 import com.automationtool.webportal.model.webservices.ConfigurationList;
 import com.automationtool.webportal.model.webservices.TestcasesList;
 import com.automationtool.webportal.model.webservices.TestcasesTestsuitesList;
@@ -22,6 +26,7 @@ import com.automationtool.webportal.model.webservices.WebserviceTemplate;
 import com.automationtool.webportal.model.webservices.request.TestCaseAppAndTestsuiteId;
 import com.automationtool.webportal.model.webservices.request.TestcaseToTestsuites;
 import com.automationtool.webportal.model.webservices.request.TestsuiteByAppAndGroup;
+import com.automationtool.webportal.model.webservices.request.TestsuiteConfig;
 
 public interface TestsuiteService {
 
@@ -47,6 +52,10 @@ public interface TestsuiteService {
 			TestcaseToTestsuites[] testcases);
 
 	WebserviceTemplate deleteTestcasesFromTestsuite(TestsuiteTestcases[] testcases);
+
+	WebserviceTemplate updateTestsuiteConfig(UpdateParamList[] updateParamLists, int i);
+
+	WebserviceTemplate deleteTestsuiteConfig(String[] deleteParamList, int i);
 	
 	
 }

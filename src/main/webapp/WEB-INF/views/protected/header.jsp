@@ -173,7 +173,18 @@
                            	 </sec:authorize>
 								<li><a id="GSDPAprSubMenu" href="testsuiteMaster">Add Testcases to Testsuite</a></li>
                             </ul>
-                        </li>			
+                        </li>
+                        
+                        <sec:authorize access="hasRole('DBA')">
+                        
+						<li id="lAnnMenu" class="dropdown">
+							<a id="AnnMenu" class="dropdown-toggle" data-toggle="dropdown">Users/Group<i class="fa fa-angle-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a id="GSDPAprSubMenu" href="users">Manage Users</a></li>
+                                <li><a id="GSDPAprSubMenu">Manage Groups</a></li>
+                            </ul>
+                        </li>
+						</sec:authorize>			
                     </ul>
                     	 
 				</div>

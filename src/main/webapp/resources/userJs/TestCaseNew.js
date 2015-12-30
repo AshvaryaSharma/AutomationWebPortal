@@ -1,4 +1,15 @@
-var app = angular.module('testCase',['ngSanitize', 'ui.select','ngTouch', 'angucomplete-alt']);
+var app = angular.module('testCase',['ngSanitize', 'ui.select','ngTouch', 'angucomplete-alt', 'mm.foundation']);
+
+//-------------------------------START HERE--------------------------------------------------
+
+
+
+
+
+
+
+
+///------------------------------END HERE----------------------------------------------------
 
 app.filter('propsFilter', function() {
 	  return function(items, props) {
@@ -31,6 +42,10 @@ app.filter('propsFilter', function() {
 	    return out;
 	  };
 	});
+
+
+
+
 
 
 app.controller('testcaseController', function($scope,$http,$timeout, $interval,$rootScope) {
@@ -450,6 +465,23 @@ $scope.saveInitialize = function(){
 		
 	}
 	
+	$scope.selectConfigParam = function(index,param) {
+		
+		if(param==1) {
+			$scope.testStep[index].arg1 = "{Config{" + $scope.testStep[index].arg1 + "}}";
+		} else if(param==2) {
+			$scope.testStep[index].arg2 = "{Config{" + $scope.testStep[index].arg2 + "}}";
+		} else if(param==3) {
+			$scope.testStep[index].arg3 = "{Config{" + $scope.testStep[index].arg3 + "}}";
+		} else if(param==4) {
+			$scope.testStep[index].arg4 = "{Config{" + $scope.testStep[index].arg4 + "}}";
+		} else if(param==5) {
+			$scope.testStep[index].arg5 = "{Config{" + $scope.testStep[index].arg5 + "}}";
+		}
+		
+		
+	}
+	
 	
 	$scope.getAllApplications = function() {
 		console.log("---------GETTING ALL APPLICATIONS-----------");
@@ -789,18 +821,31 @@ $scope.saveInitialize = function(){
 		
 	}
 	
+	$scope.testFunct = function() {
+		
+		console.log(":::::::HELOOOOOOOOOOOOO:::::::::::::::: " );
+		
+	}
+	
+	$scope.packageCheckboxEvent = function() {
+		$scope.loading = true;
+		$scope.configTestPackageId == "";
+		$scope.configParamList = null;
+		$scope.loading = false;
+	}
+	
 	$scope.packageSelectEvent = function() {
 		$scope.loading = true;
 		
 		console.log("----------Package Select Event for Package =======> " + $scope.configTestPackageId);
 		if($scope.configTestPackageId == "") {
-			$scope.isPackageSelected = false;
+			/*$scope.isPackageSelected = false;*/
 			$scope.package_id = null;
 			$scope.configParamList = null;
 			
 		} else {
 			
-			
+			$scope.configParamList = null;
 			
 			$http.post("../webservice/getTestsuiteConfiguration",$scope.configTestPackageId)
 			 .success(function(response) {
@@ -1011,7 +1056,7 @@ $scope.saveInitialize = function(){
 				$scope.testcaseObject.teststeps[i].arg2 = $scope.testStep[i].arg2.pageObjectId;
 			} else if($scope.testStep[i].operation.type == 'NONUI') {
 				
-				if($scope.testStep[i].arg1.title == undefined) {
+				/*if($scope.testStep[i].arg1.title == undefined) {
 					$scope.testcaseObject.teststeps[i].arg1 = $scope.testStep[i].arg1.originalObject;
 				} else {
 					$scope.testcaseObject.teststeps[i].arg1 = "{Config{" +$scope.testStep[i].arg1.title +"}}";
@@ -1022,33 +1067,44 @@ $scope.saveInitialize = function(){
 					$scope.testcaseObject.teststeps[i].arg2 = $scope.testStep[i].arg2.originalObject;
 				} else {
 					$scope.testcaseObject.teststeps[i].arg2 = "{Config{" +$scope.testStep[i].arg2.title+"}}";
-				}
+				}*/
+				
+				$scope.testcaseObject.teststeps[i].arg1 = $scope.testStep[i].arg1;
+				$scope.testcaseObject.teststeps[i].arg2 = $scope.testStep[i].arg2;
 				
 			}
 			
 			if($scope.testStep[i].arg3 != null) {
-				if($scope.testStep[i].arg3.title == undefined) {
+				/*if($scope.testStep[i].arg3.title == undefined) {
 					$scope.testcaseObject.teststeps[i].arg3 = $scope.testStep[i].arg3.originalObject;
 				} else {
 					$scope.testcaseObject.teststeps[i].arg3 = "{Config{" +$scope.testStep[i].arg3.title+"}}";
-				}
+				}*/
+				
+				$scope.testcaseObject.teststeps[i].arg3 = $scope.testStep[i].arg3;
+				
 			}
 			
 			if($scope.testStep[i].arg4 != null) {
-				if($scope.testStep[i].arg4.title == undefined) {
+				/*if($scope.testStep[i].arg4.title == undefined) {
 					$scope.testcaseObject.teststeps[i].arg4 = $scope.testStep[i].arg4.originalObject;
 				} else {
 					$scope.testcaseObject.teststeps[i].arg4 = "{Config{" +$scope.testStep[i].arg4.title+"}}";
-				}
+				}*/
+				
+				$scope.testcaseObject.teststeps[i].arg4 = $scope.testStep[i].arg4;
 			}
 			
 			if($scope.testStep[i].arg5 != null) {
 				
-				if($scope.testStep[i].arg5.title == undefined) {
+				/*if($scope.testStep[i].arg5.title == undefined) {
 					$scope.testcaseObject.teststeps[i].arg5 = $scope.testStep[i].arg5.originalObject;
 				} else {
 					$scope.testcaseObject.teststeps[i].arg5 = "{Config{" +$scope.testStep[i].arg5.title+"}}";
-				}
+				}*/
+				
+				
+				$scope.testcaseObject.teststeps[i].arg5 = $scope.testStep[i].arg5;
 				
 			}
 			

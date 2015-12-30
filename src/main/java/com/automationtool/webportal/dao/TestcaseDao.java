@@ -3,6 +3,7 @@ package com.automationtool.webportal.dao;
 import java.util.List;
 
 import com.automationtool.webportal.model.Testcase;
+import com.automationtool.webportal.model.UserProfile;
 
 public interface TestcaseDao {
 	
@@ -11,4 +12,5 @@ public interface TestcaseDao {
 	Testcase getTestCaseByTestcaseId(int testcase_id) throws Exception;
 	void deleteTestcasesByTestcaseIds(int[] testcaseIDs) throws Exception;
 	void updateTestcase(Testcase testcase) throws Exception;
+	
 }
