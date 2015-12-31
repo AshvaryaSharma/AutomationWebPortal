@@ -1,0 +1,48 @@
+{  
+   "status":"SUCCESS",
+   "exceptionMessage":null,
+   "testSuite":[  
+      {  
+         "testsuite_id":2,
+         "testsuite_name":"My Second Test Suite",
+         "testsuite_description":"My Second test suite description",
+         "application":{  
+            "app_id":1,
+            "app_description":"This contains test cases of MyATT Application",
+            "app_name":"MyAtt"
+         },
+         "group":{  
+            "groupid":1,
+            "team_name":"Automation"
+         }
+      },
+      {  
+         "testsuite_id":9,
+         "testsuite_name":"Thrid Test suite",
+         "testsuite_description":"Test suite",
+         "application":{  
+            "app_id":1,
+            "app_description":"This contains test cases of MyATT Application",
+            "app_name":"MyAtt"
+         },
+         "group":{  
+            "groupid":1,
+            "team_name":"Automation"
+         }
+      },
+      {  
+         "testsuite_id":1,
+         "testsuite_name":"My Test test suite",
+         "testsuite_description":"My First Test suite description",
+         "application":{  
+            "app_id":1,
+            "app_description":"This contains test cases of MyATT Application",
+            "app_name":"MyAtt"
+         },
+         "group":{  
+            "groupid":1,
+            "team_name":"Automation"
+         }
+      }
+   ]
+}
